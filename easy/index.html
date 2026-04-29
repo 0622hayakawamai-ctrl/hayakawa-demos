@@ -340,26 +340,44 @@ section.ch10{background:var(--warning-soft)}
   padding:80px 20px 40px;
 }
 .menu-panel.open{transform:translateX(0)}
+.menu-section{
+  margin:0 0 6px;border-radius:12px;overflow:hidden;background:#FAFAFA;
+}
 .menu-section-title{
-  font-size:13px;font-weight:900;letter-spacing:.15em;color:var(--gray);
-  margin:18px 8px 10px;padding-bottom:6px;border-bottom:2px dashed var(--border);
+  font-size:13px;font-weight:900;letter-spacing:.05em;color:var(--ink);
+  padding:11px 14px;cursor:pointer;user-select:none;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:linear-gradient(90deg,var(--bg) 0%,#FAFAFA 100%);
+  transition:background .2s;
 }
-.menu-section-title:first-child{margin-top:0}
+.menu-section-title:hover{background:var(--accent-soft)}
+.menu-section-title .chev{
+  font-size:11px;color:var(--gray);transition:transform .25s;
+}
+.menu-section.open .menu-section-title .chev{transform:rotate(180deg)}
+.menu-section-body{
+  max-height:0;overflow:hidden;transition:max-height .35s ease;
+  background:white;
+}
+.menu-section.open .menu-section-body{max-height:1500px}
+.menu-section-body .menu-link{margin:0}
+
 .menu-link{
-  display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;
-  text-decoration:none;color:var(--ink);font-weight:700;font-size:14px;
-  transition:background .2s,transform .15s;border-bottom:none;
-  margin-bottom:3px;
+  display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:0;
+  text-decoration:none;color:var(--ink);font-weight:700;font-size:13px;
+  transition:background .15s;border-bottom:none;
 }
-.menu-link:hover{background:var(--primary-soft);color:var(--primary);transform:translateX(4px)}
+.menu-link:hover{background:var(--primary-soft);color:var(--primary)}
 .menu-link .menu-num{
-  display:inline-flex;width:28px;height:28px;background:var(--secondary-soft);color:var(--secondary);
-  border-radius:50%;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex-shrink:0;
+  display:inline-flex;width:24px;height:24px;background:var(--secondary-soft);color:var(--secondary);
+  border-radius:50%;align-items:center;justify-content:center;font-size:10px;font-weight:900;flex-shrink:0;
 }
 .menu-link.is-quiz .menu-num{background:var(--accent-soft);color:var(--warning)}
-.menu-link .menu-icon{font-size:18px;flex-shrink:0;width:20px;text-align:center}
-.menu-link .menu-text{flex:1;line-height:1.4}
+.menu-link .menu-icon{font-size:14px;flex-shrink:0;width:18px;text-align:center}
+.menu-link .menu-text{flex:1;line-height:1.4;font-size:13px}
 .menu-completed{color:var(--green);font-size:12px;flex-shrink:0}
+
+.menu-panel{padding-top:72px}
 
 /* ========== ゲームスコアバッジ ========== */
 .score-badge{
@@ -560,76 +578,119 @@ section.ch10{background:var(--warning-soft)}
 <div class="menu-backdrop" id="menuBackdrop"></div>
 <nav class="menu-panel" id="menuPanel" aria-label="目次">
 
-  <div class="menu-section-title">🔰 STEP 1：まず知るべき基礎</div>
-  <a href="#ch1" class="menu-link"><span class="menu-num">1</span><span class="menu-icon">🔬</span><span class="menu-text">カビって何？</span></a>
-  <a href="#ch2" class="menu-link"><span class="menu-num">2</span><span class="menu-icon">🌡️</span><span class="menu-text">なぜ生える？</span></a>
-  <a href="#ch4" class="menu-link"><span class="menu-num">4</span><span class="menu-icon">😷</span><span class="menu-text">体への影響</span></a>
-  <a href="#ch5" class="menu-link"><span class="menu-num">5</span><span class="menu-icon">🏠</span><span class="menu-text">どこに生える？</span></a>
-  <a href="#ch3" class="menu-link"><span class="menu-num">3</span><span class="menu-icon">📖</span><span class="menu-text">カビ図鑑34種</span></a>
+  <div class="menu-section open">
+    <div class="menu-section-title"><span>🔰 STEP 1：まず知るべき基礎</span><span class="chev">▼</span></div>
+    <div class="menu-section-body">
+      <a href="#ch1" class="menu-link"><span class="menu-num">1</span><span class="menu-icon">🔬</span><span class="menu-text">カビって何？</span></a>
+      <a href="#ch2" class="menu-link"><span class="menu-num">2</span><span class="menu-icon">🌡️</span><span class="menu-text">なぜ生える？</span></a>
+      <a href="#ch4" class="menu-link"><span class="menu-num">4</span><span class="menu-icon">😷</span><span class="menu-text">体への影響</span></a>
+      <a href="#ch5" class="menu-link"><span class="menu-num">5</span><span class="menu-icon">🏠</span><span class="menu-text">どこに生える？</span></a>
+      <a href="#ch3" class="menu-link"><span class="menu-num">3</span><span class="menu-icon">📖</span><span class="menu-text">カビ図鑑34種</span></a>
+    </div>
+  </div>
 
-  <div class="menu-section-title">🔧 STEP 2：対策の基本</div>
-  <a href="#ch6" class="menu-link"><span class="menu-num">6</span><span class="menu-icon">⚔️</span><span class="menu-text">退治の方法・<ruby>㎡<rt>へいべい</rt></ruby>コスト</span></a>
-  <a href="#ch7" class="menu-link"><span class="menu-num">7</span><span class="menu-icon">🛡️</span><span class="menu-text">予防の科学</span></a>
+  <div class="menu-section">
+    <div class="menu-section-title"><span>🔧 STEP 2：対策の基本</span><span class="chev">▼</span></div>
+    <div class="menu-section-body">
+      <a href="#ch6" class="menu-link"><span class="menu-num">6</span><span class="menu-icon">⚔️</span><span class="menu-text">退治の方法・㎡コスト</span></a>
+      <a href="#ch7" class="menu-link"><span class="menu-num">7</span><span class="menu-icon">🛡️</span><span class="menu-text">予防の科学</span></a>
+    </div>
+  </div>
 
-  <div class="menu-section-title">💼 STEP 3：業界の全体像</div>
-  <a href="#ch8" class="menu-link"><span class="menu-num">8</span><span class="menu-icon">💼</span><span class="menu-text">業界のリアル（誰がいくら稼ぐ？）</span></a>
-  <a href="#ch10" class="menu-link"><span class="menu-num">10</span><span class="menu-icon">💰</span><span class="menu-text">お金のリアル（始めて稼ぐまで）</span></a>
-  <a href="#ch9" class="menu-link"><span class="menu-num">9</span><span class="menu-icon">📜</span><span class="menu-text">資格・基準</span></a>
-  <a href="#ch11" class="menu-link"><span class="menu-num">11</span><span class="menu-icon">⚖️</span><span class="menu-text">法律のこと</span></a>
-  <a href="#ch12" class="menu-link"><span class="menu-num">12</span><span class="menu-icon">🦺</span><span class="menu-text">安全管理</span></a>
+  <div class="menu-section">
+    <div class="menu-section-title"><span>💼 STEP 3：業界の全体像</span><span class="chev">▼</span></div>
+    <div class="menu-section-body">
+      <a href="#ch8" class="menu-link"><span class="menu-num">8</span><span class="menu-icon">💼</span><span class="menu-text">業界のリアル（売上・規模）</span></a>
+      <a href="#ch10" class="menu-link"><span class="menu-num">10</span><span class="menu-icon">💰</span><span class="menu-text">お金のリアル（始めて稼ぐまで）</span></a>
+      <a href="#ch9" class="menu-link"><span class="menu-num">9</span><span class="menu-icon">📜</span><span class="menu-text">資格・基準</span></a>
+      <a href="#ch11" class="menu-link"><span class="menu-num">11</span><span class="menu-icon">⚖️</span><span class="menu-text">法律のこと</span></a>
+      <a href="#ch12" class="menu-link"><span class="menu-num">12</span><span class="menu-icon">🦺</span><span class="menu-text">安全管理</span></a>
+    </div>
+  </div>
 
-  <div class="menu-section-title">📰 STEP 4：実例・トラブル</div>
-  <a href="#ch13" class="menu-link"><span class="menu-num">13</span><span class="menu-icon">📰</span><span class="menu-text">事例集</span></a>
-  <a href="#ch14" class="menu-link"><span class="menu-num">14</span><span class="menu-icon">🛡</span><span class="menu-text">保険・心理</span></a>
-  <a href="#ch38" class="menu-link"><span class="menu-num">38</span><span class="menu-icon">📞</span><span class="menu-text">クレーム対応</span></a>
+  <div class="menu-section">
+    <div class="menu-section-title"><span>📰 STEP 4：実例・トラブル</span><span class="chev">▼</span></div>
+    <div class="menu-section-body">
+      <a href="#ch13" class="menu-link"><span class="menu-num">13</span><span class="menu-icon">📰</span><span class="menu-text">事例集</span></a>
+      <a href="#ch14" class="menu-link"><span class="menu-num">14</span><span class="menu-icon">🛡</span><span class="menu-text">保険・心理</span></a>
+      <a href="#ch38" class="menu-link"><span class="menu-num">38</span><span class="menu-icon">📞</span><span class="menu-text">クレーム対応</span></a>
+    </div>
+  </div>
 
-  <div class="menu-section-title">🏢 STEP 5：toB業界別（法人営業）</div>
-  <a href="#ch17" class="menu-link"><span class="menu-num">17</span><span class="menu-icon">🏥</span><span class="menu-text">10業界別の優先度マトリクス</span></a>
-  <a href="#ch19" class="menu-link"><span class="menu-num">19</span><span class="menu-icon">🍽</span><span class="menu-text">HACCP（食品工場）</span></a>
-  <a href="#ch20" class="menu-link"><span class="menu-num">20</span><span class="menu-icon">📋</span><span class="menu-text">保険会社</span></a>
-  <a href="#ch18" class="menu-link"><span class="menu-num">18</span><span class="menu-icon">🏘</span><span class="menu-text">不動産・賃貸</span></a>
-  <a href="#ch15" class="menu-link"><span class="menu-num">15</span><span class="menu-icon">🚗</span><span class="menu-text">車のカビ</span></a>
-  <a href="#ch16" class="menu-link"><span class="menu-num">16</span><span class="menu-icon">🏛</span><span class="menu-text">文化財</span></a>
+  <div class="menu-section">
+    <div class="menu-section-title"><span>🏢 STEP 5：toB業界別（法人営業）</span><span class="chev">▼</span></div>
+    <div class="menu-section-body">
+      <a href="#ch17" class="menu-link"><span class="menu-num">17</span><span class="menu-icon">🏥</span><span class="menu-text">10業界別の優先度マトリクス</span></a>
+      <a href="#ch19" class="menu-link"><span class="menu-num">19</span><span class="menu-icon">🍽</span><span class="menu-text">HACCP（食品工場）</span></a>
+      <a href="#ch20" class="menu-link"><span class="menu-num">20</span><span class="menu-icon">📋</span><span class="menu-text">保険会社</span></a>
+      <a href="#ch18" class="menu-link"><span class="menu-num">18</span><span class="menu-icon">🏘</span><span class="menu-text">不動産・賃貸</span></a>
+      <a href="#ch15" class="menu-link"><span class="menu-num">15</span><span class="menu-icon">🚗</span><span class="menu-text">車のカビ</span></a>
+      <a href="#ch16" class="menu-link"><span class="menu-num">16</span><span class="menu-icon">🏛</span><span class="menu-text">文化財</span></a>
+    </div>
+  </div>
 
-  <div class="menu-section-title">🌍 STEP 6：国際視点</div>
-  <a href="#ch21" class="menu-link"><span class="menu-num">21</span><span class="menu-icon">🌍</span><span class="menu-text">海外大手</span></a>
-  <a href="#ch22" class="menu-link"><span class="menu-num">22</span><span class="menu-icon">☠️</span><span class="menu-text">マイコトキシン（カビ毒）</span></a>
+  <div class="menu-section">
+    <div class="menu-section-title"><span>🌍 STEP 6：国際視点</span><span class="chev">▼</span></div>
+    <div class="menu-section-body">
+      <a href="#ch21" class="menu-link"><span class="menu-num">21</span><span class="menu-icon">🌍</span><span class="menu-text">海外大手</span></a>
+      <a href="#ch22" class="menu-link"><span class="menu-num">22</span><span class="menu-icon">☠️</span><span class="menu-text">マイコトキシン（カビ毒）</span></a>
+    </div>
+  </div>
 
-  <div class="menu-section-title">🚀 STEP 7：最新技術＆競合分析</div>
-  <a href="#tech-deep" class="menu-link"><span class="menu-num" style="background:var(--primary-soft);color:var(--primary)">★</span><span class="menu-icon">⚙️</span><span class="menu-text"><strong>競合10社の技術徹底分析</strong></span></a>
-  <a href="#ch23" class="menu-link"><span class="menu-num">23</span><span class="menu-icon">🤖</span><span class="menu-text">AI画像認識</span></a>
-  <a href="#ch24" class="menu-link"><span class="menu-num">24</span><span class="menu-icon">🔆</span><span class="menu-text">無光触媒</span></a>
-  <a href="#ch25" class="menu-link"><span class="menu-num">25</span><span class="menu-icon">🏗</span><span class="menu-text">抗カビ建材</span></a>
-  <a href="#ch26" class="menu-link"><span class="menu-num">26</span><span class="menu-icon">🏷</span><span class="menu-text">PIAJ認証</span></a>
-  <a href="#ch28" class="menu-link"><span class="menu-num">28</span><span class="menu-icon">⚱️</span><span class="menu-text">燻蒸プロ</span></a>
+  <div class="menu-section">
+    <div class="menu-section-title"><span>🚀 STEP 7：最新技術＆競合分析</span><span class="chev">▼</span></div>
+    <div class="menu-section-body">
+      <a href="#tech-deep" class="menu-link"><span class="menu-num" style="background:var(--primary-soft);color:var(--primary)">★</span><span class="menu-icon">⚙️</span><span class="menu-text"><strong>競合10社の技術徹底分析</strong></span></a>
+      <a href="#ch23" class="menu-link"><span class="menu-num">23</span><span class="menu-icon">🤖</span><span class="menu-text">AI画像認識</span></a>
+      <a href="#ch24" class="menu-link"><span class="menu-num">24</span><span class="menu-icon">🔆</span><span class="menu-text">無光触媒</span></a>
+      <a href="#ch25" class="menu-link"><span class="menu-num">25</span><span class="menu-icon">🏗</span><span class="menu-text">抗カビ建材</span></a>
+      <a href="#ch26" class="menu-link"><span class="menu-num">26</span><span class="menu-icon">🏷</span><span class="menu-text">PIAJ認証</span></a>
+      <a href="#ch28" class="menu-link"><span class="menu-num">28</span><span class="menu-icon">⚱️</span><span class="menu-text">燻蒸プロ</span></a>
+    </div>
+  </div>
 
-  <div class="menu-section-title">🎓 STEP 8：産学連携・経営</div>
-  <a href="#ch27" class="menu-link"><span class="menu-num">27</span><span class="menu-icon">🎓</span><span class="menu-text">大学発スタートアップ</span></a>
-  <a href="#ch29" class="menu-link"><span class="menu-num">29</span><span class="menu-icon">📈</span><span class="menu-text">健康経営</span></a>
-  <a href="#ch30" class="menu-link"><span class="menu-num">30</span><span class="menu-icon">🔮</span><span class="menu-text">2026動向</span></a>
+  <div class="menu-section">
+    <div class="menu-section-title"><span>🎓 STEP 8：産学連携・経営</span><span class="chev">▼</span></div>
+    <div class="menu-section-body">
+      <a href="#ch27" class="menu-link"><span class="menu-num">27</span><span class="menu-icon">🎓</span><span class="menu-text">大学発スタートアップ</span></a>
+      <a href="#ch29" class="menu-link"><span class="menu-num">29</span><span class="menu-icon">📈</span><span class="menu-text">健康経営</span></a>
+      <a href="#ch30" class="menu-link"><span class="menu-num">30</span><span class="menu-icon">🔮</span><span class="menu-text">2026動向</span></a>
+    </div>
+  </div>
 
-  <div class="menu-section-title">🔬 STEP 9：深掘り科学（マニア向け）</div>
-  <a href="#ch31" class="menu-link"><span class="menu-num">31</span><span class="menu-icon">🧬</span><span class="menu-text">PCR検査</span></a>
-  <a href="#ch32" class="menu-link"><span class="menu-num">32</span><span class="menu-icon">💊</span><span class="menu-text">薬剤耐性</span></a>
-  <a href="#ch33" class="menu-link"><span class="menu-num">33</span><span class="menu-icon">🦠</span><span class="menu-text">マイクロバイオーム</span></a>
-  <a href="#ch34" class="menu-link"><span class="menu-num">34</span><span class="menu-icon">🧪</span><span class="menu-text">AlphaFold2</span></a>
-  <a href="#ch35" class="menu-link"><span class="menu-num">35</span><span class="menu-icon">🏰</span><span class="menu-text">バイオフィルム</span></a>
-  <a href="#ch36" class="menu-link"><span class="menu-num">36</span><span class="menu-icon">📐</span><span class="menu-text">Aw制御</span></a>
+  <div class="menu-section">
+    <div class="menu-section-title"><span>🔬 STEP 9：深掘り科学</span><span class="chev">▼</span></div>
+    <div class="menu-section-body">
+      <a href="#ch31" class="menu-link"><span class="menu-num">31</span><span class="menu-icon">🧬</span><span class="menu-text">PCR検査</span></a>
+      <a href="#ch32" class="menu-link"><span class="menu-num">32</span><span class="menu-icon">💊</span><span class="menu-text">薬剤耐性</span></a>
+      <a href="#ch33" class="menu-link"><span class="menu-num">33</span><span class="menu-icon">🦠</span><span class="menu-text">マイクロバイオーム</span></a>
+      <a href="#ch34" class="menu-link"><span class="menu-num">34</span><span class="menu-icon">🧪</span><span class="menu-text">AlphaFold2</span></a>
+      <a href="#ch35" class="menu-link"><span class="menu-num">35</span><span class="menu-icon">🏰</span><span class="menu-text">バイオフィルム</span></a>
+      <a href="#ch36" class="menu-link"><span class="menu-num">36</span><span class="menu-icon">📐</span><span class="menu-text">Aw制御</span></a>
+    </div>
+  </div>
 
-  <div class="menu-section-title">🛠 STEP 10：現場ノウハウ</div>
-  <a href="#ch37" class="menu-link"><span class="menu-num">37</span><span class="menu-icon">🛠</span><span class="menu-text">施工現場</span></a>
+  <div class="menu-section">
+    <div class="menu-section-title"><span>🛠 STEP 10：現場ノウハウ</span><span class="chev">▼</span></div>
+    <div class="menu-section-body">
+      <a href="#ch37" class="menu-link"><span class="menu-num">37</span><span class="menu-icon">🛠</span><span class="menu-text">施工現場</span></a>
+    </div>
+  </div>
 
-  <div class="menu-section-title">🎯 確認テスト（全7ゾーン）</div>
-  <a href="#quiz1" class="menu-link is-quiz"><span class="menu-num">Q1</span><span class="menu-icon">📝</span><span class="menu-text">第1ゾーン（章1-10）</span></a>
-  <a href="#quiz2" class="menu-link is-quiz"><span class="menu-num">Q2</span><span class="menu-icon">📝</span><span class="menu-text">第2ゾーン（章15-20）</span></a>
-  <a href="#quiz3" class="menu-link is-quiz"><span class="menu-num">Q3</span><span class="menu-icon">📝</span><span class="menu-text">第3ゾーン（章21-22）</span></a>
-  <a href="#quiz4" class="menu-link is-quiz"><span class="menu-num">Q4</span><span class="menu-icon">📝</span><span class="menu-text">第4ゾーン（章23-26）</span></a>
-  <a href="#quiz5" class="menu-link is-quiz"><span class="menu-num">Q5</span><span class="menu-icon">📝</span><span class="menu-text">第5ゾーン（章27-30）</span></a>
-  <a href="#quiz6" class="menu-link is-quiz"><span class="menu-num">Q6</span><span class="menu-icon">📝</span><span class="menu-text">第6ゾーン（章31-36）</span></a>
-  <a href="#quiz7" class="menu-link is-quiz"><span class="menu-num">Q7</span><span class="menu-icon">📝</span><span class="menu-text">第7ゾーン（章37-38）</span></a>
+  <div class="menu-section">
+    <div class="menu-section-title"><span>🎯 確認テスト（全7ゾーン）</span><span class="chev">▼</span></div>
+    <div class="menu-section-body">
+      <a href="#quiz1" class="menu-link is-quiz"><span class="menu-num">Q1</span><span class="menu-icon">📝</span><span class="menu-text">第1ゾーン（章1-10）</span></a>
+      <a href="#quiz2" class="menu-link is-quiz"><span class="menu-num">Q2</span><span class="menu-icon">📝</span><span class="menu-text">第2ゾーン（章15-20）</span></a>
+      <a href="#quiz3" class="menu-link is-quiz"><span class="menu-num">Q3</span><span class="menu-icon">📝</span><span class="menu-text">第3ゾーン（章21-22）</span></a>
+      <a href="#quiz4" class="menu-link is-quiz"><span class="menu-num">Q4</span><span class="menu-icon">📝</span><span class="menu-text">第4ゾーン（章23-26）</span></a>
+      <a href="#quiz5" class="menu-link is-quiz"><span class="menu-num">Q5</span><span class="menu-icon">📝</span><span class="menu-text">第5ゾーン（章27-30）</span></a>
+      <a href="#quiz6" class="menu-link is-quiz"><span class="menu-num">Q6</span><span class="menu-icon">📝</span><span class="menu-text">第6ゾーン（章31-36）</span></a>
+      <a href="#quiz7" class="menu-link is-quiz"><span class="menu-num">Q7</span><span class="menu-icon">📝</span><span class="menu-text">第7ゾーン（章37-38）</span></a>
+    </div>
+  </div>
 
-  <div class="menu-section-title">⚙️ 学習リセット</div>
-  <a href="#" class="menu-link" id="resetAllProgress" style="color:var(--warning)"><span class="menu-num" style="background:var(--warning-soft);color:var(--warning)">🗑</span><span class="menu-icon">🔄</span><span class="menu-text">全クイズの記録をリセット</span></a>
+  <a href="#" class="menu-link" id="resetAllProgress" style="color:var(--warning);margin-top:8px;border-top:1px dashed var(--border);padding-top:14px"><span class="menu-num" style="background:var(--warning-soft);color:var(--warning)">🗑</span><span class="menu-icon">🔄</span><span class="menu-text">全クイズの記録をリセット</span></a>
 </nav>
 
 <a href="#quiz1" class="score-badge" id="scoreBadge" title="クリックでクイズへジャンプ">
@@ -1197,7 +1258,7 @@ section.ch10{background:var(--warning-soft)}
       <h4><ruby>薔薇<rt>ばら</rt></ruby><ruby>棘<rt>とげ</rt></ruby>カビ <em>Sporothrix schenckii</em>（スポロトリックス）</h4>
       <div class="mold-row"><span class="mold-label">特徴</span><span class="mold-val">園芸の<ruby>傷<rt>きず</rt></ruby>から侵入する<strong>二形性<ruby>真菌<rt>しんきん</rt></ruby></strong></span></div>
       <div class="mold-row"><span class="mold-label">出る場所</span><span class="mold-val">薔薇の棘・<ruby>苔<rt>こけ</rt></ruby>・<ruby>木材<rt>もくざい</rt></ruby>・植物の刺傷部位</span></div>
-      <div class="mold-row warn-row"><span class="mold-label">害</span><span class="mold-val">皮膚<ruby>潰瘍<rt>かいよう</rt></ruby>「<ruby>スポロトリコーシス<rt></rt></ruby>」（園芸家の職業病）</span></div>
+      <div class="mold-row warn-row"><span class="mold-label">害</span><span class="mold-val">皮膚<ruby>潰瘍<rt>かいよう</rt></ruby>「スポロトリコーシス」（園芸家の<ruby>職業病<rt>しょくぎょうびょう</rt></ruby>）</span></div>
       <div class="mold-row fix"><span class="mold-label">退治法</span><span class="mold-val">園芸時は<ruby>厚手<rt>あつで</rt></ruby>手袋・<ruby>長袖<rt>ながそで</rt></ruby>。傷ができたら早期皮膚科</span></div>
     </div>
 
@@ -6011,6 +6072,13 @@ section.ch10{background:var(--warning-soft)}
     backdrop.addEventListener('click', close);
     panel.querySelectorAll('a[href^="#"]').forEach(function(a){
       a.addEventListener('click', function(){ setTimeout(close, 100); });
+    });
+    // アコーディオン
+    panel.querySelectorAll('.menu-section-title').forEach(function(title){
+      title.addEventListener('click', function(){
+        var sec = title.closest('.menu-section');
+        if (sec) sec.classList.toggle('open');
+      });
     });
     document.addEventListener('keydown', function(e){
       if (e.key === 'Escape') close();
