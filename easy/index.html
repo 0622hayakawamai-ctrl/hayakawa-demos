@@ -58,7 +58,8 @@ a:hover{color:var(--ink);border-bottom-style:solid}
 .toc{
   max-width:880px;margin:0 auto;padding:40px 24px 80px;
 }
-.toc-title{font-size:20px;font-weight:900;margin-bottom:18px;text-align:center;color:var(--ink)}
+.toc-title{font-size:22px;font-weight:900;margin-bottom:8px;text-align:center;color:var(--ink)}
+.toc-step-title{font-size:14px;font-weight:900;color:var(--secondary);margin:30px 4px 10px;padding:8px 14px;background:linear-gradient(90deg,var(--secondary-soft),transparent);border-left:4px solid var(--secondary);border-radius:6px}
 .toc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
 .toc-item{
   padding:18px 16px;background:white;border-radius:14px;border:2px solid var(--border);
@@ -713,46 +714,89 @@ section.ch10{background:var(--warning-soft)}
 
 <!-- TOC -->
 <div class="toc">
-  <div class="toc-title">📚 もくじ（全38章）</div>
+  <div class="toc-title">📚 もくじ｜10ステップで学べる順番</div>
+  <p style="text-align:center;font-size:13px;color:var(--ink-soft);margin-bottom:20px;line-height:2">
+    左上の<strong>🍔メニュー</strong>からも全章ジャンプ可能。<br>
+    右上の<strong>🏆スコア</strong>で確認テストの正解数が見れます。
+  </p>
+
+  <div class="toc-step-title">🔰 STEP 1：まず知るべき基礎</div>
   <div class="toc-grid">
     <a href="#ch1" class="toc-item"><span class="toc-num">1</span><span class="toc-icon">🔬</span>カビって何？</a>
     <a href="#ch2" class="toc-item"><span class="toc-num">2</span><span class="toc-icon">🌡️</span>なぜ生える？</a>
-    <a href="#ch3" class="toc-item"><span class="toc-num">3</span><span class="toc-icon">📖</span>カビ図鑑34種</a>
     <a href="#ch4" class="toc-item"><span class="toc-num">4</span><span class="toc-icon">😷</span>体への影響</a>
     <a href="#ch5" class="toc-item"><span class="toc-num">5</span><span class="toc-icon">🏠</span>どこに生える？</a>
-    <a href="#ch6" class="toc-item"><span class="toc-num">6</span><span class="toc-icon">⚔️</span>退治の方法</a>
+    <a href="#ch3" class="toc-item"><span class="toc-num">3</span><span class="toc-icon">📖</span>カビ図鑑34種</a>
+  </div>
+
+  <div class="toc-step-title">🔧 STEP 2：対策の基本</div>
+  <div class="toc-grid">
+    <a href="#ch6" class="toc-item"><span class="toc-num">6</span><span class="toc-icon">⚔️</span>退治の方法・㎡コスト</a>
     <a href="#ch7" class="toc-item"><span class="toc-num">7</span><span class="toc-icon">🛡️</span>予防の科学</a>
-    <a href="#ch8" class="toc-item"><span class="toc-num">8</span><span class="toc-icon">💼</span>業界のこと</a>
+  </div>
+
+  <div class="toc-step-title">💼 STEP 3：業界の全体像</div>
+  <div class="toc-grid">
+    <a href="#ch8" class="toc-item"><span class="toc-num">8</span><span class="toc-icon">💼</span>業界のリアル</a>
+    <a href="#ch10" class="toc-item"><span class="toc-num">10</span><span class="toc-icon">💰</span>お金のリアル</a>
     <a href="#ch9" class="toc-item"><span class="toc-num">9</span><span class="toc-icon">📜</span>資格・基準</a>
-    <a href="#ch10" class="toc-item"><span class="toc-num">10</span><span class="toc-icon">💰</span>お金の話</a>
     <a href="#ch11" class="toc-item"><span class="toc-num">11</span><span class="toc-icon">⚖️</span>法律のこと</a>
     <a href="#ch12" class="toc-item"><span class="toc-num">12</span><span class="toc-icon">🦺</span>安全管理</a>
+  </div>
+
+  <div class="toc-step-title">📰 STEP 4：実例・トラブル</div>
+  <div class="toc-grid">
     <a href="#ch13" class="toc-item"><span class="toc-num">13</span><span class="toc-icon">📰</span>事例集</a>
     <a href="#ch14" class="toc-item"><span class="toc-num">14</span><span class="toc-icon">🛡</span>保険・心理</a>
-    <a href="#ch15" class="toc-item"><span class="toc-num">15</span><span class="toc-icon">🚗</span>車のカビ</a>
-    <a href="#ch16" class="toc-item"><span class="toc-num">16</span><span class="toc-icon">🏛</span>文化財</a>
-    <a href="#ch17" class="toc-item"><span class="toc-num">17</span><span class="toc-icon">🏥</span>業界別</a>
-    <a href="#ch18" class="toc-item"><span class="toc-num">18</span><span class="toc-icon">🏘</span>不動産・賃貸</a>
+    <a href="#ch38" class="toc-item"><span class="toc-num">38</span><span class="toc-icon">📞</span>クレーム対応</a>
+  </div>
+
+  <div class="toc-step-title">🏢 STEP 5：toB業界別（法人営業）</div>
+  <div class="toc-grid">
+    <a href="#ch17" class="toc-item"><span class="toc-num">17</span><span class="toc-icon">🏥</span>業界別マトリクス</a>
     <a href="#ch19" class="toc-item"><span class="toc-num">19</span><span class="toc-icon">🍽</span>HACCP</a>
     <a href="#ch20" class="toc-item"><span class="toc-num">20</span><span class="toc-icon">📋</span>保険会社</a>
+    <a href="#ch18" class="toc-item"><span class="toc-num">18</span><span class="toc-icon">🏘</span>不動産・賃貸</a>
+    <a href="#ch15" class="toc-item"><span class="toc-num">15</span><span class="toc-icon">🚗</span>車のカビ</a>
+    <a href="#ch16" class="toc-item"><span class="toc-num">16</span><span class="toc-icon">🏛</span>文化財</a>
+  </div>
+
+  <div class="toc-step-title">🌍 STEP 6：国際視点</div>
+  <div class="toc-grid">
     <a href="#ch21" class="toc-item"><span class="toc-num">21</span><span class="toc-icon">🌍</span>海外大手</a>
     <a href="#ch22" class="toc-item"><span class="toc-num">22</span><span class="toc-icon">☠️</span>マイコトキシン</a>
+  </div>
+
+  <div class="toc-step-title">🚀 STEP 7：最新技術＆競合分析</div>
+  <div class="toc-grid">
+    <a href="#tech-deep" class="toc-item" style="background:linear-gradient(135deg,var(--primary-soft),var(--accent-soft));border-color:var(--primary)"><span class="toc-num" style="background:var(--primary);color:white">★</span><span class="toc-icon">⚙️</span><strong>競合10社徹底分析</strong></a>
     <a href="#ch23" class="toc-item"><span class="toc-num">23</span><span class="toc-icon">🤖</span>AI画像認識</a>
     <a href="#ch24" class="toc-item"><span class="toc-num">24</span><span class="toc-icon">🔆</span>無光触媒</a>
     <a href="#ch25" class="toc-item"><span class="toc-num">25</span><span class="toc-icon">🏗</span>抗カビ建材</a>
     <a href="#ch26" class="toc-item"><span class="toc-num">26</span><span class="toc-icon">🏷</span>PIAJ認証</a>
-    <a href="#ch27" class="toc-item"><span class="toc-num">27</span><span class="toc-icon">🎓</span>大学発SU</a>
     <a href="#ch28" class="toc-item"><span class="toc-num">28</span><span class="toc-icon">⚱️</span>燻蒸プロ</a>
+  </div>
+
+  <div class="toc-step-title">🎓 STEP 8：産学連携・経営</div>
+  <div class="toc-grid">
+    <a href="#ch27" class="toc-item"><span class="toc-num">27</span><span class="toc-icon">🎓</span>大学発スタートアップ</a>
     <a href="#ch29" class="toc-item"><span class="toc-num">29</span><span class="toc-icon">📈</span>健康経営</a>
     <a href="#ch30" class="toc-item"><span class="toc-num">30</span><span class="toc-icon">🔮</span>2026動向</a>
+  </div>
+
+  <div class="toc-step-title">🔬 STEP 9：深掘り科学（マニア向け）</div>
+  <div class="toc-grid">
     <a href="#ch31" class="toc-item"><span class="toc-num">31</span><span class="toc-icon">🧬</span>PCR検査</a>
     <a href="#ch32" class="toc-item"><span class="toc-num">32</span><span class="toc-icon">💊</span>薬剤耐性</a>
     <a href="#ch33" class="toc-item"><span class="toc-num">33</span><span class="toc-icon">🦠</span>マイクロバイオーム</a>
     <a href="#ch34" class="toc-item"><span class="toc-num">34</span><span class="toc-icon">🧪</span>AlphaFold2</a>
     <a href="#ch35" class="toc-item"><span class="toc-num">35</span><span class="toc-icon">🏰</span>バイオフィルム</a>
     <a href="#ch36" class="toc-item"><span class="toc-num">36</span><span class="toc-icon">📐</span>Aw制御</a>
+  </div>
+
+  <div class="toc-step-title">🛠 STEP 10：現場ノウハウ</div>
+  <div class="toc-grid">
     <a href="#ch37" class="toc-item"><span class="toc-num">37</span><span class="toc-icon">🛠</span>施工現場</a>
-    <a href="#ch38" class="toc-item"><span class="toc-num">38</span><span class="toc-icon">📞</span>クレーム対応</a>
   </div>
 </div>
 
