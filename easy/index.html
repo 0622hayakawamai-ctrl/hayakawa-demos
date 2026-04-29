@@ -111,6 +111,7 @@ section.ch10{background:var(--warning-soft)}
 .bubble{
   background:white;border-radius:30px;padding:24px 28px;margin:24px 0;position:relative;
   border:3px solid var(--secondary);box-shadow:0 6px 0 var(--secondary);
+  display:flex;flex-wrap:wrap;align-items:flex-start;gap:0 14px;
 }
 .bubble::before{
   content:'';position:absolute;left:30px;bottom:-15px;
@@ -121,10 +122,10 @@ section.ch10{background:var(--warning-soft)}
   width:0;height:0;border:11px solid transparent;border-top-color:white;
 }
 .bubble .speaker{
-  font-size:28px;display:inline-block;margin-right:10px;vertical-align:middle;
+  font-size:28px;flex-shrink:0;line-height:1.2;
 }
-.bubble p{font-size:15px;line-height:2.1;margin:0;display:inline}
-.bubble .speaker-name{font-size:11px;font-weight:900;color:var(--secondary);letter-spacing:.1em;margin-left:50px;display:block;margin-top:14px}
+.bubble p{font-size:15px;line-height:2.1;margin:0;flex:1;min-width:0;word-break:auto-phrase;overflow-wrap:break-word;}
+.bubble .speaker-name{font-size:11px;font-weight:900;color:var(--secondary);letter-spacing:.1em;flex-basis:100%;margin-top:10px;padding-left:46px;}
 
 /* Info card (data/numbers highlight) */
 .info{
@@ -716,10 +717,10 @@ section.ch10{background:var(--warning-soft)}
   <div class="wrap">
 
     <div class="panel" data-num="01">
-      <h3>カビは「<ruby>真菌類<rt>しんきんるい</rt></ruby>」という<ruby>生<rt>い</rt></ruby>き<ruby>物<rt>もの</rt></ruby>のなかま</h3>
+      <h3>カビは「<ruby>真菌類<rt>しんきんるい</rt></ruby>」という<ruby>生物<rt>せいぶつ</rt></ruby>の<ruby>仲間<rt>なかま</rt></ruby></h3>
       <p>
         カビは、ばい<ruby>菌<rt>きん</rt></ruby>（<ruby>細菌<rt>さいきん</rt></ruby>）とは<strong>別の生き物</strong>です。<br>
-        「真菌類」というグループに<ruby>属<rt>ぞく</rt></ruby>していて、<strong>キノコや酵母（イースト菌）と同じなかま</strong>なんです。
+        「真菌類」というグループに<ruby>属<rt>ぞく</rt></ruby>していて、<strong>キノコや<ruby>酵母<rt>こうぼ</rt></ruby>（イースト菌）と同じ<ruby>仲間<rt>なかま</rt></ruby></strong>なんです。
       </p>
       <p>
         意外ですよね。<ruby>椎茸<rt>しいたけ</rt></ruby>やパンを<ruby>膨<rt>ふく</rt></ruby>らませる<ruby>酵母<rt>こうぼ</rt></ruby>も、カビと「<ruby>遺伝的<rt>いでんてき</rt></ruby>には<ruby>従兄弟<rt>いとこ</rt></ruby>くらい」の関係。
@@ -942,7 +943,7 @@ section.ch10{background:var(--warning-soft)}
     <div class="mold-card">
       <span class="mold-num">07</span>
       <h4><ruby>浴室<rt>よくしつ</rt></ruby>カビ <em>Aspergillus versicolor</em>（バーシカラ）</h4>
-      <div class="mold-row"><span class="mold-label">特徴</span><span class="mold-val"><strong>白〜<ruby>黄<rt>き</rt></ruby><ruby>緑<rt>みどり</rt></ruby></strong>。<ruby>毒素<rt>どくそ</rt></ruby>「ステリグマトシスチン」を作る<ruby>厄介者<rt>やっかいもの</rt></ruby></span></div>
+      <div class="mold-row"><span class="mold-label">特徴</span><span class="mold-val"><strong>白〜<ruby>黄緑<rt>きみどり</rt></ruby></strong>。<ruby>毒素<rt>どくそ</rt></ruby>「ステリグマトシスチン」を作る<ruby>厄介者<rt>やっかいもの</rt></ruby></span></div>
       <div class="mold-row"><span class="mold-label">出る場所</span><span class="mold-val">浴室・地下室・湿った石膏ボード・洗面所</span></div>
       <div class="mold-row warn-row"><span class="mold-label">害</span><span class="mold-val">慢性曝露で<strong><ruby>肝臓<rt>かんぞう</rt></ruby>がん・<ruby>呼吸器<rt>こきゅうき</rt></ruby>炎症</strong>リスク。Sick Building Syndromeの<ruby>主因<rt>しゅいん</rt></ruby></span></div>
       <div class="mold-row fix"><span class="mold-label">退治法</span><span class="mold-val">プロ施工推奨。<ruby>湿度<rt>しつど</rt></ruby>60%以下を厳守。汚染石膏ボードは<strong>交換</strong>必須</span></div>
