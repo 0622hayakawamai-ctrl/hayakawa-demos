@@ -56,20 +56,25 @@ a:hover{color:var(--ink);border-bottom-style:solid}
 @keyframes float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-12px) rotate(3deg)}}
 
 .toc{
-  max-width:880px;margin:0 auto;padding:40px 24px 80px;
+  max-width:720px;margin:0 auto;padding:50px 24px 80px;
 }
-.toc-title{font-size:22px;font-weight:900;margin-bottom:8px;text-align:center;color:var(--ink)}
-.toc-step-title{font-size:14px;font-weight:900;color:var(--secondary);margin:30px 4px 10px;padding:8px 14px;background:linear-gradient(90deg,var(--secondary-soft),transparent);border-left:4px solid var(--secondary);border-radius:6px}
-.toc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.toc-title{font-size:24px;font-weight:900;margin-bottom:6px;text-align:center;color:var(--ink);letter-spacing:.02em}
+.toc-step-title{
+  font-size:13px;font-weight:900;color:var(--ink);
+  margin:34px 0 10px;padding:0;letter-spacing:.05em;
+  display:flex;align-items:center;gap:10px;
+}
+.toc-step-title::before{content:'';flex:0 0 18px;height:2px;background:var(--primary)}
+.toc-step-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.toc-grid{display:flex;flex-direction:column;gap:0;border-top:1px dashed var(--border)}
 .toc-item{
-  padding:18px 16px;background:white;border-radius:14px;border:2px solid var(--border);
-  text-align:center;transition:all .3s;text-decoration:none;color:var(--ink);font-weight:700;
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  border-bottom:none;
+  padding:13px 4px;background:transparent;border:none;border-bottom:1px dashed var(--border);
+  text-align:left;transition:color .15s,padding .15s;text-decoration:none;color:var(--ink);font-weight:600;
+  display:flex;align-items:center;gap:14px;font-size:15px;
 }
-.toc-item:hover{transform:translateY(-3px);border-color:var(--primary);color:var(--primary)}
-.toc-num{display:inline-block;width:32px;height:32px;background:var(--primary);color:white;border-radius:50%;line-height:32px;font-weight:900;font-size:14px}
-.toc-icon{font-size:28px}
+.toc-item:hover{color:var(--primary);padding-left:8px}
+.toc-num{display:inline-block;min-width:28px;color:var(--gray);font-weight:700;font-size:12px;font-variant-numeric:tabular-nums}
+.toc-icon{display:none}
 
 /* CHAPTER */
 section{padding:80px 24px;position:relative}
@@ -415,6 +420,32 @@ section.ch10{background:var(--warning-soft)}
 .quiz-item.answered.is-wrong .quiz-feedback{display:inline-block;background:var(--primary);color:white}
 .quiz-item.answered.is-correct .quiz-feedback::before{content:'🎉 正解！'}
 .quiz-item.answered.is-wrong .quiz-feedback::before{content:'😢 ざんねん'}
+
+/* 記述式問題 */
+.quiz-text-input{
+  width:100%;min-height:90px;padding:14px 16px;border-radius:12px;border:2px solid rgba(255,255,255,.3);
+  background:rgba(255,255,255,.08);color:#fff;font-family:inherit;font-size:14px;line-height:1.8;
+  resize:vertical;margin-bottom:12px;
+}
+.quiz-text-input:focus{outline:none;border-color:var(--accent);background:rgba(255,255,255,.12)}
+.quiz-text-input:disabled{opacity:.7;cursor:default}
+.quiz-text-submit{
+  background:var(--accent);color:var(--ink);border:none;padding:10px 24px;border-radius:8px;
+  font-family:inherit;font-size:13px;font-weight:900;cursor:pointer;letter-spacing:.05em;
+}
+.quiz-text-submit:hover{transform:translateY(-1px)}
+.quiz-text-submit:disabled{opacity:.5;cursor:default}
+.quiz-keywords-hit{
+  display:inline-block;padding:3px 10px;background:rgba(123,199,77,.25);border:1px solid var(--green);
+  color:var(--green);border-radius:12px;font-size:11px;font-weight:900;margin:2px;
+}
+.quiz-model-answer{
+  display:none;margin-top:10px;padding:12px 16px;background:rgba(255,217,61,.1);
+  border-left:3px solid var(--accent);border-radius:6px;font-size:13.5px;line-height:1.9;color:rgba(255,255,255,.9);
+}
+.quiz-item.answered .quiz-model-answer{display:block}
+.quiz-model-answer .label{font-weight:900;color:var(--accent);font-size:11px;letter-spacing:.05em;display:block;margin-bottom:4px}
+.quiz-model-answer .label::before{content:'📖 '}
 
 .quiz-section-actions{
   max-width:880px;margin:24px auto 0;text-align:center;
@@ -3030,9 +3061,20 @@ section.ch10{background:var(--warning-soft)}
       <div class="quiz-answer"><strong>正解：A</strong><br>各段階で<ruby>響<rt>ひび</rt></ruby>く言葉が違うので、営業は相手の状態を見極めて<ruby>切<rt>き</rt></ruby>り口を変える。</div>
     </div>
 
+    <div class="quiz-item" data-keywords="湿度|温度|栄養|水分" data-require-hits="2">
+      <p class="quiz-q">📝 <strong>記述式</strong>：カビが生える「3条件」を答えてください（同じニュアンスならOK）</p>
+      <textarea class="quiz-text-input" placeholder="例：湿度・温度・栄養 のように"></textarea>
+      <button class="quiz-text-submit" type="button">回答する ▶</button>
+      <div class="quiz-hits" style="margin-top:10px;font-size:13px"></div>
+      <div class="quiz-model-answer">
+        <span class="label">模範解答</span>
+        カビが生える3条件は <strong>「湿度（または水分）・温度・栄養」</strong>。湿度60%以下＋20℃以下＋汚れ除去で防げる。
+      </div>
+    </div>
+
   </div>
   <div class="quiz-score">
-    解答済み <span class="num done">0</span>/7問　／　正解 <span class="num correct-count">0</span>問
+    解答済み <span class="num done">0</span>/8問　／　正解 <span class="num correct-count">0</span>問
   </div>
 </section>
 
@@ -3838,9 +3880,20 @@ section.ch10{background:var(--warning-soft)}
       <div class="quiz-answer"><strong>正解：C</strong><br>2021年6月HACCP完全義務化。製造ライン・冷蔵庫・床排水溝はカビ多発ゾーン。1工場あたり月額50-200万円の契約も。拭き取り検査結果は2年保管義務。</div>
     </div>
 
+    <div class="quiz-item" data-keywords="食品|病院|半導体|製薬|ホテル|不動産|賃貸|建設" data-require-hits="2">
+      <p class="quiz-q">📝 <strong>記述式</strong>：toB営業で「優先度A以上」の業界を3つ以上挙げてください</p>
+      <textarea class="quiz-text-input" placeholder="例：食品工場、ホテル、不動産…"></textarea>
+      <button class="quiz-text-submit" type="button">回答する ▶</button>
+      <div class="quiz-hits" style="margin-top:10px;font-size:13px"></div>
+      <div class="quiz-model-answer">
+        <span class="label">模範解答</span>
+        優先度A以上は<strong>「食品工場・ホテル/旅館・不動産/賃貸・製薬/半導体・病院・建設」</strong>。低い順は学校公共・列車航空船舶。
+      </div>
+    </div>
+
   </div>
   <div class="quiz-score">
-    解答済み <span class="num done">0</span>/5問　／　正解 <span class="num correct-count">0</span>問
+    解答済み <span class="num done">0</span>/6問　／　正解 <span class="num correct-count">0</span>問
   </div>
 </section>
 
@@ -4119,9 +4172,20 @@ section.ch10{background:var(--warning-soft)}
       <div class="quiz-answer"><strong>正解：C</strong><br>アフラトキシン（<em>Aspergillus flavus</em>等が産生）はIARC Group 1。<strong>肝臓がんの主要原因</strong>。ピーナッツ・玄米・とうもろこしに発生。</div>
     </div>
 
+    <div class="quiz-item" data-keywords="アフラトキシン|肝|発がん|発癌|がん" data-require-hits="1">
+      <p class="quiz-q">📝 <strong>記述式</strong>：マイコトキシン（カビ毒）で最も発がん性が強い物質と、引き起こす癌の種類を答えて</p>
+      <textarea class="quiz-text-input" placeholder="例：アフラトキシン → 肝臓がん"></textarea>
+      <button class="quiz-text-submit" type="button">回答する ▶</button>
+      <div class="quiz-hits" style="margin-top:10px;font-size:13px"></div>
+      <div class="quiz-model-answer">
+        <span class="label">模範解答</span>
+        <strong>アフラトキシンB1</strong>（IARC Group 1 = 人に発がん性確実）。主に<strong>肝臓がん</strong>を引き起こす。ピーナッツ・玄米・とうもろこしに発生。
+      </div>
+    </div>
+
   </div>
   <div class="quiz-score">
-    解答済み <span class="num done">0</span>/4問　／　正解 <span class="num correct-count">0</span>問
+    解答済み <span class="num done">0</span>/5問　／　正解 <span class="num correct-count">0</span>問
   </div>
 </section>
 
@@ -4441,9 +4505,20 @@ section.ch10{background:var(--warning-soft)}
       <div class="quiz-answer"><strong>正解：B</strong><br>銀（Ag+）・銅（Cu2+）イオンは光不要で殺菌。Ag-ZnO 99.7%、Cu-MOFs（緩速放出型）等が2024-2026の主役。</div>
     </div>
 
+    <div class="quiz-item" data-keywords="MIST|CP工法|Goldmorr|ピュアコート|エコキメラ|無光触媒|純閃堂|MAD" data-require-hits="2">
+      <p class="quiz-q">📝 <strong>記述式</strong>：防カビ業界の有名「工法」または「技術ブランド」を3つ以上挙げてください</p>
+      <textarea class="quiz-text-input" placeholder="例：MIST工法、CP工法、Goldmorr…"></textarea>
+      <button class="quiz-text-submit" type="button">回答する ▶</button>
+      <div class="quiz-hits" style="margin-top:10px;font-size:13px"></div>
+      <div class="quiz-model-answer">
+        <span class="label">模範解答</span>
+        代表的な工法・技術: <strong>MIST工法（カビバスターズ）／CP工法（ハーツリッチ）／Goldmorr System／ピュアコート（光触媒）／エコキメラ（無光触媒）／MAD工法（カビ取り屋.com）</strong>
+      </div>
+    </div>
+
   </div>
   <div class="quiz-score">
-    解答済み <span class="num done">0</span>/5問　／　正解 <span class="num correct-count">0</span>問
+    解答済み <span class="num done">0</span>/6問　／　正解 <span class="num correct-count">0</span>問
   </div>
 </section>
 
@@ -4688,6 +4763,17 @@ section.ch10{background:var(--warning-soft)}
         <button class="quiz-opt" data-correct="true">D. 量子コンピュータ計算</button>
       </div>
       <div class="quiz-answer"><strong>正解：D</strong><br>5大トレンドは気候変動×カビ／AI×防カビ／サブスク化／SaaS化／BIMフルデジタル。世界市場 USD 13.87B → 22.5B（2030）、CAGR 6-8%。</div>
+    </div>
+
+    <div class="quiz-item" data-keywords="気候変動|AI|サブスク|SaaS|BIM|地球温暖化|月額" data-require-hits="2">
+      <p class="quiz-q">📝 <strong>記述式</strong>：2026年防カビ業界の主要トレンドを3つ以上挙げてください</p>
+      <textarea class="quiz-text-input" placeholder="例：AI、サブスク化、気候変動対応…"></textarea>
+      <button class="quiz-text-submit" type="button">回答する ▶</button>
+      <div class="quiz-hits" style="margin-top:10px;font-size:13px"></div>
+      <div class="quiz-model-answer">
+        <span class="label">模範解答</span>
+        5大トレンド: <strong>① 気候変動×カビ（湿度上昇）／② AI×防カビ（画像判定）／③ サブスク化（月額契約）／④ SaaS化（ソフト販売）／⑤ BIMフルデジタル</strong>
+      </div>
     </div>
 
   </div>
@@ -5361,9 +5447,20 @@ section.ch10{background:var(--warning-soft)}
       <div class="quiz-answer"><strong>正解：C（0.7）</strong><br>ISO 13788 表面温度係数 fRsi ≥ 0.7 で表面結露しない。ASHRAE 160-2021 は30日移動平均80%RH以下。WUFI Bio買い切り45万円 vs 月額9,800円SaaSが事業化チャンス。</div>
     </div>
 
+    <div class="quiz-item" data-keywords="0.65|0.6|0.7|6割|65%|60%" data-require-hits="1">
+      <p class="quiz-q">📝 <strong>記述式</strong>：「Awがいくつ以下ならカビは生えない」と覚えるべき値は？数値で答えてください</p>
+      <textarea class="quiz-text-input" placeholder="例：0.65 / 0.7 / 60%など"></textarea>
+      <button class="quiz-text-submit" type="button">回答する ▶</button>
+      <div class="quiz-hits" style="margin-top:10px;font-size:13px"></div>
+      <div class="quiz-model-answer">
+        <span class="label">模範解答</span>
+        <strong>Aw 0.65以下</strong>ならほぼカビは生えない（湿度60%以下）。最も乾燥に強いWallemia sebiでもAw 0.69が下限。日常的には<strong>湿度60%以下を保つ</strong>のが目安。
+      </div>
+    </div>
+
   </div>
   <div class="quiz-score">
-    解答済み <span class="num done">0</span>/8問　／　正解 <span class="num correct-count">0</span>問
+    解答済み <span class="num done">0</span>/9問　／　正解 <span class="num correct-count">0</span>問
   </div>
 </section>
 
@@ -5882,6 +5979,13 @@ section.ch10{background:var(--warning-soft)}
     });
     var ans = item.querySelector('.quiz-answer');
     if (ans) ans.classList.remove('show');
+    // 記述式リセット
+    var input = item.querySelector('.quiz-text-input');
+    if (input){ input.disabled = false; input.value = ''; }
+    var sub = item.querySelector('.quiz-text-submit');
+    if (sub) sub.disabled = false;
+    var hits = item.querySelector('.quiz-hits');
+    if (hits) hits.innerHTML = '';
     // ゾーンクリアモーダルも消す
     var quiz = item.closest('.quiz');
     if (quiz){
@@ -6018,6 +6122,43 @@ section.ch10{background:var(--warning-soft)}
     });
   }
 
+  // ===== 記述式：キーワード判定 =====
+  function checkDescriptive(item){
+    var input = item.querySelector('.quiz-text-input');
+    if (!input) return;
+    var ans = (input.value || '').toLowerCase().replace(/\s+/g,'');
+    if (!ans) { alert('回答を入力してください'); return; }
+    var kw = (item.dataset.keywords || '').split('|').map(function(s){ return s.toLowerCase().replace(/\s+/g,''); }).filter(Boolean);
+    var hits = kw.filter(function(k){ return ans.indexOf(k) !== -1; });
+    var requiredHits = parseInt(item.dataset.requireHits || '1', 10);
+    var isCorrect = hits.length >= requiredHits;
+    item.classList.add('answered');
+    item.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+    input.disabled = true;
+    var btn = item.querySelector('.quiz-text-submit');
+    if (btn) btn.disabled = true;
+    // 拾えたキーワード表示
+    var hitsDiv = item.querySelector('.quiz-hits');
+    if (hitsDiv){
+      hitsDiv.innerHTML = hits.length
+        ? '<strong>あなたの答えで拾えたキーワード:</strong> ' + hits.map(function(h){ return '<span class="quiz-keywords-hit">'+h+'</span>'; }).join('')
+        : '<strong style="color:var(--primary)">キーワードが見つかりませんでした</strong>';
+    }
+    var p = loadProgress();
+    p[quizId(item)] = { correct: isCorrect };
+    saveProgress(p);
+    updateScore();
+    if (isCorrect){
+      var rect = (btn || input).getBoundingClientRect();
+      confetti(rect.left + rect.width/2, rect.top + window.scrollY);
+    }
+    var quiz = item.closest('.quiz');
+    if (quiz){
+      var stats = getZoneStats(quiz);
+      if (stats.cleared) showZoneCleared(quiz, stats);
+    }
+  }
+
   // ===== クイズオプションのクリック =====
   function bindQuiz(){
     document.querySelectorAll('.quiz-opt').forEach(function(btn){
@@ -6053,6 +6194,15 @@ section.ch10{background:var(--warning-soft)}
     });
 
     document.querySelectorAll('.quiz-item').forEach(setupQuizItem);
+
+    // 記述式の送信ボタン
+    document.body.addEventListener('click', function(e){
+      var sub = e.target.closest('.quiz-text-submit');
+      if (sub){
+        var item = sub.closest('.quiz-item');
+        if (item) checkDescriptive(item);
+      }
+    });
 
     document.body.addEventListener('click', function(e){
       var resetBtn = e.target.closest('.quiz-reset');
