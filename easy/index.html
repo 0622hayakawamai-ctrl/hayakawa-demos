@@ -570,6 +570,63 @@ section.ch10{background:var(--warning-soft)}
 .zone-perfect{display:none;font-size:14px;background:var(--accent);color:var(--ink);padding:6px 14px;border-radius:20px;font-weight:900;margin-bottom:14px;display:inline-block}
 .zone-cleared-modal:not(.is-perfect) .zone-perfect{display:none}
 
+/* ========== 用語集（タップで飛ぶ） ========== */
+a.term-link{
+  border-bottom:2px dotted var(--secondary);
+  color:var(--secondary);
+  font-weight:700;
+  text-decoration:none;
+  cursor:help;
+  white-space:nowrap;
+  background-image:linear-gradient(transparent 70%,rgba(79,184,220,.15) 70%);
+  padding:0 2px;
+  transition:background .2s,color .2s;
+}
+a.term-link:hover{color:var(--ink);background-image:linear-gradient(transparent 70%,var(--accent) 70%)}
+a.term-link::after{content:' 📖';font-size:.7em;opacity:.6}
+
+.glossary{
+  padding:60px 24px;background:linear-gradient(135deg,var(--bg) 0%,var(--secondary-soft) 100%);
+}
+.glossary .wrap{max-width:880px;margin:0 auto}
+.glossary h2{font-size:clamp(26px,5vw,38px);font-weight:900;text-align:center;margin-bottom:8px}
+.glossary .lead{text-align:center;font-size:14px;color:var(--ink-soft);margin-bottom:36px;line-height:2}
+.glossary-cat-title{
+  font-size:14px;font-weight:900;color:var(--ink);
+  margin:30px 0 12px;padding:8px 14px;background:white;border-left:5px solid var(--primary);border-radius:6px;
+}
+.glossary-entry{
+  background:white;border-radius:14px;padding:16px 22px;margin-bottom:10px;
+  border-left:4px solid var(--secondary);scroll-margin-top:90px;
+}
+.glossary-entry:target{
+  border-left-color:var(--primary);
+  background:var(--accent-soft);
+  animation:termHighlight 1.5s ease;
+}
+@keyframes termHighlight{
+  0%{background:var(--accent);transform:scale(1)}
+  20%{background:var(--accent);transform:scale(1.02)}
+  100%{background:var(--accent-soft);transform:scale(1)}
+}
+.glossary-entry h4{font-size:17px;font-weight:900;margin-bottom:6px;color:var(--ink)}
+.glossary-entry h4 small{font-size:12px;color:var(--gray);font-weight:600;margin-left:8px}
+.glossary-entry p{font-size:14px;line-height:1.9;color:var(--ink-soft);margin:0}
+.glossary-entry p strong{color:var(--ink)}
+
+/* 戻るボタン（フローティング） */
+.back-btn{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+  z-index:998;background:var(--ink);color:white;padding:14px 26px;border-radius:50px;
+  font-weight:900;font-size:14px;border:3px solid white;cursor:pointer;font-family:inherit;
+  box-shadow:0 6px 20px rgba(0,0,0,.3);transition:transform .3s ease,opacity .3s ease;
+  opacity:0;pointer-events:none;letter-spacing:.05em;
+}
+.back-btn.show{
+  transform:translateX(-50%) translateY(0);opacity:1;pointer-events:auto;
+}
+.back-btn:hover{background:var(--primary);transform:translateX(-50%) translateY(-2px)}
+
 /* 横文字辞典スタイル */
 .jargon-dict{
   background:linear-gradient(135deg,var(--accent-soft),white);
@@ -5921,6 +5978,244 @@ section.ch10{background:var(--warning-soft)}
 </section>
 
 
+<!-- 📖 用語集 -->
+<section class="glossary" id="glossary">
+  <div class="wrap">
+    <h2>📖 <span class="hl">用語集</span>：横文字・専門用語をすべて<ruby>解説<rt>かいせつ</rt></ruby></h2>
+    <p class="lead">
+      本文中の<a class="term-link" href="#term-haccp">用語</a>みたいに点線がついた言葉をタップ → ここに飛びます。<br>
+      左下の「⬅ <strong>元の場所に戻る</strong>」ボタンで<ruby>元<rt>もと</rt></ruby>のページに戻れます。
+    </p>
+
+    <div class="glossary-cat-title">🔬 カビ・科学用語</div>
+
+    <div class="glossary-entry" id="term-shinkin">
+      <h4>真菌類（しんきんるい）<small>= Fungi</small></h4>
+      <p><strong>カビ・キノコ・酵母（イースト菌）の<ruby>仲間<rt>なかま</rt></ruby></strong>。細菌（バクテリア）とは別の生物。アルコール消毒では効きにくい。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-housi">
+      <h4>胞子（ほうし）<small>= Spore</small></h4>
+      <p>カビが空気中に放つ<strong>「タネ」</strong>。0.005mmと髪の毛より細い。これが目地・壁紙・畳に着地して根を張る。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-kinshi">
+      <h4>菌糸（きんし）<small>= Hyphae</small></h4>
+      <p>カビの<strong>「根っこ」</strong>。表面は黒い染みでも、菌糸は素材の<ruby>奥<rt>おく</rt></ruby>まで侵食している。表面拭きでは取れない理由。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-mycotoxin">
+      <h4>マイコトキシン<small>= Mycotoxin（カビ毒）</small></h4>
+      <p>カビが自分を守るために作る<strong>毒物質</strong>。発がん性が確実なアフラトキシンB1が代表例（IARC Group 1）。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-aflatoxin">
+      <h4>アフラトキシン<small>= Aflatoxin</small></h4>
+      <p><strong>カビ毒の中で最強の発がん物質</strong>。<em>Aspergillus flavus</em>等が産生。<strong>肝臓がん</strong>の主要原因。ピーナッツ・玄米・とうもろこしに発生。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-stachybotrys">
+      <h4>スタキボトリス<small>= Stachybotrys（毒黒カビ）</small></h4>
+      <p>水濡れした石膏ボードに出る<strong>真っ黒スライム状のカビ</strong>。サトラトキシンという猛毒を産生。乳幼児に最も危険。<strong>絶対に自分で触らずプロ業者へ</strong>。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-aspergillus">
+      <h4>アスペルギルス<small>= Aspergillus（麹カビ）</small></h4>
+      <p>34種いるカビ図鑑の代表選手。お味噌・醤油を作る善玉もいるが、肺アスペルギルス症で<strong>致死率40-60%</strong>の悪玉も。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-cladosporium">
+      <h4>クラドスポリウム<small>= Cladosporium（黒カビ）</small></h4>
+      <p>家庭で<strong>一番よく見る黒カビ</strong>。お風呂目地・窓サッシ・結露面の常連。空気中の胞子で最多数派。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-aw">
+      <h4>水分活性 Aw（すいぶんかっせい）<small>= Water Activity</small></h4>
+      <p><strong>「物質中の自由水の割合」</strong>。純水 Aw=1.0。<strong>Aw 0.65以下ならほぼカビは生えない</strong>＝<strong>湿度60%以下を保て</strong>が日常の合言葉。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-ros">
+      <h4>活性酸素（かっせいさんそ）<small>= Reactive Oxygen Species</small></h4>
+      <p><strong>カビを「燃やす」パワーを持った酸素</strong>。光触媒に光が当たると発生してカビを分解する。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-shokubai">
+      <h4>触媒（しょくばい）<small>= Catalyst</small></h4>
+      <p><strong>「自分は変わらず、まわりの反応だけ起こす魔法使い」</strong>な物質。1回置いとけばずっと効く。光触媒は光が当たると活性酸素を出してカビを分解。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-photocatalyst">
+      <h4>光触媒（ひかりしょくばい）<small>= Photocatalyst</small></h4>
+      <p><strong>光が当たると活性酸素を出す触媒</strong>。代表は酸化チタン。ピュアコート（ピアレックス）等の塗料が代表例。10年以上効く。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-mukou-shokubai">
+      <h4>無光触媒（むひかりしょくばい）<small>= Non-Photocatalyst</small></h4>
+      <p><strong>光がなくても効く改良版の触媒</strong>。アパタイト被覆酸化チタン使用。押入れ・床下・天井裏など暗所でも効くのが革命的。エコキメラが代表。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-hocl">
+      <h4>HOCl（次亜塩素酸）<small>= Hypochlorous Acid</small></h4>
+      <p><strong>キッチンハイターの主成分</strong>。気化させて部屋に充満させる方式（Goldmorr System）も。生分解性で翌日には消える。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-bunkai">
+      <h4>生分解性（せいぶんかいせい）<small>= Biodegradability</small></h4>
+      <p><strong>使った後に自然に分解されて消える性質</strong>。土や水を汚さない。Goldmorrの売り文句。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-kunjyou">
+      <h4>燻蒸（くんじょう）<small>= Fumigation</small></h4>
+      <p><strong>けむり（ガス）で部屋ごと消毒する方法</strong>。シロアリ駆除でもおなじみ。文化財カビ修復で使う。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-pcr">
+      <h4>PCR検査<small>= Polymerase Chain Reaction</small></h4>
+      <p><strong>カビのDNAを検出して種類を特定する技術</strong>。コロナ検査でも有名。培養法より速くて正確（数時間で結果）。</p>
+    </div>
+
+    <div class="glossary-cat-title">🏥 業界・規格・認証</div>
+
+    <div class="glossary-entry" id="term-haccp">
+      <h4>HACCP（ハサップ）<small>= Hazard Analysis and Critical Control Point</small></h4>
+      <p><strong>食品工場の衛生管理ルール</strong>。2021年6月から全食品事業者で<strong>義務化</strong>。違反すれば営業禁止処分も。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-fssc">
+      <h4>FSSC 22000<small>= 食品安全マネジメントシステム国際規格</small></h4>
+      <p>HACCPの国際版。<strong>イオン・セブン&アイ・コストコ等大手納品に必須</strong>。2024年Ver 6.0改訂で食品安全文化が要求事項に追加。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-gmp">
+      <h4>GMP（ジーエムピー）<small>= Good Manufacturing Practice</small></h4>
+      <p><strong>医薬品製造の品質ルール</strong>。違反すれば工場停止。製薬業界では<strong>カビ胞子1個でロット全廃棄→数億円損失</strong>のリスク。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-iso14644">
+      <h4>ISO 14644<small>= クリーンルーム規格</small></h4>
+      <p><strong>クリーンルームの空気清浄度規格</strong>。半導体・製薬で必須。粒子濃度クラスでISO 5（最厳格）〜ISO 9まで。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-jci">
+      <h4>JCI<small>= Joint Commission International</small></h4>
+      <p><strong>米国の病院認証</strong>。取得すると国際的な信頼度up。聖路加国際病院・亀田総合病院等が取得。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-piaj">
+      <h4>PIAJ（ピーアイエージェー）<small>= 光触媒工業会認証</small></h4>
+      <p><strong>光触媒製品の品質保証マーク</strong>。塗料・建材メーカーが取得を狙う。年会費10万円〜。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-hepa">
+      <h4>HEPA H13/H14<small>= 高性能フィルター</small></h4>
+      <p><strong>0.3μm粒子を99.95%以上除去するフィルター</strong>。クリーンルーム・病院ICU・データセンター必須。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-ashrae">
+      <h4>ASHRAE TC 9.9<small>= データセンター温湿度基準</small></h4>
+      <p>米国冷凍空調学会の基準。<strong>22℃±2 / 湿度40-50%</strong>を厳守すれば結露＝サーバー停止リスクを防げる。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-tier">
+      <h4>Tier III/IV<small>= データセンター信頼性ランク</small></h4>
+      <p>Uptime Institute認証。<strong>Tier IVが最高（年間停止4分以下）</strong>。NTTデータINZAI等。</p>
+    </div>
+
+    <div class="glossary-cat-title">💼 ビジネス・経営用語</div>
+
+    <div class="glossary-entry" id="term-tob">
+      <h4>toB（トゥビー）<small>= Business to Business</small></h4>
+      <p><strong>法人向けビジネス</strong>。一般消費者じゃなく企業が顧客。toC（消費者向け）の対義語。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-b2b2c">
+      <h4>B2B2C（ビートゥビートゥシー）</h4>
+      <p><strong>会社→会社→お客さん、と2段階で売る方式</strong>。BMC:LABOが「清掃業者に技術ライセンス→消費者へ」で実践。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-fc">
+      <h4>FC（フランチャイズ）</h4>
+      <p>本部から看板・技術・薬剤を借りて店を出す仕組み（コンビニみたいな仕組み）。カビバスターズ加盟金<strong>¥1,980,000</strong>等。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-royalty">
+      <h4>ロイヤリティ<small>= Royalty</small></h4>
+      <p>FC加盟者が本部に毎月払う「のれん代」。<strong>売上の5〜10%が相場</strong>。ダスキンは8%＋広告分担金1%＋システム使用料0.5%。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-upsell">
+      <h4>アップセル<small>= Upsell</small></h4>
+      <p>追加注文を取って単価を上げる手法。「ついでに○○もどうですか？」と提案。業界平均で初回見積から<strong>1.8〜2.5倍化</strong>。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-ltv">
+      <h4>LTV（生涯価値）<small>= Life Time Value</small></h4>
+      <p><strong>1人のお客さんから「一生の間に」もらえる総額</strong>。カビ業界では¥80,000〜¥150,000が標準。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-cac">
+      <h4>CAC（顧客獲得コスト）<small>= Customer Acquisition Cost</small></h4>
+      <p><strong>1人のお客さんを取るのに使った広告費</strong>。Google広告で¥3,750〜¥20,000、くらしのマーケットで¥6,600。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-ltvcac">
+      <h4>LTV/CAC バランス</h4>
+      <p>事業の「コスパ」指標。<strong>3以上で健全、5以上で優良</strong>。3未満は赤字事業の可能性。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-mrr">
+      <h4>MRR（月次経常収益）<small>= Monthly Recurring Revenue</small></h4>
+      <p>毎月安定して入る売上（月額契約）。賃貸オーナー継続契約・法人定期契約で実現。<strong>24ヶ月継続率60〜80%</strong>。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-bep">
+      <h4>損益分岐点（そんえきぶんきてん）<small>= Break-Even Point</small></h4>
+      <p><strong>「これ以上売れば黒字」のライン</strong>。個人事業主¥50万/月、法人5名体制¥450万/月が目安。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-tanka">
+      <h4>客単価（きゃくたんか）<small>= Average Order Value</small></h4>
+      <p>1人のお客さんから平均いくらもらえるか。カビ業界の浴室標準は¥25,000、ハイエンドで¥150,000。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-seo">
+      <h4>SEO（エスイーオー）<small>= Search Engine Optimization</small></h4>
+      <p><strong>Googleで上位表示させるテクニック</strong>。広告費はかからないが時間と労力が必要。長期的にCPAほぼゼロにできる。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-cpa">
+      <h4>CPA（シーピーエー）<small>= Cost Per Acquisition</small></h4>
+      <p><strong>1件の成約にかかった広告費</strong>。CACとほぼ同義（CPAは広告費だけ・CACは全コスト含む）。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-eigyou">
+      <h4>営業利益（えいぎょうりえき）<small>= Operating Profit</small></h4>
+      <p>売上から経費（人件費・広告・家賃）まで全部引いた<strong>「本業の純利益」</strong>。これが黒字なら事業として成立。</p>
+    </div>
+
+    <div class="glossary-cat-title">⚖️ 法律・契約用語</div>
+
+    <div class="glossary-entry" id="term-yakkihou">
+      <h4>薬機法（やっきほう）<small>= 医薬品医療機器等法</small></h4>
+      <p><strong>「殺菌」「滅菌」と書くと違反になる法律</strong>。雑貨カテゴリは「除菌」「防カビ」のみOK。違反すると<strong>2年以下の懲役 or 200万円以下の罰金</strong>。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-keihyou">
+      <h4>景表法（けいひょうほう）<small>= 景品表示法</small></h4>
+      <p>誇大広告を禁止する法律。違反すると<strong>課徴金 売上の4.5%</strong>。大幸薬品クレベリン2022年措置命令が有名事例。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-cooling">
+      <h4>クーリングオフ<small>= Cooling Off</small></h4>
+      <p><strong>訪問販売契約から8日以内なら無条件解約OK</strong>（特定商取引法）。床下点検商法等で被害にあったら国民生活センター 188へ。</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 戻るボタン（フローティング） -->
+<button class="back-btn" id="backBtn" type="button">⬅ 元の場所に戻る</button>
+
 <!-- FOOTER -->
 <footer class="foot">
   <p><strong>カビ大百科（叩き台）</strong></p>
@@ -6300,12 +6595,54 @@ section.ch10{background:var(--warning-soft)}
     }
   }
 
+  // ===== 用語リンク → 用語集ジャンプ → 戻るボタン =====
+  function bindGlossary(){
+    var backBtn = document.getElementById('backBtn');
+    if (!backBtn) return;
+    var savedY = null;
+    function showBack(){ backBtn.classList.add('show'); }
+    function hideBack(){ backBtn.classList.remove('show'); }
+    // 用語リンクをクリック → 現在のスクロール位置を保存
+    document.body.addEventListener('click', function(e){
+      var t = e.target.closest('a.term-link');
+      if (t){
+        savedY = window.scrollY;
+        sessionStorage.setItem('mold_back_y', String(savedY));
+      }
+    });
+    // ハッシュ変化で表示制御
+    function onHash(){
+      var h = location.hash || '';
+      if (h.indexOf('#term-') === 0){
+        showBack();
+      } else {
+        hideBack();
+      }
+    }
+    window.addEventListener('hashchange', onHash);
+    onHash();
+    // 戻るボタン → 保存位置 or history.back()
+    backBtn.addEventListener('click', function(){
+      var y = sessionStorage.getItem('mold_back_y');
+      hideBack();
+      if (y !== null){
+        // ハッシュをクリアしてスクロール戻し
+        history.replaceState(null, '', location.pathname + location.search);
+        window.scrollTo({top: parseInt(y, 10), behavior: 'smooth'});
+        sessionStorage.removeItem('mold_back_y');
+      } else {
+        history.back();
+      }
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function(){
     addZoneResetButtons();
     bindQuiz();
     restoreState();
     updateScore();
     bindMenu();
+    bindGlossary();
   });
 })();
 </script>
