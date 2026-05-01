@@ -265,12 +265,12 @@ a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decorati
       <tr>
         <td><span class="hl-red">🔒 機密データ漏洩</span></td>
         <td>顧客名簿・契約書をうっかりクラウドAIに送信</td>
-        <td>① <strong>Cursor の Privacy Mode を必ず Enable</strong>（学習データに使われない）<br>② NDA案件は別フォルダで作業<br>③ パスワード・APIキーはコードに直書きせず環境変数</td>
+        <td>① <strong>Anthropic は学習に使わない契約</strong>（Commercial Terms）だが<strong>送信自体は発生</strong>する<br>② NDA案件・個人情報はマスキング or 別フォルダで作業<br>③ パスワード・APIキーはコードに直書きせず環境変数<br>④ 詳細は「<a href="#security">🔒 セキュリティ</a>」セクション参照</td>
       </tr>
       <tr>
-        <td><span class="hl-red">💸 暴走で課金爆増</span></td>
-        <td>無限ループ・大量呼び出しで月課金が想定以上に</td>
-        <td>① <strong>Pro $20/月の固定プラン</strong>から始める（従量課金より安全）<br>② 自動実行は<strong>初回は人間が監視</strong>しながら<br>③ <strong>使用量メーター</strong>を週1回チェック</td>
+        <td><span class="hl-orange">⏱ 使用量上限に達してストップ</span></td>
+        <td>Pro/Maxプランは月の使用量に上限あり。超えると一時的に止まる（※ <strong>追加課金は発生しない</strong>）</td>
+        <td>① <strong>定額プラン（Pro $20 / Max $100/$200）は上限到達=ストップで安全</strong>。請求は固定<br>② 上限近くなったら <code>/usage</code> で残量チェック<br>③ 足りないなら Max プランへアップグレード<br>④ <strong>従量課金（Anthropic Console / API key）の場合のみ</strong>使いすぎで請求増 → ダッシュボードで上限設定推奨</td>
       </tr>
       <tr>
         <td><span class="hl-red">⚡ ファイル誤削除・上書き</span></td>
