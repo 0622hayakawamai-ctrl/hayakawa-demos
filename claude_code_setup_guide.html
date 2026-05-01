@@ -164,6 +164,7 @@ a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decorati
       <li><a href="#step1">Cursor をダウンロード</a></li>
       <li><a href="#step2">Cursor の初回設定</a></li>
       <li><a href="#step3">必要なツールを一括インストール</a></li>
+      <li><a href="#account">Anthropicアカウント作成 + 課金（初めての方）</a></li>
       <li><a href="#step4">Claude Code を起動してログイン</a></li>
       <li><a href="#price">料金プラン</a></li>
       <li><a href="#step5">Claude in Chrome をインストール</a></li>
@@ -609,6 +610,18 @@ a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decorati
     <div class="box info"><div class="box-icon">💡</div><div><strong>ターミナルが出ない場合：</strong>Cursor上部のメニュー「<strong>Terminal</strong>」→「<strong>New Terminal</strong>」をクリック</div></div>
   </div>
 
+  <div class="card" style="border:2px solid var(--orange);background:#fff7e6">
+    <h3>⚠️ Windows事前注意（必読・2点）</h3>
+
+    <p style="font-weight:700;margin-top:8px">① wingetが使えるWindowsバージョンか確認</p>
+    <p>winget は <strong>Windows 11</strong> または <strong>Windows 10 バージョン1709以降</strong>で動きます。古いWindows 10だと <code>'winget' is not recognized</code> と出ます。</p>
+    <p style="font-size:.9em;color:var(--dim)">※ 自分のWindowsバージョン確認: <kbd>Windows</kbd>+<kbd>R</kbd> →「<code>winver</code>」と入力 → Enter。「バージョン1709」以上ならOK。<br>※ wingetが使えない場合は<strong>下の「wingetが使えない場合」</strong>の手動インストールへ。</p>
+
+    <p style="font-weight:700;margin-top:14px">② 会社支給PCで管理者権限がない場合</p>
+    <p>winget も <code>npm install -g</code> も<strong>管理者権限が必要</strong>です。社内のIT管理ポリシーで「PCに勝手にソフト入れられない」設定だと、全部ブロックされます。<strong>研修1日前までに情シスに連絡</strong>してください（当日対応は間に合いません）。</p>
+    <div class="box info"><div class="box-icon">📧</div><div><strong>情シスへの連絡文例:</strong><br>「AI研修のため業務PCに以下のツールをインストールしたいです。Git / Node.js LTS / Claude Code（npm経由） / Cursor（IDE）。すべて開発者向け正規ツールです。インストール許可または手動対応をお願いします。」</div></div>
+  </div>
+
   <div class="card">
     <h3>⚡ 下のコマンドをコピーして、ターミナルに貼り付けて Enter</h3>
     <p>Git・Node.js・Claude Code を全部まとめてインストールします。</p>
@@ -641,6 +654,49 @@ a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decorati
     <p style="margin-top:8px">その後、Claude Codeだけ別途インストール：</p>
     <div class="code">npm install -g @anthropic-ai/claude-code<button class="copy" onclick="cp('npm install -g @anthropic-ai/claude-code',this)">コピー</button></div>
   </div>
+</div>
+
+<!-- ===== STEP 3.5: Anthropicアカウント作成 ===== -->
+<div class="step" id="account">
+  <div class="step-head">
+    <div class="step-num o">3.5</div>
+    <div><div class="step-title">Anthropicアカウント作成 + 課金</div><div class="step-sub">初めての方は次のSTEP 4の前にここを済ませる</div></div>
+  </div>
+
+  <div class="box err-b"><div class="box-icon">🚨</div><div>
+    <strong>すでにClaude.ai（Pro/Max）に課金済みの方は読み飛ばしてOK。</strong><br>
+    初めての方は、<strong>これを済ませないとSTEP 4のログインで詰まります</strong>。
+  </div></div>
+
+  <div class="card">
+    <h3>① アカウント作成（無料）</h3>
+    <div class="url"><a href="https://claude.ai/login" target="_blank">https://claude.ai/login</a><button class="copy" onclick="cp('https://claude.ai/login',this)">コピー</button></div>
+    <ol class="sl">
+      <li>上のURLを開く</li>
+      <li>「<strong>Continue with Google</strong>」をクリック（Googleアカウントで作るのが最速）</li>
+      <li>初回は<strong>SMS認証</strong>あり → 携帯電話番号を入力 → 6桁コードを入力</li>
+      <li>Claudeのチャット画面が出たらアカウント作成完了</li>
+    </ol>
+    <div class="box info"><div class="box-icon">💡</div><div>研修で使うGoogleアカウントは、<strong>Cursorのサインイン・Claude Code・Claude.aiすべて同じもの</strong>に揃えてください（後でややこしくなる）。</div></div>
+  </div>
+
+  <div class="card">
+    <h3>② 有料プラン契約（Pro $20/月）</h3>
+    <div class="url"><a href="https://claude.ai/upgrade" target="_blank">https://claude.ai/upgrade</a><button class="copy" onclick="cp('https://claude.ai/upgrade',this)">コピー</button></div>
+    <ol class="sl">
+      <li>上のURLを開く（claude.ai右上のメニュー →「Upgrade」でも同じ）</li>
+      <li>「<strong>Pro</strong>」プランの「<strong>Get Pro</strong>」をクリック</li>
+      <li>クレジットカード情報を入力（VISA/Master/AMEX/JCB対応）</li>
+      <li>請求先住所は<strong>日本の住所をローマ字</strong>で入力（例: 1-2-3 Shinjuku, Shinjuku-ku, Tokyo）</li>
+      <li>「<strong>Subscribe</strong>」で確定 → 確認メールが届けば完了</li>
+    </ol>
+    <div class="box info"><div class="box-icon">📄</div><div>
+      <strong>領収書（経費精算用）:</strong> claude.ai右上 → Settings → Billing → Invoicesから月次領収書（PDF）がダウンロードできます。<br>
+      <strong>解約:</strong> 同じくBillingから「Cancel Subscription」。次回更新日まで使えます。
+    </div></div>
+  </div>
+
+  <div class="box ok"><div class="box-icon">✅</div><div>これで次のSTEP 4で <code>claude</code> 起動 → 「Log in with Anthropic Console」 → このアカウントでログインすれば使えます。</div></div>
 </div>
 
 <!-- ===== STEP 4: Claude Code起動 ===== -->
@@ -924,6 +980,30 @@ a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decorati
     <h3>Step 1〜2 は Windows と同じ</h3>
     <p>Cursorのダウンロード（<a href="https://cursor.com/" target="_blank">cursor.com</a>）・初回設定はWindowsと同じ手順です。</p>
     <div class="box info"><div class="box-icon">💡</div><div>Macで「開発元が未確認」と出たら → <strong>システム設定 → プライバシーとセキュリティ →「このまま開く」</strong>を選択</div></div>
+  </div>
+
+  <!-- Mac事前注意（必読） -->
+  <div class="card" style="border:2px solid var(--orange);background:#fff7e6">
+    <h3>⚠️ Mac事前注意（必読・3点）</h3>
+    <p style="font-size:.92em;color:var(--dim)">下の方法A/B/Cどれを選んでも、この3点は<strong>事前に把握</strong>しておくこと。知らないと途中で詰みます。</p>
+
+    <p style="font-weight:700;margin-top:14px">① Xcode Command Line Tools が自動DLされる（2-3GB / 10-20分）</p>
+    <p>Homebrewインストール時に「<code>xcode-select --install</code>」が自動で走ります。<strong>2-3GBのダウンロード</strong>が始まり、画面に「インストール」のダイアログが出ます。</p>
+    <ul style="padding-left:20px;line-height:1.8">
+      <li>必ず「<strong>インストール</strong>」を選択（キャンセルするとHomebrewが動きません）</li>
+      <li>10-20分かかるので、<strong>Wi-Fi安定環境＋電源接続</strong>で実施</li>
+      <li>「これ何？」と止めない。Apple純正の開発者ツールで、Homebrewの動作に必須</li>
+    </ul>
+
+    <p style="font-weight:700;margin-top:14px">② Apple Silicon (M1/M2/M3/M4) は PATH 追加が必須</p>
+    <p>Apple Silicon Mac は Homebrew が <code>/opt/homebrew</code> に入りますが、<strong>PATHを通さないと <code>brew: command not found</code> のままになります</strong>。Homebrewインストール後、必ず以下をターミナルで実行：</p>
+    <div class="code multi" style="font-size:.78em">echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' &gt;&gt; ~/.zprofile &amp;&amp; source ~/.zprofile<button class="copy" onclick="cp('echo &apos;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&apos; >> ~/.zprofile &amp;&amp; source ~/.zprofile',this)">コピー</button></div>
+    <p style="font-size:.85em;color:var(--dim);margin-top:6px">※ <strong>Intel Mac の方はこの手順不要</strong>（自動でPATH通る）。M1以降の方だけ必須。<br>※ 自分のMacがどっちか分からない → 左上Apple🍎 → 「このMacについて」→ 「チップ」欄が「Apple M○」ならApple Silicon、「Intel Core ○○」ならIntel</p>
+    <p style="font-size:.85em;color:var(--dim)">※ 方法A（Cursorチャットに丸投げ）の場合、AIがこの設定も自動でやってくれることが多いですが、念のため確認</p>
+
+    <p style="font-weight:700;margin-top:14px">③ 会社支給Macで管理者権限がない場合</p>
+    <p>HomebrewもClaude Codeも<strong>管理者権限が必要</strong>です。会社支給で「sudoが拒否される」「インストールがブロックされる」場合は、<strong>研修1日前までに情シスに連絡</strong>してください。当日対応は間に合いません。</p>
+    <div class="box info"><div class="box-icon">📧</div><div><strong>情シスへの連絡文例:</strong><br>「AI研修のため業務PCに以下のツールをインストールしたいです。Homebrew / Node.js / Claude Code（npm経由） / Cursor（IDE）。すべて開発者向け正規ツールです。インストール許可または手動対応をお願いします。」</div></div>
   </div>
 
   <!-- 方法A: Cursor自動セットアップ -->
