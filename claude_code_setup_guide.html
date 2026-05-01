@@ -7,7 +7,22 @@
 <meta name="description" content="Cursor + Claude Code + Claude in Chrome のセットアップを15-20分で完了。コピペで全部入る。">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
-:root{--bg:#0f0f17;--card:#181822;--border:#2a2a3a;--text:#e4e4ef;--dim:#8888a0;--accent:#6c5ce7;--acl:#a29bfe;--green:#00d2a0;--red:#ff6b6b;--orange:#ffa726;--blue:#4fc3f7}
+:root{
+  --bg:#ffffff;
+  --card:#f8f9fc;
+  --card-hover:#f0f2f8;
+  --border:#e5e7eb;
+  --text:#1f2937;
+  --dim:#6b7280;
+  --accent:#6c5ce7;
+  --acl:#5544e0;
+  --green:#00b894;
+  --red:#e74c3c;
+  --orange:#f39c12;
+  --blue:#0984e3;
+  --code-bg:#1f2937;
+  --code-text:#a8e6cf;
+}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.8;padding:0 16px}
@@ -16,7 +31,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 
 /* Header */
 .hero{text-align:center;padding:60px 0 40px;border-bottom:1px solid var(--border)}
-.hero h1{font-size:2.6em;font-weight:900;background:linear-gradient(135deg,var(--acl),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.hero h1{font-size:2.6em;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
 .hero .sub{color:var(--dim);font-size:1.05em;margin-bottom:24px}
 .badge{display:inline-block;background:var(--card);border:1px solid var(--border);padding:8px 20px;border-radius:50px;font-size:0.95em;margin-bottom:16px}
 
@@ -24,39 +39,40 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .step{padding:40px 0;border-bottom:1px solid var(--border)}
 .step:last-child{border-bottom:none}
 .step-head{display:flex;align-items:center;gap:14px;margin-bottom:24px}
-.step-num{width:48px;height:48px;border-radius:14px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:1.4em;font-weight:900;color:#fff;flex-shrink:0}
-.step-num.g{background:var(--green)}.step-num.o{background:var(--orange)}.step-num.r{background:var(--red)}.step-num.b{background:var(--blue)}.step-num.p{background:linear-gradient(135deg,#a29bfe,#fd79a8)}
-.step-title{font-size:1.5em;font-weight:900}
+.step-num{width:48px;height:48px;border-radius:14px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:1.4em;font-weight:900;color:#fff;flex-shrink:0;box-shadow:0 4px 12px rgba(108,92,231,.3)}
+.step-num.g{background:var(--green);box-shadow:0 4px 12px rgba(0,184,148,.3)}.step-num.o{background:var(--orange);box-shadow:0 4px 12px rgba(243,156,18,.3)}.step-num.r{background:var(--red);box-shadow:0 4px 12px rgba(231,76,60,.3)}.step-num.b{background:var(--blue);box-shadow:0 4px 12px rgba(9,132,227,.3)}.step-num.p{background:linear-gradient(135deg,#a29bfe,#fd79a8);box-shadow:0 4px 12px rgba(162,155,254,.3)}
+.step-title{font-size:1.5em;font-weight:900;color:var(--text)}
 .step-sub{font-size:0.9em;color:var(--dim)}
 
 /* Cards */
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:14px}
-.card h3{font-size:1.05em;font-weight:700;margin-bottom:10px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.card h3{font-size:1.05em;font-weight:700;margin-bottom:10px;color:var(--text)}
 .card p{margin-bottom:8px}
 
 /* Code */
-.code{position:relative;background:#0a0a12;border:1px solid var(--border);border-radius:10px;padding:14px 80px 14px 16px;font-family:'JetBrains Mono',monospace;font-size:0.9em;color:var(--green);margin:10px 0;overflow-x:auto;white-space:nowrap}
-.code.err{color:var(--red);border-color:rgba(255,107,107,.3)}
-.code.inf{color:var(--blue)}
+.code{position:relative;background:var(--code-bg);border:1px solid #374151;border-radius:10px;padding:14px 80px 14px 16px;font-family:'JetBrains Mono',monospace;font-size:0.9em;color:var(--code-text);margin:10px 0;overflow-x:auto;white-space:nowrap}
+.code.err{color:#ff8a80;border-color:rgba(231,76,60,.3)}
+.code.inf{color:#82b1ff}
 .code.multi{white-space:pre-wrap;line-height:1.6}
 .copy{position:absolute;top:6px;right:6px;background:var(--accent);color:#fff;border:none;padding:5px 14px;border-radius:7px;cursor:pointer;font-family:'Noto Sans JP';font-size:.78em;font-weight:700}
 .copy:hover{background:var(--acl)}
 .copy.ok{background:var(--green)}
 
 /* URL */
-.url{background:#0a0a12;border:1px solid var(--border);border-radius:8px;padding:10px 80px 10px 14px;font-family:'JetBrains Mono',monospace;font-size:.88em;color:var(--blue);margin:8px 0;position:relative;word-break:break-all}
+.url{background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:10px 80px 10px 14px;font-family:'JetBrains Mono',monospace;font-size:.88em;color:#0c4a6e;margin:8px 0;position:relative;word-break:break-all}
+.url a{color:var(--blue);font-weight:700}
 
 /* Alert boxes */
 .box{border-radius:10px;padding:14px 16px;margin:10px 0;display:flex;gap:10px;align-items:flex-start;font-size:.95em}
-.box.warn{background:rgba(255,167,38,.1);border:1px solid rgba(255,167,38,.3)}
-.box.err-b{background:rgba(255,107,107,.1);border:1px solid rgba(255,107,107,.3)}
-.box.ok{background:rgba(0,210,160,.1);border:1px solid rgba(0,210,160,.3)}
-.box.info{background:rgba(79,195,247,.1);border:1px solid rgba(79,195,247,.3)}
+.box.warn{background:#fff7e6;border:1px solid #fcd34d}
+.box.err-b{background:#fef2f2;border:1px solid #fca5a5}
+.box.ok{background:#ecfdf5;border:1px solid #86efac}
+.box.info{background:#eff6ff;border:1px solid #93c5fd}
 .box-icon{font-size:1.2em;flex-shrink:0;line-height:1.6}
 
 /* Mock screens */
-.mock{background:#1e1e2e;border:2px solid var(--border);border-radius:12px;overflow:hidden;margin:14px 0}
-.mock-bar{background:#2a2a3a;padding:6px 12px;display:flex;align-items:center;gap:6px;font-size:.75em;color:var(--dim)}
+.mock{background:#fff;border:2px solid var(--border);border-radius:12px;overflow:hidden;margin:14px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.mock-bar{background:#f3f4f6;padding:6px 12px;display:flex;align-items:center;gap:6px;font-size:.75em;color:var(--dim);border-bottom:1px solid var(--border)}
 .mock-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
 .mock-dot.r{background:#ff5f56}.mock-dot.y{background:#ffbd2e}.mock-dot.g{background:#27c93f}
 .mock-body{padding:20px}
@@ -65,64 +81,68 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .mock-btn.secondary{background:#555;color:#fff}
 .mock-btn.blue{background:#4488ff;color:#fff}
 .mock-btn.outline{background:transparent;border:2px solid var(--border);color:var(--text)}
-.mock-input{background:#333;border:1px solid #555;border-radius:4px;padding:6px 12px;color:var(--text);width:100%;margin:4px 0;font-family:'JetBrains Mono',monospace;font-size:.85em}
+.mock-input{background:#fff;border:1px solid var(--border);border-radius:4px;padding:6px 12px;color:var(--text);width:100%;margin:4px 0;font-family:'JetBrains Mono',monospace;font-size:.85em}
 .mock-radio{margin-right:6px}
 .mock-label{display:block;padding:4px 0;cursor:default}
-.highlight{color:var(--acl);font-weight:700}
+.highlight{color:var(--accent);font-weight:700}
 .hl-green{color:var(--green);font-weight:700}
 .hl-red{color:var(--red);font-weight:700}
 .hl-orange{color:var(--orange);font-weight:700}
 .arrow-label{display:inline-block;background:var(--red);color:#fff;padding:2px 10px;border-radius:4px;font-size:.85em;font-weight:700;margin:2px 4px}
 
 /* Keyboard */
-kbd{background:#2a2a3a;border:1px solid #3a3a4a;border-radius:5px;padding:2px 7px;font-family:'JetBrains Mono',monospace;font-size:.82em;box-shadow:0 2px 0 #1a1a2a}
+kbd{background:#f3f4f6;border:1px solid #d1d5db;border-radius:5px;padding:2px 7px;font-family:'JetBrains Mono',monospace;font-size:.82em;box-shadow:0 2px 0 #d1d5db;color:var(--text)}
 
 /* Table */
-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.9em}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.9em;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.04)}
 th,td{padding:10px 14px;border:1px solid var(--border);text-align:left}
 th{background:var(--accent);color:#fff;font-weight:700}
-tr:nth-child(even){background:var(--card)}
-.rec{background:rgba(108,92,231,.15);border-left:3px solid var(--accent)}
+tr:nth-child(even){background:#fafbfc}
+.rec{background:rgba(108,92,231,.08) !important;border-left:3px solid var(--accent)}
+
+/* Inline code */
+code{background:#f3f4f6;color:#e91e63;padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:.9em}
 
 /* Checklist */
 .check-list{list-style:none;margin:14px 0}
-.check-list li{padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;display:flex;align-items:center;gap:10px;cursor:pointer}
-.check-list li .ck{width:22px;height:22px;border:2px solid var(--border);border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:transparent}
+.check-list li{padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .15s}
+.check-list li:hover{background:var(--card-hover)}
+.check-list li .ck{width:22px;height:22px;border:2px solid var(--border);border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:transparent;background:#fff}
 .check-list li.done .ck{background:var(--green);border-color:var(--green);color:#fff}
-.check-list li.done{border-color:var(--green);opacity:.7}
+.check-list li.done{border-color:var(--green);opacity:.7;background:#ecfdf5}
 
 /* FAQ */
 .faq{background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;overflow:hidden}
 .faq-q{padding:14px 16px;cursor:pointer;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.faq-q:hover{background:#1f1f2c}
+.faq-q:hover{background:var(--card-hover)}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .3s;padding:0 16px}
 .faq.open .faq-a{max-height:1200px;padding:0 16px 14px}
 .faq.open .faq-q .ar{transform:rotate(180deg)}
-.ar{transition:transform .3s;flex-shrink:0}
+.ar{transition:transform .3s;flex-shrink:0;color:var(--dim)}
 
 /* Steps list */
 ol.sl{counter-reset:st;list-style:none;margin:8px 0}
 ol.sl li{counter-increment:st;padding:6px 0 6px 32px;position:relative}
 ol.sl li::before{content:counter(st);position:absolute;left:0;top:6px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:.7em;font-weight:700;display:flex;align-items:center;justify-content:center}
 
-a{color:var(--acl);text-decoration:none}a:hover{text-decoration:underline}
+a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decoration:underline}
 
 /* Troubleshoot flow */
 .ts{background:var(--card);border:1px solid var(--border);padding:14px 16px}
 .ts:first-child{border-radius:10px 10px 0 0}
 .ts:last-child{border-radius:0 0 10px 10px}
-.ts h4{color:var(--acl);margin-bottom:4px;font-size:.95em}
+.ts h4{color:var(--accent);margin-bottom:4px;font-size:.95em}
 .ts-con{text-align:center;color:var(--dim);padding:2px;font-size:1.1em}
 
 /* TOC */
-.toc{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin:20px 0 0}
-.toc h3{margin-bottom:12px;font-size:1.05em}
+.toc{background:linear-gradient(135deg,#f0f4ff,#fff);border:1px solid var(--border);border-radius:14px;padding:24px;margin:20px 0 0;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.toc h3{margin-bottom:12px;font-size:1.05em;color:var(--text)}
 .toc ol{padding-left:0;list-style:none;counter-reset:toc}
-.toc ol li{counter-increment:toc;padding:6px 0;border-bottom:1px dashed #2a2a3a;font-size:.95em}
+.toc ol li{counter-increment:toc;padding:6px 0;border-bottom:1px dashed var(--border);font-size:.95em}
 .toc ol li:last-child{border-bottom:none}
 .toc ol li::before{content:counter(toc) ". ";color:var(--accent);font-weight:700;margin-right:6px}
-.toc a{color:var(--text)}
-.toc a:hover{color:var(--acl)}
+.toc a{color:var(--text);font-weight:500}
+.toc a:hover{color:var(--accent)}
 
 @media(max-width:600px){.hero h1{font-size:1.8em}.step-title{font-size:1.2em}}
 </style>
@@ -140,6 +160,7 @@ a{color:var(--acl);text-decoration:none}a:hover{text-decoration:underline}
     <h3>📚 もくじ</h3>
     <ol>
       <li><a href="#intro">はじめに（AI初心者の方へ）</a></li>
+      <li><a href="#usecase">🎬 こんな時はこう頼む（使い方サンプル）</a></li>
       <li><a href="#step1">Cursor をダウンロード</a></li>
       <li><a href="#step2">Cursor の初回設定</a></li>
       <li><a href="#step3">必要なツールを一括インストール</a></li>
@@ -230,6 +251,55 @@ a{color:var(--acl);text-decoration:none}a:hover{text-decoration:underline}
   </div></div>
 
   <div class="card">
+    <h3>🛡️ リスクと対処法（事故を起こさない使い方）</h3>
+    <p style="color:var(--dim);font-size:.92em;margin-bottom:12px">「便利だけど怖い」は対処法を知れば消えます。<strong>5大リスク</strong>と具体的対策。</p>
+    <table>
+      <tr><th>リスク</th><th>何が起きる？</th><th>対処法</th></tr>
+      <tr>
+        <td><span class="hl-red">🚨 ハルシネーション<br>（自信満々に間違える）</span></td>
+        <td>存在しない数字・URL・引用を作り出すことがある（特に固有名詞）</td>
+        <td>① <strong>重要な数値・社名・URLは必ず元ソース確認</strong><br>② 「ソースを示して」と追加指示で出典確認<br>③ 大事な書類は人間がダブルチェック</td>
+      </tr>
+      <tr>
+        <td><span class="hl-red">🔒 機密データ漏洩</span></td>
+        <td>顧客名簿・契約書をうっかりクラウドAIに送信</td>
+        <td>① <strong>Cursor の Privacy Mode を必ず Enable</strong>（学習データに使われない）<br>② NDA案件は別フォルダで作業<br>③ パスワード・APIキーはコードに直書きせず環境変数</td>
+      </tr>
+      <tr>
+        <td><span class="hl-red">💸 暴走で課金爆増</span></td>
+        <td>無限ループ・大量呼び出しで月課金が想定以上に</td>
+        <td>① <strong>Pro $20/月の固定プラン</strong>から始める（従量課金より安全）<br>② 自動実行は<strong>初回は人間が監視</strong>しながら<br>③ <strong>使用量メーター</strong>を週1回チェック</td>
+      </tr>
+      <tr>
+        <td><span class="hl-red">⚡ ファイル誤削除・上書き</span></td>
+        <td>「整理して」と言ったらフォルダごと消えた等の事故</td>
+        <td>① <strong>大事なフォルダは作業前にバックアップ</strong>（コピーを別の場所に）<br>② <code>git</code> でバージョン管理（戻せる）<br>③ <strong>「実行する前に確認して」</strong>と一言添える</td>
+      </tr>
+      <tr>
+        <td><span class="hl-red">📤 誤送信・誤公開</span></td>
+        <td>「メール送信して」と言ったら下書きじゃなく送ってしまった</td>
+        <td>① <strong>送信・公開系は「下書きまで」と指示</strong>を明示<br>② 「送信前に内容確認させて」と一言添える<br>③ <strong>CLAUDE.md に「送信前確認必須」</strong>と書く（毎回チェック）</td>
+      </tr>
+      <tr>
+        <td><span class="hl-red">⚖️ 著作権・規約違反</span></td>
+        <td>「この画像コピーして」が規約違反になることも</td>
+        <td>① <strong>商用利用OKな素材</strong>か事前確認<br>② 競合サイトの<strong>丸パクリは指示しない</strong>（参考にする程度）<br>③ AI生成物の<strong>商用利用ライセンス</strong>を確認</td>
+      </tr>
+      <tr>
+        <td><span class="hl-red">🧠 思考力低下リスク</span></td>
+        <td>AI任せで自分で考えなくなる</td>
+        <td>① <strong>「なぜそうなる？」を自分で言語化</strong>してから依頼<br>② <strong>戦略・判断は自分</strong>。AIは「実行係」「下書き係」<br>③ 月1回は「AIなしで作業」する日を作る</td>
+      </tr>
+      <tr>
+        <td><span class="hl-red">📡 AI障害で業務停止</span></td>
+        <td>Claude APIダウンで作業が止まる</td>
+        <td>① <strong>マニュアル手順</strong>もドキュメント化しておく<br>② 重要案件は<strong>余裕のある納期</strong>で受ける<br>③ 障害時は <a href="https://status.anthropic.com/" target="_blank">status.anthropic.com</a> で確認</td>
+      </tr>
+    </table>
+    <div class="box info"><div class="box-icon">🔑</div><div><strong>原則:</strong> AIは<strong>「下書きまで・実行は人間が確認してGO」</strong>で運用。これだけで90%の事故は防げます。</div></div>
+  </div>
+
+  <div class="card">
     <h3>🗺 全体像：セットアップする3つ</h3>
     <table>
       <tr><th>#</th><th>ツール</th><th>役割</th><th>費用</th></tr>
@@ -237,6 +307,97 @@ a{color:var(--acl);text-decoration:none}a:hover{text-decoration:underline}
       <tr class="rec"><td>2</td><td><strong>Claude Code</strong></td><td>AI本体。日本語で指示すると動く</td><td>要課金（最低 月$20）</td></tr>
       <tr><td>3</td><td><strong>Claude in Chrome</strong></td><td>AIがブラウザを自動操作する</td><td>無料</td></tr>
     </table>
+  </div>
+</div>
+
+<!-- ===== 使い方サンプル ===== -->
+<div class="step" id="usecase">
+  <div class="step-head">
+    <div class="step-num p">🎬</div>
+    <div><div class="step-title">こんな時はこう頼む（使い方サンプル）</div><div class="step-sub">「何ができるかピンと来ない」人向け。コピペで試せる指示例</div></div>
+  </div>
+
+  <div class="box info"><div class="box-icon">💡</div><div>使い方は<strong>「日本語でお願いするだけ」</strong>。下の例をそのままコピーして、Cursorのターミナル（<code>claude</code> 起動後）に貼り付けて Enter してみてください。</div></div>
+
+  <div class="card">
+    <h3>📧 シーン1：メール・文章作成</h3>
+    <p style="color:var(--dim);font-size:.9em">毎日のメール作業を10倍速くする</p>
+    <div class="code multi" style="font-size:.85em">クライアント向けに「明日の打ち合わせを30分早めたい」というメール下書きを敬語で作って<button class="copy" onclick="cp('クライアント向けに「明日の打ち合わせを30分早めたい」というメール下書きを敬語で作って',this)">コピー</button></div>
+    <div class="code multi" style="font-size:.85em">先週の議事録（meeting.txt）を3行に要約して<button class="copy" onclick="cp('先週の議事録（meeting.txt）を3行に要約して',this)">コピー</button></div>
+    <div class="code multi" style="font-size:.85em">提案書のドラフトを「課題→解決策→料金→納期」の順で2,000字で書いて<button class="copy" onclick="cp('提案書のドラフトを「課題→解決策→料金→納期」の順で2,000字で書いて',this)">コピー</button></div>
+  </div>
+
+  <div class="card">
+    <h3>🌐 シーン2：Web調査・情報収集</h3>
+    <p style="color:var(--dim);font-size:.9em">Chrome拡張と組み合わせるとAIが自動でブラウザ操作</p>
+    <div class="code multi" style="font-size:.85em">この10社のHPを順番に開いて、業種・従業員数・本社所在地を表にまとめて<button class="copy" onclick="cp('この10社のHPを順番に開いて、業種・従業員数・本社所在地を表にまとめて',this)">コピー</button></div>
+    <div class="code multi" style="font-size:.85em">「東京 整体院 開業」で検索した上位10件を読んで、頻出する集客方法をまとめて<button class="copy" onclick="cp('「東京 整体院 開業」で検索した上位10件を読んで、頻出する集客方法をまとめて',this)">コピー</button></div>
+    <div class="code multi" style="font-size:.85em">競合5社の料金プランを比較表にして、自社が優位な点も指摘して<button class="copy" onclick="cp('競合5社の料金プランを比較表にして、自社が優位な点も指摘して',this)">コピー</button></div>
+  </div>
+
+  <div class="card">
+    <h3>📊 シーン3：データ集計・整理</h3>
+    <p style="color:var(--dim);font-size:.9em">エクセル・スプレッドシートの繰り返し作業を全自動</p>
+    <div class="code multi" style="font-size:.85em">sales.csv を読んで、月別売上をグラフにして PDF で保存して<button class="copy" onclick="cp('sales.csv を読んで、月別売上をグラフにして PDF で保存して',this)">コピー</button></div>
+    <div class="code multi" style="font-size:.85em">このフォルダの画像ファイルを撮影日ごとにフォルダ分けして<button class="copy" onclick="cp('このフォルダの画像ファイルを撮影日ごとにフォルダ分けして',this)">コピー</button></div>
+    <div class="code multi" style="font-size:.85em">領収書PDFを5枚読んで、日付・金額・項目を一覧表にして<button class="copy" onclick="cp('領収書PDFを5枚読んで、日付・金額・項目を一覧表にして',this)">コピー</button></div>
+  </div>
+
+  <div class="card">
+    <h3>🎨 シーン4：HP・LP・資料作成</h3>
+    <p style="color:var(--dim);font-size:.9em">デザインスキルゼロでもHTMLが秒で生成される</p>
+    <div class="code multi" style="font-size:.85em">「整体院○○」のLPを作って。ターゲットは40代女性、デザインは清潔感重視、CTAは予約フォーム<button class="copy" onclick="cp('「整体院○○」のLPを作って。ターゲットは40代女性、デザインは清潔感重視、CTAは予約フォーム',this)">コピー</button></div>
+    <div class="code multi" style="font-size:.85em">この営業資料（slides.md）からPowerPoint風のHTMLスライドを作って<button class="copy" onclick="cp('この営業資料（slides.md）からPowerPoint風のHTMLスライドを作って',this)">コピー</button></div>
+    <div class="code multi" style="font-size:.85em">既存HPのデザインを参考に、新サービスページを作って色味は同じテイストで<button class="copy" onclick="cp('既存HPのデザインを参考に、新サービスページを作って色味は同じテイストで',this)">コピー</button></div>
+  </div>
+
+  <div class="card">
+    <h3>🤖 シーン5：自動化・繰り返し作業</h3>
+    <p style="color:var(--dim);font-size:.9em">「毎日やってる作業」を1回の指示で永久に楽に</p>
+    <div class="code multi" style="font-size:.85em">毎朝Gmailの未読メールを開いて、重要度順に並べたサマリーをLINEに送るスクリプトを作って<button class="copy" onclick="cp('毎朝Gmailの未読メールを開いて、重要度順に並べたサマリーをLINEに送るスクリプトを作って',this)">コピー</button></div>
+    <div class="code multi" style="font-size:.85em">Googleフォーム回答が来たら、自動でスプレッドシートに転記+Slackに通知するGASを書いて<button class="copy" onclick="cp('Googleフォーム回答が来たら、自動でスプレッドシートに転記+Slackに通知するGASを書いて',this)">コピー</button></div>
+    <div class="code multi" style="font-size:.85em">月初にこのフォルダの請求書を全部開いて、合計金額をメールで送るバッチを作って<button class="copy" onclick="cp('月初にこのフォルダの請求書を全部開いて、合計金額をメールで送るバッチを作って',this)">コピー</button></div>
+  </div>
+
+  <div class="card">
+    <h3>📱 シーン6：SNS・コンテンツ運用</h3>
+    <p style="color:var(--dim);font-size:.9em">投稿アイデア出し・ハッシュタグ・スケジュールも全部</p>
+    <div class="code multi" style="font-size:.85em">Instagram投稿用に、整体院サービスの「お客様の悩み解決ストーリー」5本分のキャプション+ハッシュタグを作って<button class="copy" onclick="cp('Instagram投稿用に、整体院サービスの「お客様の悩み解決ストーリー」5本分のキャプション+ハッシュタグを作って',this)">コピー</button></div>
+    <div class="code multi" style="font-size:.85em">YouTube動画のタイトル・サムネ案・概要欄テンプレを「サロン経営」テーマで5パターン<button class="copy" onclick="cp('YouTube動画のタイトル・サムネ案・概要欄テンプレを「サロン経営」テーマで5パターン',this)">コピー</button></div>
+    <div class="code multi" style="font-size:.85em">X（Twitter）投稿1ヶ月分のスケジュールを「朝・昼・夜」3投稿×30日で作って<button class="copy" onclick="cp('X（Twitter）投稿1ヶ月分のスケジュールを「朝・昼・夜」3投稿×30日で作って',this)">コピー</button></div>
+  </div>
+
+  <div class="card">
+    <h3>💡 上手く使うコツ（3つだけ覚えればOK）</h3>
+    <table>
+      <tr><th>コツ</th><th>悪い指示</th><th>良い指示</th></tr>
+      <tr>
+        <td><strong>① <span class="hl-green">具体的に書く</span></strong></td>
+        <td>「メール書いて」</td>
+        <td>「<strong>クライアントA社</strong>に<strong>明日のZoom時間変更</strong>のメールを<strong>敬語で200字</strong>で」</td>
+      </tr>
+      <tr>
+        <td><strong>② <span class="hl-green">背景を伝える</span></strong></td>
+        <td>「LP作って」</td>
+        <td>「<strong>整体院</strong>のLP。<strong>40代女性向け</strong>、<strong>清潔感重視</strong>、<strong>予約への導線</strong>強め」</td>
+      </tr>
+      <tr>
+        <td><strong>③ <span class="hl-green">完成イメージを示す</span></strong></td>
+        <td>「集計して」</td>
+        <td>「<strong>月別売上の表 + 棒グラフ</strong>。<strong>PDFで保存</strong>。<strong>前年比も併記</strong>」</td>
+      </tr>
+    </table>
+    <div class="box ok"><div class="box-icon">🎯</div><div><strong>覚え方:</strong> 「<strong>誰に / 何を / どんな形で</strong>」を一文に入れる。それだけで品質3倍。</div></div>
+  </div>
+
+  <div class="card">
+    <h3>🚀 まずやってみる「3つの最初の一歩」</h3>
+    <ol class="sl">
+      <li><strong>セットアップ完了</strong>後、Claude Codeを起動（<code>claude</code>）</li>
+      <li>上のサンプルから<strong>1つコピペ</strong>して試す（コードが分からなくてもOK）</li>
+      <li>結果を見て「<strong>もっと○○して</strong>」と追加指示を出す（会話で改善できる）</li>
+    </ol>
+    <div class="box info"><div class="box-icon">💪</div><div><strong>失敗を恐れない:</strong> AIは何度やり直してもOK。「<strong>違うな、こうして</strong>」で何度でも修正可能。</div></div>
   </div>
 </div>
 
@@ -297,9 +458,9 @@ a{color:var(--acl);text-decoration:none}a:hover{text-decoration:underline}
     <p>Cursorを初めて起動すると、サインイン画面が出ます。</p>
     <div class="mock" style="margin-top:12px">
       <div class="mock-bar"><span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span> Cursor</div>
-      <div class="mock-body" style="text-align:center;padding:30px;background:#111">
+      <div class="mock-body" style="text-align:center;padding:30px;background:#fff">
         <div style="font-size:2em;margin-bottom:4px">〈</div>
-        <div style="font-weight:700;margin-bottom:2px">Cursor</div>
+        <div style="font-weight:700;margin-bottom:2px;color:var(--text)">Cursor</div>
         <div style="color:var(--dim);font-size:.85em;margin-bottom:20px">The best way to code with AI</div>
         <div class="mock-btn primary" style="width:250px;display:block;margin:8px auto">Sign Up</div>
         <span class="arrow-label">↑ 初めての方はこちら</span>
@@ -345,13 +506,13 @@ a{color:var(--acl);text-decoration:none}a:hover{text-decoration:underline}
     <div class="mock" style="margin-top:12px">
       <div class="mock-bar"><span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span> Cursor</div>
       <div class="mock-body" style="padding:0">
-        <div style="background:#1e1e2e;padding:16px;color:var(--dim);text-align:center;font-size:.9em;border-bottom:1px solid var(--border)">
+        <div style="background:#f9fafb;padding:16px;color:var(--dim);text-align:center;font-size:.9em;border-bottom:1px solid var(--border)">
           ↑ ここはコードの編集エリア（今は使わない）
         </div>
-        <div style="background:#0a0a12;padding:16px;font-family:'JetBrains Mono',monospace;font-size:.85em">
-          <div style="color:#666;font-size:.75em;margin-bottom:4px">TERMINAL</div>
-          <div style="color:#ccc">PS C:\Users\あなたの名前&gt; <span style="color:var(--green)">█</span></div>
-          <div style="color:var(--green);margin-top:6px;font-weight:700">↑ ここにコマンドを貼り付けます</div>
+        <div style="background:#1f2937;padding:16px;font-family:'JetBrains Mono',monospace;font-size:.85em">
+          <div style="color:#9ca3af;font-size:.75em;margin-bottom:4px">TERMINAL</div>
+          <div style="color:#e5e7eb">PS C:\Users\あなたの名前&gt; <span style="color:#a8e6cf">█</span></div>
+          <div style="color:#a8e6cf;margin-top:6px;font-weight:700">↑ ここにコマンドを貼り付けます</div>
         </div>
       </div>
     </div>
@@ -409,23 +570,23 @@ a{color:var(--acl);text-decoration:none}a:hover{text-decoration:underline}
     <h3>👤 初回ログイン</h3>
     <div class="mock">
       <div class="mock-bar"><span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span> Terminal - claude</div>
-      <div class="mock-body" style="background:#0a0a12;font-family:'JetBrains Mono',monospace;font-size:.85em">
-        <p style="color:#aaa">Welcome to Claude Code!</p>
+      <div class="mock-body" style="background:#1f2937;font-family:'JetBrains Mono',monospace;font-size:.85em">
+        <p style="color:#9ca3af">Welcome to Claude Code!</p>
         <p style="color:#fff">Do you accept the Anthropic Terms of Service? (y/n)</p>
-        <p style="color:var(--green);font-weight:700">→ <kbd>y</kbd> と入力して Enter</p>
+        <p style="color:#a8e6cf;font-weight:700">→ <kbd style="background:#374151;border-color:#4b5563;color:#fff;box-shadow:0 2px 0 #1f2937">y</kbd> と入力して Enter</p>
         <br>
         <p style="color:#fff">How would you like to authenticate?</p>
-        <p style="color:var(--blue)">  ❯ Log in with Anthropic Console (browser)</p>
-        <p style="color:#666">    Use an API key</p>
-        <p style="color:var(--green);font-weight:700">→ そのまま Enter（一番上が選択済み）</p>
+        <p style="color:#82b1ff">  ❯ Log in with Anthropic Console (browser)</p>
+        <p style="color:#6b7280">    Use an API key</p>
+        <p style="color:#a8e6cf;font-weight:700">→ そのまま Enter（一番上が選択済み）</p>
         <br>
-        <p style="color:#aaa">→ ブラウザが自動で開く → Googleでログイン → 「許可」 → タブ閉じる</p>
+        <p style="color:#9ca3af">→ ブラウザが自動で開く → Googleでログイン → 「許可」 → タブ閉じる</p>
         <br>
         <p style="color:#fff">Choose a theme:</p>
-        <p style="color:var(--green);font-weight:700">→ 好きなもの選んで Enter</p>
+        <p style="color:#a8e6cf;font-weight:700">→ 好きなもの選んで Enter</p>
         <br>
-        <p style="color:var(--green);font-size:1.3em;font-weight:700">&gt;</p>
-        <p style="color:var(--green)">↑ これが出たら起動成功！ここに日本語で指示を入力します。</p>
+        <p style="color:#a8e6cf;font-size:1.3em;font-weight:700">&gt;</p>
+        <p style="color:#a8e6cf">↑ これが出たら起動成功！ここに日本語で指示を入力します。</p>
       </div>
     </div>
   </div>
@@ -487,11 +648,11 @@ a{color:var(--acl);text-decoration:none}a:hover{text-decoration:underline}
 
     <div class="mock">
       <div class="mock-bar"><span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span> Chrome ブラウザ右上</div>
-      <div class="mock-body" style="display:flex;align-items:center;gap:6px;justify-content:flex-end;background:#333;padding:10px 16px">
+      <div class="mock-body" style="display:flex;align-items:center;gap:6px;justify-content:flex-end;background:#f3f4f6;padding:10px 16px">
         <span style="font-size:.85em;color:var(--dim)">...アドレスバー...</span>
-        <span style="background:#444;padding:4px 8px;border-radius:4px;font-size:1.2em;border:2px solid var(--orange)">🧩</span>
+        <span style="background:#fff;padding:4px 8px;border-radius:4px;font-size:1.2em;border:2px solid var(--orange);box-shadow:0 1px 3px rgba(0,0,0,.1)">🧩</span>
         <span class="arrow-label" style="background:var(--orange)">← これがパズルアイコン</span>
-        <span style="background:#444;padding:4px 8px;border-radius:4px">👤</span>
+        <span style="background:#fff;padding:4px 8px;border-radius:4px;border:1px solid var(--border)">👤</span>
       </div>
     </div>
   </div>
