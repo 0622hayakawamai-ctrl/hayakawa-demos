@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude Code セットアップ完全版ガイド</title>
+<style>
+:root{
+  --ink:#1a1a2e;
+  --ink-soft:#3a3a4e;
+  --bg:#fafafa;
+  --paper:#ffffff;
+  --accent:#2563eb;
+  --accent-soft:#dbeafe;
+  --gold:#d4a969;
+  --green:#10b981;
+  --red:#ef4444;
+  --gray:#6b7280;
+  --border:#e5e7eb;
+}
+*{box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;
+  background:var(--bg);color:var(--ink);
+  line-height:1.85;letter-spacing:0.02em;
+  margin:0;padding:0;
+}
+.wrap{
+  max-width:880px;margin:0 auto;padding:60px 32px 80px;
+  background:var(--paper);
+}
+h1{
+  font-size:2.4em;font-weight:800;margin:0 0 0.4em;
+  letter-spacing:-0.02em;line-height:1.2;
+  border-bottom:3px solid var(--accent);padding-bottom:0.4em;
+}
+h2{
+  font-size:1.7em;font-weight:700;margin:2em 0 0.6em;
+  padding:8px 16px;background:linear-gradient(90deg,var(--accent-soft),transparent);
+  border-left:5px solid var(--accent);border-radius:4px;
+  letter-spacing:-0.01em;
+}
+h3{
+  font-size:1.3em;font-weight:700;margin:1.6em 0 0.5em;
+  color:var(--accent);
+}
+h4{font-size:1.1em;font-weight:700;margin:1.4em 0 0.4em}
+p{margin:1em 0;color:var(--ink-soft);font-weight:400}
+ul,ol{padding-left:1.6em;margin:1em 0;color:var(--ink-soft)}
+li{margin:0.4em 0}
+li::marker{color:var(--accent)}
+strong{color:var(--ink);font-weight:700}
+em{color:var(--accent);font-style:normal;font-weight:600}
+a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+a:hover{color:var(--ink)}
+
+code{
+  background:var(--accent-soft);color:var(--accent);
+  padding:2px 8px;border-radius:4px;
+  font-family:'SF Mono',Monaco,Consolas,monospace;font-size:0.9em;
+}
+pre{
+  background:#1a1a2e;color:#e0e0ff;
+  padding:20px 24px;border-radius:8px;
+  overflow-x:auto;margin:1.4em 0;
+  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+}
+pre code{background:transparent;color:inherit;padding:0;font-size:0.92em;line-height:1.6}
+
+blockquote{
+  margin:1.4em 0;padding:18px 24px;
+  background:linear-gradient(135deg,#fef3c7,#fffbeb);
+  border-left:5px solid var(--gold);border-radius:6px;
+  color:var(--ink);
+}
+blockquote strong{color:var(--gold)}
+blockquote p{margin:0.4em 0;color:var(--ink)}
+
+table{
+  border-collapse:collapse;width:100%;margin:1.4em 0;
+  background:var(--paper);box-shadow:0 2px 8px rgba(0,0,0,0.06);border-radius:8px;overflow:hidden;
+  font-size:0.95em;
+}
+th{
+  background:var(--accent);color:white;
+  padding:14px 16px;text-align:left;font-weight:700;letter-spacing:0.02em;
+}
+td{
+  padding:12px 16px;border-bottom:1px solid var(--border);
+  color:var(--ink-soft);
+}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--accent-soft);color:var(--ink)}
+
+hr{
+  border:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border),transparent);
+  margin:2.4em 0;
+}
+
+.toc{
+  background:linear-gradient(135deg,var(--accent-soft),#f0f9ff);
+  border:1px solid var(--accent);border-radius:10px;
+  padding:24px 28px;margin:2em 0;
+}
+.toc::before{
+  content:"📚 目次";display:block;
+  font-weight:800;font-size:1.1em;margin-bottom:12px;color:var(--accent);
+}
+
+.callout-warning{
+  background:#fef2f2;border-left:5px solid var(--red);
+  padding:16px 20px;border-radius:6px;margin:1.4em 0;
+}
+.callout-success{
+  background:#f0fdf4;border-left:5px solid var(--green);
+  padding:16px 20px;border-radius:6px;margin:1.4em 0;
+}
+
+@media (max-width:720px){
+  .wrap{padding:32px 18px 60px}
+  h1{font-size:1.8em}h2{font-size:1.4em}h3{font-size:1.15em}
+  table{font-size:0.85em}
+  th,td{padding:10px 12px}
+}
+
+@media print{
+  body{background:white}
+  .wrap{box-shadow:none;padding:24px}
+  pre{background:#f5f5f5;color:black;border:1px solid #ddd}
+  blockquote{background:#fffbeb}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1 id="claude-code">Claude Code セットアップ完全版ガイド</h1>
+<blockquote>
+<p><strong>このガイドはマスター資料です。</strong><br />
+Claude Code の最新情報・ベストプラクティスはこのファイルに集約。研修・自習・運用の単一窓口です。<br />
+<strong>更新ルール:</strong> 新機能・新情報が出たら、このファイル1か所を更新 → 派生資料（スライド・台本）に反映。</p>
+</blockquote>
+<p><strong>このガイドの通りに上から順番に進めれば、セットアップが完了します。</strong><br />
+所要時間: 約15〜20分</p>
+<hr />
+<h2 id="0-ai">0. はじめに（AI初心者の方へ）</h2>
+<h3 id="claude-code_1">Claude Code って何？</h3>
+<p><strong>ひとことで言うと「日本語で指示するとパソコンが勝手に動くツール」</strong> です。</p>
+<ul>
+<li>メールの下書き、議事録の整理、データ集計、画像作り、HPの作成、ブラウザ操作…</li>
+<li>全部、<strong>日本語で「○○して」と頼むだけ</strong> で、PC上で自動的に作業してくれます。</li>
+<li>ChatGPTとの違い：ChatGPTは「チャット画面の中だけ」。<strong>Claude Codeは「実際にPCを動かす」</strong>。</li>
+</ul>
+<h3 id="claude-code_2">Claude Code でできること（具体例）</h3>
+<table>
+<thead>
+<tr>
+<th>シーン</th>
+<th>あなたの指示</th>
+<th>Claude Code がやること</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>営業</td>
+<td>「この100社のHP見て、業種をまとめて」</td>
+<td>100サイト全部開いて → 内容読み取り → 一覧表に出力</td>
+</tr>
+<tr>
+<td>集計</td>
+<td>「先月の売上をエクセルで集計して」</td>
+<td>エクセル開く → 集計 → グラフ化 → 保存</td>
+</tr>
+<tr>
+<td>制作</td>
+<td>「整体院のLPを作って」</td>
+<td>業界調査 → デザイン提案 → HTML生成 → プレビュー</td>
+</tr>
+<tr>
+<td>リサーチ</td>
+<td>「競合5社の料金プランを比較して」</td>
+<td>各社サイト訪問 → 情報抽出 → 比較表作成</td>
+</tr>
+<tr>
+<td>メール</td>
+<td>「クライアント10社にお礼メール送って」</td>
+<td>メール文生成 → Gmail起動 → 順番に送信（送信前確認あり）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_1">何が嬉しいの？（メリット）</h3>
+<table>
+<thead>
+<tr>
+<th>メリット</th>
+<th>具体的にこう変わる</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ <strong>作業時間が10倍速い</strong></td>
+<td>1時間の作業 → 6分で完了が普通</td>
+</tr>
+<tr>
+<td>✅ <strong>専門知識いらない</strong></td>
+<td>プログラミング知識ゼロでOK。日本語だけで動く</td>
+</tr>
+<tr>
+<td>✅ <strong>疲れない・ミスらない</strong></td>
+<td>100件の繰り返し作業も淡々とやってくれる</td>
+</tr>
+<tr>
+<td>✅ <strong>学習で賢くなる</strong></td>
+<td>教えたことを覚えて、次回から同じ説明不要</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_2">デメリット・注意点（正直に）</h3>
+<table>
+<thead>
+<tr>
+<th>デメリット</th>
+<th>対策</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⚠️ <strong>月額課金が必要</strong></td>
+<td>Pro $20/月（約3,000円）から。Cursor・Chrome拡張は無料</td>
+</tr>
+<tr>
+<td>⚠️ <strong>完全自動だとミス事故もある</strong></td>
+<td>重要な送信・公開前は必ず人間が目視確認</td>
+</tr>
+<tr>
+<td>⚠️ <strong>設定なしだとそこそこの実力</strong></td>
+<td>このガイドの <strong>STEP 4</strong> で品質2〜3倍に化ける</td>
+</tr>
+<tr>
+<td>⚠️ <strong>Claude が分からないとサボる</strong></td>
+<td>プロジェクトのルールは <code>CLAUDE.md</code> に書く（後述）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_3">このガイドのゴール</h3>
+<p>セットアップ完了 + <strong>STEP 4 の3つの仕込み</strong> までやれば、<strong>「優秀な秘書を1人雇った」状態</strong> になります。月3,000円の投資で、月10〜30万円分の作業時間が浮きます。</p>
+<hr />
+<h2 id="_4">全体像</h2>
+<p>セットアップするのは <strong>3つ</strong> です。</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ツール</th>
+<th>役割</th>
+<th>費用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Cursor</strong></td>
+<td>AIの作業場所（エディタ）</td>
+<td>無料</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Claude Code</strong></td>
+<td>AI本体。日本語で指示すると動く</td>
+<td>要課金（最低 月$20）</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Claude in Chrome</strong></td>
+<td>AIがブラウザを自動操作する</td>
+<td>無料</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="step-1-cursor">STEP 1: Cursor をインストールする</h2>
+<h3 id="1-1">1-1. ダウンロード</h3>
+<ol>
+<li>Chromeで以下を開く → <strong>https://cursor.com/</strong></li>
+<li><strong>「Download for Free」</strong> をクリック</li>
+<li>ダウンロードを待つ（数秒〜1分）</li>
+</ol>
+<h3 id="1-2">1-2. インストール</h3>
+<p><strong>Mac:</strong><br />
+1. <code>Cursor-xxx.dmg</code> をダブルクリック<br />
+2. Cursorアイコンを「Applications」にドラッグ<br />
+3. Launchpadから「Cursor」を起動<br />
+4. 「開きますか？」→「開く」</p>
+<p><strong>Windows:</strong><br />
+1. <code>CursorSetup-xxx.exe</code> をダブルクリック<br />
+2. Next → Next → Install → Finish<br />
+3. 自動で起動する</p>
+<h3 id="1-3">1-3. 初回設定</h3>
+<table>
+<thead>
+<tr>
+<th>画面</th>
+<th>選択</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Import Settings</td>
+<td><strong>Start from Scratch</strong></td>
+</tr>
+<tr>
+<td>Theme</td>
+<td>好きなものを選ぶ（Darkが人気）</td>
+</tr>
+<tr>
+<td>Keybindings</td>
+<td><strong>Cursor (Default)</strong></td>
+</tr>
+<tr>
+<td>Sign In</td>
+<td><strong>Sign In with Google</strong> → 普段のGoogleアカウントでログイン</td>
+</tr>
+<tr>
+<td>Privacy Mode</td>
+<td><strong>必ず Enable にする</strong>（データ保護のため必須）</td>
+</tr>
+<tr>
+<td>AI Model</td>
+<td>デフォルトのまま</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-4">1-4. ターミナル（文字入力画面）を開く</h3>
+<table>
+<thead>
+<tr>
+<th>OS</th>
+<th>ショートカット</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td><code>Ctrl</code> + <code>`</code>（数字1の左のキー）</td>
+</tr>
+<tr>
+<td>Mac</td>
+<td><code>Cmd</code> + <code>`</code></td>
+</tr>
+</tbody>
+</table>
+<p>メニューからも可: <strong>Terminal → New Terminal</strong></p>
+<hr />
+<h2 id="step-2-claude-code">STEP 2: Claude Code をインストールする</h2>
+<h3 id="2-1-1">2-1. インストール（1行コピペするだけ）</h3>
+<p>ターミナル（文字入力画面）に以下を貼り付けて Enter:</p>
+<p><strong>Mac / Linux:</strong></p>
+<pre><code>curl -fsSL https://claude.ai/install.sh | bash
+</code></pre>
+<p><strong>Windows（PowerShell）:</strong></p>
+<pre><code>irm https://claude.ai/install.ps1 | iex
+</code></pre>
+<p><strong>Windows（コマンドプロンプト）:</strong></p>
+<pre><code>curl -fsSL https://claude.ai/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd
+</code></pre>
+<blockquote>
+<p><strong>これは何をしているの？</strong><br />
+Anthropic社（Claudeの開発元）の公式サーバーから、Claude Code のプログラムをダウンロードしてインストールしています。<br />
+Node.js等の追加ソフトは不要です。この1行で完了します。</p>
+<p><strong>Windowsの方:</strong> 事前に <a href="https://git-scm.com/downloads/win">Git for Windows</a> が必要です。</p>
+</blockquote>
+<h3 id="2-1b-nodejs">2-1b. Node.js も念のため入れておく（任意だが推奨）</h3>
+<p>公式インストーラーだけで動きますが、環境によっては必要になる場合があります。</p>
+<p><strong>Mac:</strong></p>
+<pre><code>brew install node
+</code></pre>
+<p><code>brew: command not found</code> と出た場合 → 先にこれを実行:</p>
+<pre><code>/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;
+</code></pre>
+<p>完了後、もう一度 <code>brew install node</code></p>
+<p><strong>Windows:</strong></p>
+<pre><code>winget install OpenJS.NodeJS.LTS
+</code></pre>
+<p><code>winget</code> が使えない場合 → <a href="https://nodejs.org/">nodejs.org</a> からLTS版をダウンロードしてインストール。<br />
+<strong>インストール後、Cursorを一度閉じて開き直してください。</strong></p>
+<p><strong>確認:</strong> <code>node --version</code> で数字が出ればOK。</p>
+<hr />
+<h3 id="2-2">2-2. 起動</h3>
+<pre><code>claude
+</code></pre>
+<h3 id="2-3">2-3. 初回起動時に出てくる画面</h3>
+<h4 id="1">画面① 利用規約</h4>
+<p>画面に表示される英語:</p>
+<pre><code>Welcome to Claude Code!
+Do you accept the Anthropic Terms of Service? (y/n)
+</code></pre>
+<p><strong>意味:</strong> 「利用規約に同意しますか？」<br />
+→ <strong><code>y</code> と入力して Enter</strong></p>
+<h4 id="2">画面② ログイン方法の選択</h4>
+<p>画面に表示される英語:</p>
+<pre><code>How would you like to authenticate?
+  ❯ Log in with Anthropic Console (browser)
+    Use an API key
+</code></pre>
+<p><strong>意味:</strong> 「ログイン方法を選んでください」<br />
+→ <strong>一番上の「Log in with Anthropic Console (browser)」が選ばれた状態でそのまま Enter</strong><br />
+（矢印キー↑↓で選択肢を変えられます）</p>
+<h4 id="3">画面③ ブラウザでログイン</h4>
+<p>ブラウザが自動で開いて、Anthropicのログイン画面が表示されます。<br />
+1. Googleアカウント等でログイン<br />
+2. 「許可」「Allow」ボタンを押す<br />
+3. 「You can close this window」と表示される → タブを閉じてCursorに戻る</p>
+<h4 id="4">画面④ テーマの選択</h4>
+<p>画面に表示される英語:</p>
+<pre><code>Choose a theme:
+  ❯ Light (default)
+    Dark
+    Light (high contrast)
+</code></pre>
+<p><strong>意味:</strong> 「画面の色を選んでください」（見た目だけの設定）<br />
+→ <strong>お好みで選んで Enter</strong>（Darkが目に優しくて人気）</p>
+<h4 id="_5">起動完了</h4>
+<p>画面に <code>&gt;</code> が表示されたら起動成功。ここに日本語で指示を入力します。</p>
+<hr />
+<h2 id="step-3-claude-in-chrome">STEP 3: Claude in Chrome をインストールする</h2>
+<h3 id="3-1-chrome">3-1. Chrome拡張を追加</h3>
+<ol>
+<li>Chromeで以下を開く:</li>
+</ol>
+<pre><code>https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn?hl=ja
+</code></pre>
+<ol start="2">
+<li><strong>「Chromeに追加」</strong> → <strong>「拡張機能を追加」</strong></li>
+<li>Chrome右上のパズルアイコン → Claude in Chrome をピン留め</li>
+</ol>
+<h3 id="3-2-aichrome">3-2. AIとChromeを接続する（重要）</h3>
+<p>Chrome拡張を入れただけでは、まだAIとつながっていません。<br />
+Claude Code のターミナルで以下を入力して Enter:</p>
+<pre><code>/chrome
+</code></pre>
+<p>これでAIとChromeが接続されます。</p>
+<h3 id="3-3">3-3. 接続テスト</h3>
+<p>Claude Code に以下を入力:</p>
+<pre><code>Chromeで新しいタブを開いて、Googleのトップページを表示して
+</code></pre>
+<p>→ Chromeが自動で動けば成功。</p>
+<hr />
+<h2 id="step-4-23">STEP 4: 使いこなしの仕込み（品質2〜3倍）</h2>
+<blockquote>
+<p><strong>このSTEPが最重要です。</strong><br />
+ここまでだとClaude Codeは「7割の力」しか出ません。<br />
+残り3割を引き出すのが、Anthropic公式の Claude Code 開発者 Rahul（@sairahul1）が公開した <strong>「3つの仕込み」</strong> です。<br />
+<strong>慣れれば1分で習慣化できて、品質は2〜3倍。</strong></p>
+</blockquote>
+<hr />
+<h3 id="1-plan-mode">仕込み1: Plan Mode を使う（設計→実行）</h3>
+<h4 id="_6">これは何？</h4>
+<p>いきなり作業せず、Claude に <strong>「こうやります」という設計図</strong> を先に出させて、承認後に実行するモード。</p>
+<h4 id="_7">例え話</h4>
+<p>美容師が「じゃ切りますね」とハサミを入れる前に、「こう切ります、長さこのくらい、前髪こうします、これでいいですか？」と先に見せてくれる感覚。</p>
+<h4 id="before-after">Before / After</h4>
+<p><strong>Before（Plan Modeなし）:</strong></p>
+<pre><code>あなた: 「整体院のLP作って」
+Claude: → いきなり書き始める
+（30分後）
+Claude: 「できました！」
+あなた: 「あれ、レビュー要素入ってない…」
+Claude: 「やり直します」（追加30分）
+</code></pre>
+<p><strong>After（Plan Mode使用）:</strong></p>
+<pre><code>あなた: 「整体院のLP作って」（Plan Mode ON）
+Claude: 「Plan: ①レビュー収集 ②強み抽出 ③HTML生成 ④検証
+         画像はAI？写真ご支給？」
+あなた: 「AIで。あとレビュー10件以上で」
+Claude: 「OK 着手します」
+（30分後）
+Claude: 「完成、自己検証OK」
+</code></pre>
+<p>→ <strong>やり直し時間ゼロ</strong></p>
+<h4 id="_8">メリット</h4>
+<ul>
+<li>✅ ズレた仕事をさせない</li>
+<li>✅ 大きいタスクが1発で通る</li>
+<li>✅ あなたが認識違いに気付ける</li>
+</ul>
+<h4 id="_9">デメリット</h4>
+<ul>
+<li>⚠️ 簡単な作業（メール下書き等）には逆に遅い → 通常モードで十分</li>
+<li>⚠️ 設計だけ見て満足してしまうと意味ない → 必ず実行までする</li>
+</ul>
+<h4 id="_10">使い方</h4>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>キー</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Plan Mode ON</strong></td>
+<td><code>Shift</code> + <code>Tab</code> を <strong>2回</strong> 押す</td>
+</tr>
+<tr>
+<td><strong>通常モードに戻す</strong></td>
+<td><code>Shift</code> + <code>Tab</code> でもう1回</td>
+</tr>
+</tbody>
+</table>
+<p>画面下に <code>plan mode on</code> と出ればON。</p>
+<h4 id="_11">いつ使う？</h4>
+<table>
+<thead>
+<tr>
+<th>使う</th>
+<th>使わない</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LP・HPを作る</td>
+<td>メール1通下書き</td>
+</tr>
+<tr>
+<td>100社リサーチする</td>
+<td>簡単な質問</td>
+</tr>
+<tr>
+<td>Webスクレイピング</td>
+<td>計算</td>
+</tr>
+<tr>
+<td>複雑な処理を頼む</td>
+<td>1ステップで終わる作業</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="2-claudemd">仕込み2: CLAUDE.md でプロジェクト学習させる</h3>
+<h4 id="_12">これは何？</h4>
+<p>プロジェクトのルートに置く <strong>「Claude専用のマニュアル」</strong>。Claude が毎回開いて読んでから仕事を始める。</p>
+<h4 id="_13">例え話</h4>
+<p>新人スタッフに「これ毎日読んでから仕事してね」と渡す業務マニュアル。<br />
+<strong>スタッフが入れ替わっても、新人がいきなり戦力になる。</strong></p>
+<h4 id="before-after_1">Before / After</h4>
+<p><strong>Before（CLAUDE.mdなし）:</strong></p>
+<pre><code>月曜: 「日本語で応答してね」
+火曜: 「日本語で応答してね」
+水曜: 「日本語で応答してね」
+（毎回ゼロから説明）
+</code></pre>
+<p><strong>After（CLAUDE.mdあり）:</strong></p>
+<pre><code>CLAUDE.mdに「日本語で応答」と1回書く
+→ 永遠にそのルールで動く
+</code></pre>
+<p>さらに<strong>ミスしたら即追記</strong> する運用が最強：</p>
+<pre><code>あなた: 「住所、勝手に作ったでしょ。CLAUDE.mdに『住所は実データのみ』追記して」
+Claude: 「追記しました」
+→ 二度と勝手に住所を作らない
+</code></pre>
+<h4 id="_14">メリット</h4>
+<ul>
+<li>✅ 同じ説明を毎回しなくていい</li>
+<li>✅ 過去のミスを永久に消せる</li>
+<li>✅ プロジェクトの好み・ルール・前提が全部蓄積</li>
+<li>✅ 別のPCに移っても CLAUDE.md があれば即仕事できる</li>
+</ul>
+<h4 id="_15">デメリット</h4>
+<ul>
+<li>⚠️ 書きすぎると逆にルールが守られなくなる（200行以内推奨）</li>
+<li>⚠️ 矛盾するルールが混ざると Claude が迷う → 整理が必要</li>
+<li>⚠️ ファイルを共有するときは個人情報に注意</li>
+</ul>
+<h4 id="claudemd">CLAUDE.md の書き方の型</h4>
+<p>プロジェクトのルートに <code>CLAUDE.md</code> を作成（Claude Code に「CLAUDE.md を作って」と頼めばOK）。</p>
+<pre><code class="language-markdown"># プロジェクトのルール
+
+## 言語スタイル
+- 日本語で応答
+- 結論ファースト
+
+## このプロジェクトで大事なこと
+- ターゲット顧客: 個人事業主
+- 単価: 月¥7,980
+- 営業先: HPなしの店舗
+
+## 頻出ミス記録（更新日: 2026-04-28）
+- ❌ 個人情報を勝手に推測して書く → ✅ 本人に確認してから書く
+- ❌ テンプレを流用する → ✅ 案件ごとに独自デザインで作る
+- ❌ ランダムな画像URLを使う → ✅ AI生成 or 確認済みURLのみ
+
+## 必ず守ること
+- ファイルを公開する前に「公開していい案件か」確認
+- メール送信前にスクリーンショットで1回チェック
+
+## 納品前チェックリスト
+- [ ] 誤字脱字なし
+- [ ] 個人情報・連絡先が正しい
+- [ ] スマホ表示でも崩れない
+- [ ] リンクがすべて生きている
+</code></pre>
+<h4 id="_16">運用ルール（最重要）</h4>
+<p><strong>Claude がミスしたら → その場で「CLAUDE.md に追記して」と頼む</strong>。これだけで賢くなり続けます。</p>
+<pre><code>（Claudeのミス発覚直後）
+あなた: 「それ間違い。CLAUDE.md に『○○のときは××する』と追記して」
+Claude: 「追記しました」
+→ 次回以降、二度と同じミスは起きない
+</code></pre>
+<hr />
+<h3 id="3_1">仕込み3: 検証ループで自動チェック</h3>
+<h4 id="_17">これは何？</h4>
+<p>Claude が作業を終えたら、<strong>自分で答え合わせ</strong> してから「完成」と報告する仕組み。</p>
+<h4 id="_18">例え話</h4>
+<p>パン屋がパンを焼いたあと、自分で味見・形・焦げチェック → ダメなら作り直し。<br />
+お客さんに出す前に、職人が自分で判断する。</p>
+<h4 id="before-after_2">Before / After</h4>
+<p><strong>Before（検証ループなし）:</strong></p>
+<pre><code>Claude: 「HP完成しました！」
+あなた: （確認）「あ、リンク切れてる…誤字もある…スマホ崩れてる」
+Claude: 「修正します」
+→ クライアントに送る前に発覚すればまだセーフ
+→ 送ったあとで発覚すると **信用毀損**
+</code></pre>
+<p><strong>After（検証ループあり）:</strong></p>
+<pre><code>Claude: 「HP完成。チェックリスト全項目OKを確認しました」
+- ✅ 誤字脱字なし
+- ✅ リンク全て生存確認
+- ✅ スマホ表示OK
+- ✅ 個人情報正確
+あなた: （確認）「OK、送ろう」
+</code></pre>
+<h4 id="_19">メリット</h4>
+<ul>
+<li>✅ 「できました！」と言って壊れてた事故ゼロ</li>
+<li>✅ クライアントに渡す前に問題が見つかる</li>
+<li>✅ 早川さんが目視チェックする時間が激減</li>
+</ul>
+<h4 id="_20">デメリット</h4>
+<ul>
+<li>⚠️ 完成報告までの時間が少し延びる（数分）</li>
+<li>⚠️ Claude のチェック自体が間違うこともある（人間の最終確認は残す）</li>
+</ul>
+<h4 id="_21">簡易版（誰でもできる）</h4>
+<p>CLAUDE.md に <strong>「納品前チェックリスト」</strong> を書いておく（仕込み2の例にあり）。</p>
+<p>そして指示の最後に必ずこう書く:</p>
+<pre><code>このHPを作って。完成したらCLAUDE.mdの納品前チェックリストに沿って
+自己検証して、全部 ✅ になったら完成と報告して。
+</code></pre>
+<p>→ Claude が<strong>自分でチェックしてから完成報告</strong>してくれる。</p>
+<h4 id="_22">上級版（自動化）</h4>
+<p><code>.claude/hooks/</code> フォルダに自動チェックスクリプトを配置すると、Claude の作業ごとに<strong>自動実行</strong>される。<br />
+- 例: HTML作ったら住所妥当性チェック<br />
+- 例: 応募文書いたら個人情報推測検出<br />
+- 例: 公開前に「公開禁止クライアント」確認</p>
+<p>→ 上級者向け。まずは簡易版から。</p>
+<hr />
+<h3 id="step-4">STEP 4 まとめ</h3>
+<table>
+<thead>
+<tr>
+<th>仕込み</th>
+<th>効果</th>
+<th>やる頻度</th>
+<th>難度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plan Mode</td>
+<td>修正ループ削減 50%</td>
+<td>大きい作業のたび</td>
+<td>⭐</td>
+</tr>
+<tr>
+<td>CLAUDE.md追記</td>
+<td>同じミス0%</td>
+<td>ミスあったら即</td>
+<td>⭐</td>
+</tr>
+<tr>
+<td>検証ループ</td>
+<td>品質2〜3倍</td>
+<td>納品前に必ず</td>
+<td>⭐⭐</td>
+</tr>
+</tbody>
+</table>
+<p><strong>この3つを習慣にすれば、Claude Code は最強のアシスタントになります。</strong></p>
+<p>→ 全部やると <strong>「インストールしただけ」の人と比べて、明らかに成果物の質が違う</strong> ようになります。</p>
+<hr />
+<h2 id="_23">セットアップ完了チェックリスト</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>項目</th>
+<th>確認</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Cursor が起動している</td>
+<td>□</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Privacy Mode が Enable（有効）</td>
+<td>□</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ターミナル（文字入力画面）が開ける</td>
+<td>□</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>claude</code> で AI が起動できる（ &gt; が出る）</td>
+<td>□</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Claude in Chrome がインストール済み</td>
+<td>□</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>/chrome</code> で接続済み</td>
+<td>□</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_24">よくあるトラブル 完全対応表</h2>
+<h3 id="cursor">Cursor 関連</h3>
+<table>
+<thead>
+<tr>
+<th>こうなった</th>
+<th>こうしてください</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ダウンロードが始まらない</td>
+<td>ブラウザの「ポップアップをブロックしました」→「許可」をクリック</td>
+</tr>
+<tr>
+<td>Macで「このアプリは開けません」</td>
+<td>システム設定 → プライバシーとセキュリティ →「このまま開く」</td>
+</tr>
+<tr>
+<td>Windowsで青い警告画面</td>
+<td>「詳細情報」をクリック →「実行」</td>
+</tr>
+<tr>
+<td>ログインできない</td>
+<td>Chromeがデフォルトブラウザか確認。Chrome以外が開いている可能性</td>
+</tr>
+</tbody>
+</table>
+<h3 id="claude-code_3">Claude Code インストール関連</h3>
+<table>
+<thead>
+<tr>
+<th>こうなった</th>
+<th>こうしてください</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>claude</code> と入力しても反応がない</td>
+<td><strong>Cursorを一回閉じて開き直す</strong>。ダメなら<strong>PC再起動</strong></td>
+</tr>
+<tr>
+<td>インストールコマンドでエラー</td>
+<td>ネット接続確認。VPN使用中なら一度切って再試行</td>
+</tr>
+<tr>
+<td>Windowsで「Git がない」と言われた</td>
+<td><a href="https://git-scm.com/downloads/win">git-scm.com</a> からGit for Windowsをインストール → Cursor再起動 → やり直す</td>
+</tr>
+<tr>
+<td>Macでパスワードを聞かれた</td>
+<td>PCのログインパスワードを入力。<strong>文字は画面に表示されないが正常</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="claude-code_4">Claude Code 起動・認証関連</h3>
+<table>
+<thead>
+<tr>
+<th>こうなった</th>
+<th>こうしてください</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ブラウザが自動で開かない</td>
+<td>ターミナルに表示されているURLをコピーしてChromeに貼り付け</td>
+</tr>
+<tr>
+<td>ログイン後、Cursorに戻っても反応がない</td>
+<td>数秒待つ。それでもダメなら <code>/exit</code> → <code>claude</code> で再起動</td>
+</tr>
+<tr>
+<td>赤い文字でエラー</td>
+<td>スクリーンショットを撮って講師に送ってください</td>
+</tr>
+</tbody>
+</table>
+<h3 id="claude-in-chrome">Claude in Chrome 関連</h3>
+<table>
+<thead>
+<tr>
+<th>こうなった</th>
+<th>こうしてください</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>拡張機能が追加できない</td>
+<td>社内ブラウザポリシーの制限の可能性。IT部門に確認</td>
+</tr>
+<tr>
+<td><code>/chrome</code> でエラー</td>
+<td>Claude Code を <code>/exit</code> → <code>claude</code> で再起動してからもう一度 <code>/chrome</code></td>
+</tr>
+<tr>
+<td>Chromeが自動操作されない</td>
+<td><code>/chrome</code> で接続したか確認。接続切れの場合は再度 <code>/chrome</code></td>
+</tr>
+<tr>
+<td>Chrome以外のブラウザを使っている</td>
+<td><strong>Google Chrome 必須</strong>（Edge/Firefox/Safari不可）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_25">万能対処法</h3>
+<p><strong>大体のエラーはこの3つで解決します:</strong></p>
+<ol>
+<li><strong>Cursorを閉じて開き直す</strong></li>
+<li><strong>PCを再起動する</strong></li>
+<li><strong>Claude Code に聞く</strong>: <code>claude</code> を起動して「〇〇というエラーが出ました。どうすればいい？」と入力</li>
+</ol>
+<hr />
+<h2 id="_26">料金について</h2>
+<p>Claude Code を使うには、Claudeの有料プランへの加入が必要です。</p>
+<table>
+<thead>
+<tr>
+<th>プラン</th>
+<th>月額</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pro（おすすめ）</strong></td>
+<td>$20/月（約3,000円）</td>
+<td>一番安い。まず始めるならこれ</td>
+</tr>
+<tr>
+<td><strong>Max 5x</strong></td>
+<td>$100/月（約15,000円）</td>
+<td>Proの5倍の使用量</td>
+</tr>
+<tr>
+<td><strong>Max 20x</strong></td>
+<td>$200/月（約30,000円）</td>
+<td>Proの20倍</td>
+</tr>
+<tr>
+<td><strong>Team（法人向け）</strong></td>
+<td>$30/月/人（約4,500円）</td>
+<td>一括請求・メンバー管理対応</td>
+</tr>
+<tr>
+<td><strong>Enterprise</strong></td>
+<td>要問い合わせ</td>
+<td>SSO・監査ログ・SLA対応</td>
+</tr>
+</tbody>
+</table>
+<p>Cursor（作業アプリ）は無料。Chrome拡張も無料。<strong>課金が必要なのはClaude本体のみ</strong>です。</p>
+<p>※ 料金は Anthropic社の公式情報に基づいています（claude.com/pricing）</p>
+<hr />
+<h2 id="faq">研修受講者向け FAQ</h2>
+<p><strong>Q1. プログラミングの知識ゼロでも大丈夫？</strong><br />
+→ 大丈夫です。日本語で「○○して」と頼むだけ。コードは Claude が全部書きます。</p>
+<p><strong>Q2. PCが古くても動く？</strong><br />
+→ Mac/Windows問わずネット接続できればOK。スペックは普通の事務用PCで十分。</p>
+<p><strong>Q3. 月3,000円って高い？</strong><br />
+→ 1日あたり100円。1日30分の作業時間が浮けば即元が取れます。</p>
+<p><strong>Q4. データが学習に使われない？</strong><br />
+→ Privacy Mode を Enable にすれば学習に使われません（このガイドの STEP 1-3 で必ず設定）。</p>
+<p><strong>Q5. STEP 4 の3つ、覚えるの大変？</strong><br />
+→ 慣れれば1〜2日で習慣化。覚えるのは「Shift+Tab 2回」「ミスったら追記」「自己検証して」の3フレーズだけ。</p>
+<p><strong>Q6. うまく動かない時は？</strong><br />
+→ ① Cursor 再起動 ② PC 再起動 ③ Claude に聞く、で大体解決します。</p>
+<p><strong>Q7. もっと使いこなしたい</strong><br />
+→ 早川まいの個別コンサルがあります（月15万円×2ヶ月、1ヶ月卒業可）。詳細は研修終了後に。</p>
+<hr />
+<h2 id="_27">このマスター資料の更新運用</h2>
+<h3 id="_28">更新タイミング</h3>
+<p>新機能・新ベストプラクティス・受講者からよく出る質問・現場で発見した使い方が出たら、<strong>このファイル1か所</strong> に追記。</p>
+<h3 id="_29">更新する人</h3>
+<p>早川まい（または Claude Code に「このガイドに○○の項目を追加して」と指示）</p>
+<h3 id="_30">更新したら必ずやること</h3>
+<ol>
+<li>このガイドファイル（<code>.md</code>）を更新</li>
+<li>派生資料（<code>.html</code>版・スライド・台本）に反映 → Claude Code に「ガイドの最新版を反映して」と指示</li>
+<li>変更日と内容を下記「変更履歴」に記録</li>
+</ol>
+<h3 id="_31">変更履歴</h3>
+<table>
+<thead>
+<tr>
+<th>日付</th>
+<th>変更内容</th>
+<th>担当</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026-04-07</td>
+<td>初版作成（STEP 1〜3）</td>
+<td>早川まい</td>
+</tr>
+<tr>
+<td>2026-04-28</td>
+<td>冒頭メリット解説・STEP 4（Plan Mode/CLAUDE.md/検証ループ）追加・FAQ・更新運用ルール追加</td>
+<td>早川まい + Claude Code</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_32">派生資料の場所</h3>
+<ul>
+<li><code>AI研修_セットアップ完全版ガイド.html</code>（HTML版・印刷/閲覧用）</li>
+<li><code>AI研修_台本_ClaudeCode導入.md</code>（講師台本・75分）</li>
+<li><code>AI研修_スライド.html</code>（メインスライド）</li>
+<li><code>AI研修_基礎知識スライド.html</code>（基礎知識スライド37枚）</li>
+</ul>
+<p>これらは <strong>このマスターから派生</strong> 。マスターを更新したら派生資料も合わせて更新する。</p>
+<hr />
+<h2 id="_33">困ったときの最後の一手</h2>
+<p><strong>このガイドを読んでも分からない時は、Claude Code に貼り付けて聞く:</strong></p>
+<pre><code>このガイド（path: hayakawa/アドネス株式会社/05_ルール・マニュアル/AI研修_セットアップ完全版ガイド.md）
+を読んで、以下の質問に答えてください:
+[ここに質問]
+</code></pre>
+<p>→ Claude Code 自身がガイドの専門家として答えてくれます。</p>
+</div>
+</body>
+</html>
