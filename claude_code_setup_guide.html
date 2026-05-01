@@ -308,6 +308,95 @@ a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decorati
       <tr><td>3</td><td><strong>Claude in Chrome</strong></td><td>AIがブラウザを自動操作する</td><td>無料</td></tr>
     </table>
   </div>
+
+  <div class="card" style="border-left:5px solid var(--blue)">
+    <h3>📚 用語ミニ辞典（途中で「これ何？」となる言葉）</h3>
+    <p style="color:var(--dim);font-size:.92em;margin-bottom:12px">セットアップ中によく出る用語を<strong>ふつうの言葉</strong>で解説。先に読むとラクです。</p>
+    <table>
+      <tr><th>用語</th><th>かんたんな意味</th></tr>
+      <tr>
+        <td><strong>ターミナル</strong></td>
+        <td>文字でPCに命令する黒い画面（チャット風）。Cursorの中に表示される。<kbd>Ctrl/Cmd</kbd>+<kbd>J</kbd>で開く。</td>
+      </tr>
+      <tr>
+        <td><strong>コマンド</strong></td>
+        <td>ターミナルに打つ「PCへの命令文」。例: <code>git --version</code> = 「Gitのバージョン教えて」</td>
+      </tr>
+      <tr>
+        <td><strong>パス（Path）</strong></td>
+        <td>PCの中で<strong>プログラムが置いてある場所のリスト</strong>。「パスが通ってない」＝PCがそのプログラムを見つけられない状態</td>
+      </tr>
+      <tr>
+        <td><strong>環境変数</strong></td>
+        <td>PCの設定みたいな値。<strong>「パス」も環境変数の一種</strong>。普段は気にしなくていい</td>
+      </tr>
+      <tr>
+        <td><strong>Git（ギット）</strong></td>
+        <td>コードのバージョン管理ツール。「いつ・誰が・何を変えたか」を記録できる便利ツール</td>
+      </tr>
+      <tr>
+        <td><strong>Node.js（ノードジェイエス）</strong></td>
+        <td>JavaScriptを動かす環境。Claude Codeの動作にも必要なので入れる</td>
+      </tr>
+      <tr>
+        <td><strong>npm（エヌピーエム）</strong></td>
+        <td>Node.js用のアプリ管理ツール。<code>npm install -g claude-code</code> = 「Claude Codeを世界中どこでも使えるように入れて」</td>
+      </tr>
+      <tr>
+        <td><strong>Homebrew（ホームブリュー）</strong></td>
+        <td>Mac用の<strong>アプリ・ツール管理ツール</strong>。<code>brew install ○○</code> で何でも入る</td>
+      </tr>
+      <tr>
+        <td><strong>winget（ウィンゲット）</strong></td>
+        <td>Windows用の<strong>アプリ・ツール管理ツール</strong>。Homebrewの Windows 版</td>
+      </tr>
+      <tr>
+        <td><strong>シェル / Bash / PowerShell</strong></td>
+        <td>ターミナルの「中身の言語」。MacはBash/Zsh、WindowsはPowerShellが標準。普段は意識しなくてOK</td>
+      </tr>
+      <tr>
+        <td><strong>sudo（スードゥ）</strong></td>
+        <td>Macで「<strong>管理者権限で実行</strong>」する命令。<code>sudo ○○</code> でパスワードを聞かれる</td>
+      </tr>
+      <tr>
+        <td><strong>API キー</strong></td>
+        <td>外部サービス（Claude/OpenAI等）と接続するための<strong>「合鍵」</strong>。漏れたら課金事故になるので絶対に他人に見せない</td>
+      </tr>
+      <tr>
+        <td><strong>パッケージ</strong></td>
+        <td>プログラムの<strong>「セット」</strong>。「Claude Codeパッケージをインストール」＝Claude Codeのプログラム一式を入れる</td>
+      </tr>
+      <tr>
+        <td><strong>ディレクトリ / フォルダ</strong></td>
+        <td>同じもの。MacやUnixでは「ディレクトリ」、Windowsでは「フォルダ」と呼ぶ習慣がある</td>
+      </tr>
+      <tr>
+        <td><strong>リポジトリ（リポ）</strong></td>
+        <td>Gitで管理する<strong>プロジェクトのフォルダ</strong>。GitHubで公開するとURLになる</td>
+      </tr>
+      <tr>
+        <td><strong>クローン（clone）</strong></td>
+        <td>GitHubから<strong>コードを自分のPCにダウンロード</strong>すること</td>
+      </tr>
+      <tr>
+        <td><strong>プロンプト</strong></td>
+        <td>AIへの<strong>指示文</strong>。「メール書いて」みたいな。<strong>具体的なほど結果が良くなる</strong></td>
+      </tr>
+      <tr>
+        <td><strong>トークン</strong></td>
+        <td>AIが文字を処理する<strong>単位</strong>。日本語1文字≒1〜2トークン。Pro $20で月数百万トークン使える</td>
+      </tr>
+      <tr>
+        <td><strong>ハルシネーション</strong></td>
+        <td>AIが<strong>「自信満々に間違える」</strong>こと。架空の数字や URL を作ることがある（要事実確認）</td>
+      </tr>
+      <tr>
+        <td><strong>MCP（エムシーピー）</strong></td>
+        <td>AIと外部ツール（Chrome/Notion/Slack等）をつなぐ<strong>共通規格</strong>。Claude in Chromeもこれの一種</td>
+      </tr>
+    </table>
+    <div class="box info"><div class="box-icon">💡</div><div><strong>困ったらClaude Code自身に聞く:</strong> セットアップ中に分からない言葉が出てきたら、Claude Code起動後に「<strong>○○って何？小学生にもわかるように教えて</strong>」と打てば日本語で説明してくれます。</div></div>
+  </div>
 </div>
 
 <!-- ===== 使い方サンプル ===== -->
@@ -766,6 +855,9 @@ a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decorati
     <div class="code err">'node' is not recognized as an internal or external command</div>
     <div class="code err">'claude' is not recognized as an internal or external command</div>
     <p style="margin-top:8px">= <span class="hl-red">「パスが通っていない」</span>エラー。PCが「そのプログラムどこ？」と迷ってる状態。</p>
+    <div class="box info"><div class="box-icon">📚</div><div><strong>「パス」って何？:</strong> PCの中で<strong>プログラムが置いてある場所のリスト</strong>のこと。<br>
+    例: 「ターミナルで <code>git</code> って打ったら、PCはこのリストの中を順番に探して見つけたら実行する」<br>
+    <strong>「パスが通ってない」 = リストにそのプログラムの場所が登録されてない</strong> ＝見つけられない、という状態。</div></div>
   </div>
 
   <div class="card">
