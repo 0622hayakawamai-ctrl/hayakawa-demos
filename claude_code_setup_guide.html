@@ -167,6 +167,7 @@ a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decorati
       <li><a href="#account">Anthropicアカウント作成 + 課金（初めての方）</a></li>
       <li><a href="#step4">Claude Code を起動してログイン</a></li>
       <li><a href="#price">料金プラン</a></li>
+      <li><a href="#security">🔒 セキュリティ・データの扱い（企業利用の方へ）</a></li>
       <li><a href="#step5">Claude in Chrome をインストール</a></li>
       <li><a href="#step6">⭐ 使いこなしの仕込み（品質2-3倍）</a></li>
       <li><a href="#check">完了チェック</a></li>
@@ -568,7 +569,7 @@ a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decorati
       <tr><td>Import Settings</td><td><span class="highlight">Start from Scratch</span></td></tr>
       <tr><td>Theme（見た目）</td><td>好きなもの（<span class="highlight">Dark</span>が人気）</td></tr>
       <tr><td>Keybindings</td><td><span class="highlight">Cursor (Default)</span></td></tr>
-      <tr class="rec"><td>Privacy Mode</td><td><span class="hl-green">✅ 必ず Enable にする</span>（データ保護のため必須！）</td></tr>
+      <tr class="rec"><td>Privacy Mode</td><td><span class="hl-green">✅ Enable推奨</span>（Cursor自身のAI機能のデータ保護用）<br><span style="font-size:.82em;color:var(--dim)">※ Claude Code はAnthropic API直接通信のため、この設定とは無関係。データ保護は別途Anthropicの規約による（後述「セキュリティ」参照）</span></td></tr>
       <tr><td>AI Model</td><td>デフォルトのまま</td></tr>
       <tr><td>Connect GitHub</td><td><span class="hl-orange">Skip でスキップ</span>（後でOK）</td></tr>
     </table>
@@ -613,46 +614,63 @@ a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decorati
   <div class="card" style="border:2px solid var(--orange);background:#fff7e6">
     <h3>⚠️ Windows事前注意（必読・2点）</h3>
 
-    <p style="font-weight:700;margin-top:8px">① wingetが使えるWindowsバージョンか確認</p>
-    <p>winget は <strong>Windows 11</strong> または <strong>Windows 10 バージョン1709以降</strong>で動きます。古いWindows 10だと <code>'winget' is not recognized</code> と出ます。</p>
-    <p style="font-size:.9em;color:var(--dim)">※ 自分のWindowsバージョン確認: <kbd>Windows</kbd>+<kbd>R</kbd> →「<code>winver</code>」と入力 → Enter。「バージョン1709」以上ならOK。<br>※ wingetが使えない場合は<strong>下の「wingetが使えない場合」</strong>の手動インストールへ。</p>
+    <p style="font-weight:700;margin-top:8px">① Windowsバージョン要件</p>
+    <p>Claude Code は <strong>Windows 10 バージョン1809以降</strong>または <strong>Windows 11</strong> で動きます。古いWindows 10だとwingetもClaude Codeも動きません。</p>
+    <p style="font-size:.9em;color:var(--dim)">※ 自分のWindowsバージョン確認: <kbd>Windows</kbd>+<kbd>R</kbd> →「<code>winver</code>」と入力 → Enter。「バージョン1809」以上ならOK（推奨は最新の22H2など）。<br>※ Windows 10の古いバージョンは<strong>Windows Update</strong>で22H2まで更新するか、Windows 11へアップグレードしてから着手してください。</p>
 
     <p style="font-weight:700;margin-top:14px">② 会社支給PCで管理者権限がない場合</p>
     <p>winget も <code>npm install -g</code> も<strong>管理者権限が必要</strong>です。社内のIT管理ポリシーで「PCに勝手にソフト入れられない」設定だと、全部ブロックされます。<strong>研修1日前までに情シスに連絡</strong>してください（当日対応は間に合いません）。</p>
     <div class="box info"><div class="box-icon">📧</div><div><strong>情シスへの連絡文例:</strong><br>「AI研修のため業務PCに以下のツールをインストールしたいです。Git / Node.js LTS / Claude Code（npm経由） / Cursor（IDE）。すべて開発者向け正規ツールです。インストール許可または手動対応をお願いします。」</div></div>
   </div>
 
-  <div class="card">
-    <h3>⚡ 下のコマンドをコピーして、ターミナルに貼り付けて Enter</h3>
-    <p>Git・Node.js・Claude Code を全部まとめてインストールします。</p>
-    <div class="code" style="font-size:.82em">winget install --id Git.Git -e --source winget; winget install OpenJS.NodeJS.LTS; npm install -g @anthropic-ai/claude-code<button class="copy" onclick="cp('winget install --id Git.Git -e --source winget; winget install OpenJS.NodeJS.LTS; npm install -g @anthropic-ai/claude-code',this)">コピー</button></div>
+  <!-- 方法A: 公式ネイティブインストーラ（推奨） -->
+  <div class="card" style="border-left:5px solid var(--accent)">
+    <h3>⭐ <strong>方法A: 公式ネイティブインストーラ（推奨・最ラク）</strong></h3>
+    <p style="color:var(--dim);font-size:.92em">Anthropic公式が推奨する最新の方法。<strong>1コマンドだけ</strong>。Node.jsもGitも不要。自動アップデートも有効。</p>
 
-    <div class="box info"><div class="box-icon">💡</div><div>
-      <strong>貼り付け方：</strong><br>
-      ① 上の「<strong>コピー</strong>」ボタンを押す<br>
-      ② ターミナルの黒い画面をクリック<br>
-      ③ <kbd>Ctrl</kbd> + <kbd>V</kbd> で貼り付け（または<strong>右クリック</strong>）<br>
-      ④ <kbd>Enter</kbd> を押して実行
+    <p style="font-weight:700;margin-top:14px">PowerShell の場合（ターミナルの先頭が <code>PS C:\</code> ）</p>
+    <div class="code" style="font-size:.9em">irm https://claude.ai/install.ps1 | iex<button class="copy" onclick="cp('irm https://claude.ai/install.ps1 | iex',this)">コピー</button></div>
+
+    <p style="font-weight:700;margin-top:14px">Command Prompt の場合（先頭が <code>C:\&gt;</code>）</p>
+    <div class="code" style="font-size:.78em">curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd<button class="copy" onclick="cp('curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd',this)">コピー</button></div>
+
+    <div class="box info" style="margin-top:10px"><div class="box-icon">💡</div><div>
+      <strong>どっちのターミナル？</strong> ターミナル左端を見る。<code>PS C:\</code> ならPowerShell、<code>C:\&gt;</code>（PSなし）ならCMD。<br>
+      <strong>Cursorで開いた場合は通常PowerShell</strong> なので上の <code>irm</code> コマンドを使ってください。
     </div></div>
-    <p style="font-size:.85em;color:var(--dim)">数分かかります。途中で「Y/N」と聞かれたら <kbd>Y</kbd> → <kbd>Enter</kbd></p>
+
+    <p style="margin-top:12px;font-size:.9em">確認：</p>
+    <div class="code">claude --version<button class="copy" onclick="cp('claude --version',this)">コピー</button></div>
+    <div class="box ok"><div class="box-icon">✅</div><div><code>2.x.x</code>のような数字が出れば成功！STEP 3.5 のアカウント作成へ進む</div></div>
   </div>
 
-  <div class="box err-b"><div class="box-icon">🚨</div><div><strong>超重要：</strong>インストールが終わったら<span class="hl-red">Cursorを一度完全に閉じて（右上の×）、もう一度開いてください</span>。これをしないと次のステップでエラーになります！</div></div>
-
+  <!-- 方法B: WinGet -->
   <div class="card">
-    <h3>✅ 確認（ターミナルで実行して数字が出ればOK）</h3>
+    <h3>方法B: WinGet（Microsoft公式の管理ツール経由）</h3>
+    <p>方法Aがエラーになる場合のバックアップ。WinGet が動く環境ならこちらでもOK：</p>
+    <div class="code">winget install Anthropic.ClaudeCode<button class="copy" onclick="cp('winget install Anthropic.ClaudeCode',this)">コピー</button></div>
+    <p style="font-size:.85em;color:var(--dim);margin-top:6px">途中で「Y/N」と聞かれたら <kbd>Y</kbd> → <kbd>Enter</kbd>。アップデートは <code>winget upgrade Anthropic.ClaudeCode</code> を時々実行</p>
+  </div>
+
+  <!-- 方法C: npm + Git/Node も同時に入れる -->
+  <div class="card">
+    <h3>方法C: npm（Node.js / Git も同時に入れたい場合）</h3>
+    <p>Node.js や Git も今後使うなら、下のコマンドで一気に揃えられます（旧推奨方式）：</p>
+    <div class="code" style="font-size:.78em">winget install --id Git.Git -e --source winget; winget install OpenJS.NodeJS.LTS; npm install -g @anthropic-ai/claude-code<button class="copy" onclick="cp('winget install --id Git.Git -e --source winget; winget install OpenJS.NodeJS.LTS; npm install -g @anthropic-ai/claude-code',this)">コピー</button></div>
+    <p style="font-size:.85em;color:var(--dim);margin-top:6px">⚠️ <code>npm install -g</code> に <code>sudo</code>（Macの場合）や管理者権限を絶対に付けないこと（権限エラー多発）</p>
+    <p style="margin-top:10px">確認:</p>
     <div class="code">git --version<button class="copy" onclick="cp('git --version',this)">コピー</button></div>
     <div class="code">node --version<button class="copy" onclick="cp('node --version',this)">コピー</button></div>
-    <div class="box ok"><div class="box-icon">✅</div><div><code>git version 2.44.0</code> / <code>v20.11.1</code> のように数字が出ればOK</div></div>
+    <div class="code">claude --version<button class="copy" onclick="cp('claude --version',this)">コピー</button></div>
   </div>
 
+  <div class="box err-b"><div class="box-icon">🚨</div><div><strong>超重要：</strong>どの方法でも、インストールが終わったら<span class="hl-red">Cursorを一度完全に閉じて（右上の×）、もう一度開いてください</span>。これをしないと次のステップで <code>'claude' is not recognized</code> エラーになります！</div></div>
+
   <div class="card">
-    <h3>🔴 wingetが使えない場合（手動インストール）</h3>
-    <p>以下から手動でダウンロード → インストール → Cursor再起動</p>
-    <div class="url"><a href="https://git-scm.com/download/win" target="_blank">Git: https://git-scm.com/download/win</a><button class="copy" onclick="cp('https://git-scm.com/download/win',this)">コピー</button></div>
-    <div class="url"><a href="https://nodejs.org/" target="_blank">Node.js: https://nodejs.org/ （LTS版をダウンロード）</a><button class="copy" onclick="cp('https://nodejs.org/',this)">コピー</button></div>
-    <p style="margin-top:8px">その後、Claude Codeだけ別途インストール：</p>
-    <div class="code">npm install -g @anthropic-ai/claude-code<button class="copy" onclick="cp('npm install -g @anthropic-ai/claude-code',this)">コピー</button></div>
+    <h3>🔴 全部失敗した場合（手動ダウンロード）</h3>
+    <p>方法A/B/Cが全滅した場合の最終手段：</p>
+    <div class="url"><a href="https://claude.com/download" target="_blank">Claude公式ダウンロード: https://claude.com/download</a><button class="copy" onclick="cp('https://claude.com/download',this)">コピー</button></div>
+    <p style="font-size:.9em;color:var(--dim);margin-top:6px">※ デスクトップアプリ版（GUI）も提供されています。ターミナル不要で使えるので、コマンド操作が苦手な方はこちらでもOK。</p>
   </div>
 </div>
 
@@ -712,7 +730,8 @@ a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decorati
   </div>
 
   <div class="card">
-    <h3>👤 初回ログイン</h3>
+    <h3>👤 初回ログイン（ブラウザ認証）</h3>
+    <p>初回起動時、Claude Codeが<strong>自動でブラウザを開いて</strong>ログイン画面を表示します。</p>
     <div class="mock">
       <div class="mock-bar"><span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span> Terminal - claude</div>
       <div class="mock-body" style="background:#1f2937;font-family:'JetBrains Mono',monospace;font-size:.85em">
@@ -720,12 +739,11 @@ a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decorati
         <p style="color:#fff">Do you accept the Anthropic Terms of Service? (y/n)</p>
         <p style="color:#a8e6cf;font-weight:700">→ <kbd style="background:#374151;border-color:#4b5563;color:#fff;box-shadow:0 2px 0 #1f2937">y</kbd> と入力して Enter</p>
         <br>
-        <p style="color:#fff">How would you like to authenticate?</p>
-        <p style="color:#82b1ff">  ❯ Log in with Anthropic Console (browser)</p>
-        <p style="color:#6b7280">    Use an API key</p>
-        <p style="color:#a8e6cf;font-weight:700">→ そのまま Enter（一番上が選択済み）</p>
-        <br>
-        <p style="color:#9ca3af">→ ブラウザが自動で開く → Googleでログイン → 「許可」 → タブ閉じる</p>
+        <p style="color:#9ca3af">→ <strong>ブラウザが自動で開く</strong></p>
+        <p style="color:#9ca3af">→ claude.ai のログイン画面が出る</p>
+        <p style="color:#9ca3af">→ STEP 3.5で作った Google アカウントで「Continue with Google」</p>
+        <p style="color:#9ca3af">→ 「Authorize Claude Code」のボタンをクリックして許可</p>
+        <p style="color:#9ca3af">→ 「You can close this tab」と出たらブラウザのタブを閉じる</p>
         <br>
         <p style="color:#fff">Choose a theme:</p>
         <p style="color:#a8e6cf;font-weight:700">→ 好きなもの選んで Enter</p>
@@ -734,9 +752,13 @@ a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decorati
         <p style="color:#a8e6cf">↑ これが出たら起動成功！ここに日本語で指示を入力します。</p>
       </div>
     </div>
+    <div class="box info" style="margin-top:10px"><div class="box-icon">💡</div><div>
+      <strong>「ログイン方法を選んでください」のメニューが出た場合:</strong> claude.ai の Pro/Max 契約者は「<strong>Claude account / claude.ai (Pro/Max subscription)</strong>」を選択。<span style="color:var(--dim);font-size:.9em">「Anthropic Console」は API key 経由で従量課金する別経路（claude.ai $20とは別物・選ばないこと）</span>
+    </div></div>
   </div>
 
-  <div class="box warn"><div class="box-icon">⚠️</div><div><strong>ブラウザが自動で開かない場合：</strong>ターミナルに表示されている <code>https://...</code> のURLをコピーしてChromeに貼り付けて開く</div></div>
+  <div class="box warn"><div class="box-icon">⚠️</div><div><strong>ブラウザが自動で開かない場合：</strong>ターミナルに表示されている <code>https://...</code> のURL（または「<code>c</code>キーを押すとURLがコピーされる」表示）からURLをコピーして、Chromeに貼り付けて開く</div></div>
+  <div class="box warn"><div class="box-icon">⚠️</div><div><strong>「Paste code here if prompted」と出た場合：</strong>ブラウザに表示されたコードをコピーして、ターミナルに貼り付けて Enter（WSL/SSH/コンテナ環境でよく出る）</div></div>
 </div>
 
 <!-- ===== 料金 ===== -->
@@ -750,12 +772,90 @@ a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decorati
     <div class="url"><a href="https://claude.ai/pricing" target="_blank">https://claude.ai/pricing</a><button class="copy" onclick="cp('https://claude.ai/pricing',this)">コピー</button></div>
     <table>
       <tr><th>プラン</th><th>月額</th><th>特徴</th></tr>
-      <tr class="rec"><td><strong>Pro ⭐</strong></td><td>$20（約3,000円）</td><td>まず始めるならこれ</td></tr>
+      <tr class="rec"><td><strong>Pro ⭐</strong></td><td>$20（約3,000円）</td><td>個人利用・まず始めるならこれ</td></tr>
       <tr><td>Max 5x</td><td>$100（約15,000円）</td><td>Proの5倍使える</td></tr>
-      <tr><td>Max 20x</td><td>$200（約30,000円）</td><td>Proの20倍使える</td></tr>
+      <tr><td>Max 20x</td><td>$200（約30,000円）</td><td>Proの20倍使える・ヘビーユーザー向け</td></tr>
+      <tr><td>Team</td><td>$30/人〜</td><td>チーム管理・集中課金・SSO（5人以上推奨）</td></tr>
+      <tr><td>Enterprise</td><td>要見積</td><td>SSO・監査ログ・データ保持ポリシー設定・専任サポート</td></tr>
     </table>
-    <div class="box info" style="margin-top:10px"><div class="box-icon">💡</div><div><strong>企業の場合：</strong>共有アカウントでも使えますが、複数人同時だとトークン不足になりやすい。<span class="highlight">1人1アカウント（Pro $20/月）</span>がおすすめ。足りなくなったらMaxにアップグレード。</div></div>
-    <p style="font-size:.9em;color:var(--dim);margin-top:8px">※ Cursor（作業アプリ）は無料。Chrome拡張も無料。課金はClaude本体のみ。</p>
+    <div class="box info" style="margin-top:10px"><div class="box-icon">💡</div><div><strong>企業の場合：</strong>規約上アカウント共有は推奨されません。<span class="highlight">1人1アカウント（Pro $20/月）</span>または<strong>Teamプラン（$30/人〜）</strong>を契約してください。<br>※ Teamは集中課金・チーム管理機能あり、Enterpriseは大規模組織向け（コンプライアンス対応）</div></div>
+    <p style="font-size:.9em;color:var(--dim);margin-top:8px">※ Cursor（作業アプリ）は無料利用可。Chrome拡張も無料。課金はClaude本体のみ。</p>
+  </div>
+</div>
+
+<!-- ===== セキュリティ ===== -->
+<div class="step" id="security">
+  <div class="step-head">
+    <div class="step-num r">🔒</div>
+    <div><div class="step-title">セキュリティ・データの扱い</div><div class="step-sub">企業利用の方は必ず読んでください</div></div>
+  </div>
+
+  <div class="card">
+    <h3>🤔 そもそもデータはどこに行くのか？</h3>
+    <p>Claude Code を使うと、あなたが入力したプロンプト・読み込んだファイル内容・コマンド出力などが <strong>Anthropic（米国企業）のサーバー（米国AWS）</strong>に送られます。通信は <strong>TLS 1.2+ で暗号化</strong>されます。</p>
+    <table>
+      <tr><th>データの種類</th><th>送信先・保管</th></tr>
+      <tr><td>プロンプト・ファイル内容・コマンド出力</td><td>Anthropic（米国AWS） → モデルが応答生成</td></tr>
+      <tr><td>認証情報（OAuthトークン）</td><td>Mac: Keychain / Win・Linux: <code>~/.claude/.credentials.json</code> （ローカル暗号化）</td></tr>
+      <tr><td>会話履歴（API送信ログ）</td><td>Anthropic 30日間保持（不正利用調査用、その後自動削除）</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>🛡️ 学習データに使われるのか？</h3>
+    <p style="font-size:1.05em;font-weight:700;background:linear-gradient(transparent 60%,rgba(0,184,148,.3) 60%);padding:0 4px;display:inline">→ <strong>使われません（API/Pro/Max/Team/Enterprise すべて）</strong></p>
+    <p style="margin-top:10px">Anthropic の <a href="https://www.anthropic.com/legal/commercial-terms" target="_blank">Commercial Terms</a> に「<strong>Inputs and Outputs are not used to train Anthropic models</strong>」と明記。デフォルトで学習に使われない契約です。</p>
+    <ul style="margin-top:8px;padding-left:24px;line-height:1.9">
+      <li><strong>例外1:</strong> ユーザーが「Thumbs up/down」フィードバックを能動的に送信した場合 → 品質改善に使われる可能性あり</li>
+      <li><strong>例外2:</strong> 不正利用（マルウェア生成等）の調査が必要な場合 → ログ解析される</li>
+      <li>機微案件は <strong>Cursor自身のAI機能とClaude Codeの送信先が違う</strong>点に注意（Cursor自身のAI機能はCursorのサーバーへ送信されるため別管理）</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>📋 コンプライアンス・認証</h3>
+    <table>
+      <tr><th>認証・規格</th><th>対応状況</th></tr>
+      <tr><td>SOC 2 Type II</td><td>✅ 対応（レポート開示はNDA締結後）</td></tr>
+      <tr><td>ISO/IEC 27001</td><td>✅ 認証取得済み</td></tr>
+      <tr><td>GDPR（EU一般データ保護規則）</td><td>✅ 対応・DPA締結可能</td></tr>
+      <tr><td>HIPAA（医療情報）</td><td>✅ Enterpriseプランで対応・BAA締結可能</td></tr>
+      <tr><td>Zero Data Retention（ZDR）</td><td>Enterpriseプランで設定可（ログ即時削除）</td></tr>
+      <tr><td>個人情報保護法（日本）</td><td>越境移転に該当（米国保管）→ 利用目的明示・同意取得が必要</td></tr>
+    </table>
+    <p style="font-size:.9em;color:var(--dim);margin-top:8px">詳細: <a href="https://trust.anthropic.com/" target="_blank">trust.anthropic.com</a> から最新の認証レポート閲覧可（NDA要）</p>
+  </div>
+
+  <div class="card" style="border-left:5px solid var(--red)">
+    <h3>⚠️ 業務利用の実務注意（運用ルール例）</h3>
+    <p>研修参加企業に推奨する社内運用ルール：</p>
+    <ul style="margin-top:8px;padding-left:24px;line-height:1.9">
+      <li><strong>送らない情報:</strong> 顧客の個人情報（氏名・連絡先・口座等）／営業秘密・特許出願前情報／法令で越境移転が制限される情報（マイナンバー等）</li>
+      <li><strong>送る場合:</strong> マスキング処理（「お客様」「ABC社」等で抽象化）してから送信</li>
+      <li><strong>機密度高い案件:</strong> Enterprise + ZDR契約 or オンプレLLM（社内LLM）を検討</li>
+      <li><strong>出力の社内保管:</strong> Claude が出力したコード・文章も社内文書として管理対象に含める</li>
+      <li><strong>監査ログ:</strong> Enterpriseプランならコンプライアンスエンドポイントで監査ログ取得可</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>🆚 Cursor Privacy Mode との違い（混同注意）</h3>
+    <table>
+      <tr><th>機能</th><th>送信先</th><th>Cursor Privacy Modeの効果</th></tr>
+      <tr><td>Cursor Tab / Chat / Composer</td><td>Cursor のサーバー</td><td><strong>あり</strong>（ONなら学習・保存されない）</td></tr>
+      <tr class="rec"><td><strong>Cursor内ターミナルで <code>claude</code>実行</strong></td><td>Anthropic API（直接）</td><td><strong>無関係</strong>（Cursorは通信に介在しない）</td></tr>
+    </table>
+    <p style="font-size:.9em;color:var(--dim);margin-top:8px">※ Cursor Privacy Mode は <strong>Cursor自身のAI機能</strong>用の設定。Claude Code 側のデータ保護は <strong>Anthropic 側の規約</strong>（上記）で決まります。</p>
+  </div>
+
+  <div class="card">
+    <h3>📞 相談窓口</h3>
+    <ul style="padding-left:24px;line-height:1.9">
+      <li>Enterprise・ZDR・BAA契約の問合せ: <a href="mailto:sales@anthropic.com">sales@anthropic.com</a></li>
+      <li>セキュリティインシデント報告: <a href="mailto:security@anthropic.com">security@anthropic.com</a></li>
+      <li>規約・プライバシーポリシー: <a href="https://www.anthropic.com/legal" target="_blank">anthropic.com/legal</a></li>
+      <li>Trust Center（コンプライアンス資料）: <a href="https://trust.anthropic.com/" target="_blank">trust.anthropic.com</a></li>
+    </ul>
   </div>
 </div>
 
@@ -804,9 +904,27 @@ a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decorati
 
   <div class="card">
     <h3>🔗 AIとChromeを接続（重要！）</h3>
-    <p>Cursorのターミナルで入力して Enter：</p>
+    <p>Claude Code を起動した状態で、ターミナルに入力して Enter：</p>
     <div class="code" style="font-size:1.2em;text-align:center">/chrome<button class="copy" onclick="cp('/chrome',this)">コピー</button></div>
-    <div class="box ok" style="margin-top:10px"><div class="box-icon">🎉</div><div><strong>テスト：</strong>「Chromeで新しいタブを開いて」と入力。Chromeが自動で動けば成功！</div></div>
+    <p style="margin-top:8px">表示メニューで「<strong>Enabled by default</strong>」を選ぶと、毎回 <code>--chrome</code> を付けなくても自動で有効になります（推奨）。</p>
+    <div class="box info" style="margin-top:10px"><div class="box-icon">💡</div><div>
+      <strong>新規セッションから有効にする場合:</strong> <code>claude --chrome</code> で起動<br>
+      <strong>接続状態の確認・再接続:</strong> セッション中いつでも <code>/chrome</code> で確認可能
+    </div></div>
+    <div class="box ok" style="margin-top:10px"><div class="box-icon">🎉</div><div><strong>テスト：</strong>「Chromeで新しいタブを開いて、google.comに行って」と入力。Chromeが自動で動けば成功！</div></div>
+  </div>
+
+  <div class="card" style="border-left:4px solid var(--orange)">
+    <h3>⚠️ Chrome連携の制限事項（公式仕様）</h3>
+    <ul style="padding-left:24px;line-height:1.8">
+      <li><strong>対応ブラウザ:</strong> Google Chrome / Microsoft Edge のみ。<strong>Brave / Arc / Firefox / Safari は未対応</strong></li>
+      <li><strong>WSL（Windows Subsystem for Linux）は未対応</strong> → ネイティブWindowsで実行すること</li>
+      <li><strong>必要バージョン:</strong> Claude Code v2.0.73 以上 / Claude in Chrome 拡張 v1.0.36 以上</li>
+      <li><strong>対応プラン:</strong> Pro / Max / Team / Enterprise（API key単独利用は不可）</li>
+      <li><strong>サードパーティ経由（Bedrock/Vertex/Foundry）は非対応</strong> → 別途claude.aiアカウントが必要</li>
+      <li>ログイン画面・CAPTCHA は手動操作が必要（AIは止まって聞いてくる）</li>
+      <li>金融・法律・医療系サイトでの利用は<strong>非推奨</strong>（ミスのリスク）</li>
+    </ul>
   </div>
 </div>
 
@@ -888,12 +1006,12 @@ a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decorati
     <li onclick="tgl(this)"><span class="ck">✓</span>Cursor が起動している</li>
     <li onclick="tgl(this)"><span class="ck">✓</span>Privacy Mode が Enable</li>
     <li onclick="tgl(this)"><span class="ck">✓</span>ターミナルが開ける（Ctrl+J）</li>
-    <li onclick="tgl(this)"><span class="ck">✓</span><code>git --version</code> で数字が出る</li>
-    <li onclick="tgl(this)"><span class="ck">✓</span><code>node --version</code> で数字が出る</li>
-    <li onclick="tgl(this)"><span class="ck">✓</span><code>claude</code> で <code>&gt;</code> が出る</li>
-    <li onclick="tgl(this)"><span class="ck">✓</span>Claude有料プラン加入済み</li>
-    <li onclick="tgl(this)"><span class="ck">✓</span>Chrome拡張インストール済み</li>
-    <li onclick="tgl(this)"><span class="ck">✓</span><code>/chrome</code> で接続済み</li>
+    <li onclick="tgl(this)"><span class="ck">✓</span><code>claude --version</code> で数字が出る</li>
+    <li onclick="tgl(this)"><span class="ck">✓</span>Anthropicアカウント作成 + Pro $20課金済み</li>
+    <li onclick="tgl(this)"><span class="ck">✓</span><code>claude</code> で起動 → ログイン成功 → <code>&gt;</code> が出る</li>
+    <li onclick="tgl(this)"><span class="ck">✓</span>Chrome拡張（Claude in Chrome）インストール+ピン留め済み</li>
+    <li onclick="tgl(this)"><span class="ck">✓</span><code>/chrome</code> で接続済み・テスト動作確認</li>
+    <li onclick="tgl(this)"><span class="ck">✓</span>セキュリティ・データ保護の方針を理解した（企業利用の方）</li>
   </ul>
   <div class="box ok" id="alldone" style="display:none"><div class="box-icon" style="font-size:1.8em">🎉</div><div><strong style="font-size:1.2em">セットアップ完了！</strong><br>お疲れ様でした！研修当日はこの状態でスタートします。</div></div>
 </div>
@@ -1006,9 +1124,24 @@ a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decorati
     <div class="box info"><div class="box-icon">📧</div><div><strong>情シスへの連絡文例:</strong><br>「AI研修のため業務PCに以下のツールをインストールしたいです。Homebrew / Node.js / Claude Code（npm経由） / Cursor（IDE）。すべて開発者向け正規ツールです。インストール許可または手動対応をお願いします。」</div></div>
   </div>
 
+  <!-- 方法0: 最速（Claude Codeだけ） -->
+  <div class="card" style="border:2px solid var(--green);background:rgba(0,184,148,.05)">
+    <h3>🚀 <strong>方法0: 最速ルート（Claude Codeだけ入れる）</strong></h3>
+    <p style="color:var(--dim);font-size:.92em">Anthropic公式の標準インストーラ。Homebrewも Node.js も不要、<strong>1コマンドだけ</strong>。</p>
+    <p style="font-weight:700;margin-top:14px">ターミナル（<kbd>Cmd</kbd>+<kbd>J</kbd>）に貼り付けて Enter：</p>
+    <div class="code" style="font-size:.85em">curl -fsSL https://claude.ai/install.sh | bash<button class="copy" onclick="cp('curl -fsSL https://claude.ai/install.sh | bash',this)">コピー</button></div>
+    <p style="margin-top:8px">確認：</p>
+    <div class="code">claude --version<button class="copy" onclick="cp('claude --version',this)">コピー</button></div>
+    <div class="box ok"><div class="box-icon">✅</div><div><code>2.x.x</code>のような数字が出れば成功！STEP 3.5（アカウント作成）へ進んでOK。<br>※ Macは Git が標準搭載。<strong>これ単体で Claude Code が動きます</strong>。</div></div>
+    <div class="box info"><div class="box-icon">💡</div><div>
+      <strong>Homebrew派の方:</strong> <code>brew install --cask claude-code</code> でも同じものが入ります。<br>
+      <strong>Node.js も将来使う方:</strong> 下の方法A/B/Cで一緒に入れておくと後で便利
+    </div></div>
+  </div>
+
   <!-- 方法A: Cursor自動セットアップ -->
   <div class="card" style="border-left:5px solid var(--accent)">
-    <h3>⭐ <strong>方法A: Cursorのチャットに丸投げ（最ラク）</strong></h3>
+    <h3>⭐ <strong>方法A: Cursorのチャットに丸投げ（コマンド苦手な方向け）</strong></h3>
     <p style="color:var(--dim);font-size:.92em">Cursor内蔵AIに「全部やって」と頼むだけ。コマンド分からなくてもOK。</p>
 
     <ol class="sl">
