@@ -1072,10 +1072,49 @@ a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decorati
     <ol class="sl">
       <li>Cursorを閉じて開き直す</li>
       <li>PCを再起動する</li>
-      <li>Claude Codeに聞く：「〇〇というエラーが出ました。どうすればいい？」</li>
-      <li>スクリーンショットを講師に送る</li>
+      <li><strong>Claude（Web版）</strong>に聞く（Claude Code がまだ起動できていないため、ブラウザの <a href="https://claude.ai" target="_blank">claude.ai</a> を使う）<br>
+        例: 「Cursor のターミナルで <code>claude</code> と打ったら <code>'claude' is not recognized</code> と出ました。Windows 11 です。どうすればいい？」<br>
+        <span style="font-size:.85em;color:var(--dim)">※ エラー文・OSバージョン・直前にやった操作 をセットで聞くと精度が上がります</span></li>
+      <li>スクリーンショット（画面写真）を講師に送る</li>
     </ol>
-    <div class="box info" style="margin-top:12px"><div class="box-icon">📷</div><div><strong>スクショの撮り方：</strong><br>Windows: <kbd>Windows</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd> → 範囲を選択 → LINEやメールに貼り付け<br>Mac: <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>4</kbd></div></div>
+  </div>
+
+  <div class="card" style="border-left:4px solid var(--blue)">
+    <h3>📷 スクリーンショット（画面写真）の撮り方</h3>
+    <p style="color:var(--dim);font-size:.92em">エラー画面を見せると一発で解決することが多いので、<strong>必ず撮り方を覚えてください</strong>。</p>
+
+    <p style="font-weight:700;margin-top:14px">🪟 Windows の場合（一番ラクな方法）</p>
+    <ol class="sl">
+      <li>キーボードで <kbd>Windows</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd> を同時に押す<br>（画面が一瞬グレーになります）</li>
+      <li>マウスでドラッグして<strong>エラー画面の範囲を選択</strong>（ターミナル全体を囲うのが推奨）</li>
+      <li>右下に「画像をコピーしました」と通知が出る</li>
+      <li>LINE / メール / Slack の入力欄をクリックして <kbd>Ctrl</kbd> + <kbd>V</kbd> で貼り付け → 送信</li>
+    </ol>
+    <div class="box info" style="margin-top:8px"><div class="box-icon">💡</div><div>
+      <strong>うまくいかない場合の代替手段:</strong><br>
+      ① <kbd>PrintScreen</kbd>（Prt Sc）キーを押す → 画面全体がコピーされる → 上記④で貼り付け<br>
+      ② スマホで画面を撮影してLINEに送る（最終手段・誰でもできる）
+    </div></div>
+
+    <p style="font-weight:700;margin-top:18px">🍎 Mac の場合</p>
+    <ol class="sl">
+      <li>キーボードで <kbd>Cmd</kbd>(⌘) + <kbd>Shift</kbd> + <kbd>4</kbd> を同時に押す<br>（マウスカーソルが十字に変わる）</li>
+      <li>マウスでドラッグして<strong>エラー画面の範囲を選択</strong>して指を離す</li>
+      <li>デスクトップに「<strong>スクリーンショット 2026-MM-DD ...</strong>」というPNG画像が保存される</li>
+      <li>LINE / メール / Slack の入力欄に<strong>その画像をドラッグ&ドロップ</strong>するか、<br><kbd>Cmd</kbd>+<kbd>C</kbd>でコピー後 <kbd>Cmd</kbd>+<kbd>V</kbd>で貼り付け → 送信</li>
+    </ol>
+    <div class="box info" style="margin-top:8px"><div class="box-icon">💡</div><div>
+      <strong>画面全体を撮りたい場合:</strong> <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>3</kbd>（ドラッグ不要・全画面が即保存）<br>
+      <strong>クリップボードに直接コピーしたい:</strong> <kbd>Cmd</kbd>+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>4</kbd>（Cmd+Ctrlを足す）
+    </div></div>
+
+    <div class="box ok" style="margin-top:10px"><div class="box-icon">📤</div><div>
+      <strong>送るときに添える情報（一緒に書くと早く解決）:</strong><br>
+      ① OS（Windows 11 / Mac M2 等）<br>
+      ② どのSTEPで詰まったか（例: 「STEP 3 の方法A」）<br>
+      ③ 直前にやった操作（例: 「<code>irm ...</code> を貼り付けて Enter したら...」）<br>
+      ④ ターミナルに出ている英文エラー（できればそのままコピー）
+    </div></div>
   </div>
 </div>
 
