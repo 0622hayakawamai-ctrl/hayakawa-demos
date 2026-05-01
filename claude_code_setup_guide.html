@@ -139,6 +139,7 @@ a{color:var(--acl);text-decoration:none}a:hover{text-decoration:underline}
   <div class="toc">
     <h3>📚 もくじ</h3>
     <ol>
+      <li><a href="#intro">はじめに（AI初心者の方へ）</a></li>
       <li><a href="#step1">Cursor をダウンロード</a></li>
       <li><a href="#step2">Cursor の初回設定</a></li>
       <li><a href="#step3">必要なツールを一括インストール</a></li>
@@ -151,6 +152,74 @@ a{color:var(--acl);text-decoration:none}a:hover{text-decoration:underline}
       <li><a href="#mac">Macの方はこちら</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ol>
+  </div>
+</div>
+
+<!-- ===== STEP 0: はじめに ===== -->
+<div class="step" id="intro">
+  <div class="step-head">
+    <div class="step-num o">0</div>
+    <div><div class="step-title">はじめに（AI初心者の方へ）</div><div class="step-sub">「Claude Codeって何？」「何ができる？」をまず理解</div></div>
+  </div>
+
+  <div class="card">
+    <h3>🤖 Claude Code って何？</h3>
+    <p style="font-size:1.1em;font-weight:700;background:linear-gradient(transparent 60%,rgba(108,92,231,.3) 60%);padding:0 4px;display:inline">ひとことで言うと「日本語で指示するとパソコンが勝手に動くツール」</p>
+    <ul style="margin-top:14px;padding-left:24px;line-height:2">
+      <li>メールの下書き、議事録の整理、データ集計、画像作り、HPの作成、ブラウザ操作…</li>
+      <li>全部、<span class="highlight">日本語で「○○して」と頼むだけ</span>で、PC上で自動的に作業してくれます。</li>
+      <li><strong>ChatGPTとの違い:</strong> ChatGPTは「チャット画面の中だけ」。<span class="hl-green">Claude Codeは「実際にPCを動かす」</span>。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>💼 Claude Code でできること（具体例）</h3>
+    <table>
+      <tr><th>シーン</th><th>あなたの指示</th><th>Claude Code がやること</th></tr>
+      <tr><td>営業</td><td>「この100社のHP見て、業種をまとめて」</td><td>100サイト全部開く → 読取 → 一覧表に出力</td></tr>
+      <tr><td>集計</td><td>「先月の売上をエクセルで集計して」</td><td>エクセル開く → 集計 → グラフ化 → 保存</td></tr>
+      <tr><td>制作</td><td>「整体院のLPを作って」</td><td>業界調査 → デザイン提案 → HTML生成 → プレビュー</td></tr>
+      <tr><td>リサーチ</td><td>「競合5社の料金を比較して」</td><td>各社サイト訪問 → 情報抽出 → 比較表作成</td></tr>
+      <tr><td>メール</td><td>「クライアント10社にお礼メール送って」</td><td>文生成 → Gmail起動 → 順番に送信（確認あり）</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>✨ 何が嬉しいの？（メリット）</h3>
+    <table>
+      <tr><th>メリット</th><th>具体的にこう変わる</th></tr>
+      <tr><td><span class="hl-green">✅ 作業時間が10倍速い</span></td><td>1時間の作業 → <strong>6分で完了</strong>が普通</td></tr>
+      <tr><td><span class="hl-green">✅ 専門知識いらない</span></td><td>プログラミング知識ゼロでOK。<strong>日本語だけで動く</strong></td></tr>
+      <tr><td><span class="hl-green">✅ 疲れない・ミスらない</span></td><td>100件の繰り返し作業も淡々とやってくれる</td></tr>
+      <tr><td><span class="hl-green">✅ 学習で賢くなる</span></td><td>教えたことを覚えて、次回から同じ説明不要</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>⚠️ デメリット・注意点（正直に）</h3>
+    <table>
+      <tr><th>デメリット</th><th>対策</th></tr>
+      <tr><td><span class="hl-orange">⚠️ 月額課金が必要</span></td><td>Pro $20/月（約3,000円）から。Cursor・Chrome拡張は無料</td></tr>
+      <tr><td><span class="hl-orange">⚠️ 完全自動だとミス事故もある</span></td><td>重要な送信・公開前は必ず人間が目視確認</td></tr>
+      <tr><td><span class="hl-orange">⚠️ 設定なしだとそこそこの実力</span></td><td>このガイドの <strong>STEP 6</strong> で品質2〜3倍に化ける</td></tr>
+      <tr><td><span class="hl-orange">⚠️ Claudeが前提を知らないとサボる</span></td><td>プロジェクトのルールは <code>CLAUDE.md</code> に書く（後述）</td></tr>
+    </table>
+  </div>
+
+  <div class="box ok"><div class="box-icon" style="font-size:1.4em">🎯</div><div>
+    <strong style="font-size:1.05em">このガイドのゴール</strong><br>
+    セットアップ完了 + <strong>STEP 6 の3つの仕込み</strong>までやれば、<span class="hl-green">「優秀な秘書を1人雇った」状態</span>になります。<br>
+    月3,000円の投資で、<strong>月10〜30万円分の作業時間が浮きます</strong>。
+  </div></div>
+
+  <div class="card">
+    <h3>🗺 全体像：セットアップする3つ</h3>
+    <table>
+      <tr><th>#</th><th>ツール</th><th>役割</th><th>費用</th></tr>
+      <tr><td>1</td><td><strong>Cursor</strong></td><td>AIの作業場所（エディタ）</td><td>無料</td></tr>
+      <tr class="rec"><td>2</td><td><strong>Claude Code</strong></td><td>AI本体。日本語で指示すると動く</td><td>要課金（最低 月$20）</td></tr>
+      <tr><td>3</td><td><strong>Claude in Chrome</strong></td><td>AIがブラウザを自動操作する</td><td>無料</td></tr>
+    </table>
   </div>
 </div>
 
