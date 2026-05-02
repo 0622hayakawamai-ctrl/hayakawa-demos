@@ -6551,43 +6551,43 @@ a.term-link::after{content:' 📖';font-size:.7em;opacity:.6}
     <div class="info">
       <div class="info-title">🌡 結露を予測する5つの計算式（建築の世界で標準）</div>
       <div class="info-content">
-        <p style="margin:0 0 .8em;font-size:.92em;color:#555">👉 結露＝<strong>表面温度が露点を下回って水蒸気が水滴になる現象</strong>。これを事前に予測してカビを防ぐための計算式。</p>
-        ・<strong>Magnus式（マグナスしき）</strong>──<strong>気温と湿度から「水が水蒸気のままでいられる限界の圧力」を計算</strong>する基本式。露点の計算に使う<br>
-        ・<strong>Glaser法（グレーザーほう）</strong>──<strong>壁の中で結露が起きるかを静的に</strong>（時間変化なし・1日の平均的な状況で）予測する伝統的方法。1959年〜<br>
-        ・<strong>GAB吸湿等温線</strong>──<strong>木材・コンクリ・石膏ボード等の「水を吸う性質」を曲線で表す</strong>モデル。素材別の吸湿シミュレーションに使う<br>
-        ・<strong>表面結露・<a class="term-link" href="#term-frsi">fRsi</a></strong>──<strong>「壁の表面温度が外気と室内のどっち寄りか」を数値化</strong>。fRsi ≥ 0.7なら表面結露しない（ISO 13788規格）<br>
-        ・<strong>内部結露・HAM解析</strong>──<strong>熱（Heat）・空気（Air）・水分（Moisture）を時間変化込みで動的に解析</strong>する最新手法。WUFI Pro/2D等のソフトで実行<br>
-        <p style="margin:.8em 0 0;font-size:.85em;color:#888">💡 ザックリ言うと：Magnus＝基本／Glaser＝静的予測（古い）／HAM＝動的予測（最新）／fRsi＝表面結露の判定指標。</p>
+        <p style="margin:0 0 .8em;font-size:.92em;color:#555">👉 結露＝<strong>表面温度が<a class="term-link" href="#term-roten">露点</a>を下回って水蒸気が水滴になる現象</strong>。これを事前に予測してカビを防ぐための計算式。<strong>用語をクリックすると用語集に飛びます</strong>📖</p>
+        ・<strong><a class="term-link" href="#term-magnus">Magnus式（マグナスしき）</a></strong>──<strong>気温と湿度から「水が水蒸気のままでいられる限界の圧力（<a class="term-link" href="#term-saturation-pressure">飽和水蒸気圧</a>）」を計算</strong>する基本式。<a class="term-link" href="#term-roten">露点</a>の計算に使う<br>
+        ・<strong><a class="term-link" href="#term-glaser">Glaser法（グレーザーほう）</a></strong>──<strong>壁の中で結露が起きるかを静的に</strong>（時間変化なし・1日の平均的な状況で）予測する伝統的方法。1959年〜<br>
+        ・<strong><a class="term-link" href="#term-gab">GAB吸湿等温線</a></strong>──<strong>木材・コンクリ・石膏ボード等の「水を吸う性質」を曲線で表す</strong>モデル。素材別の吸湿シミュレーションに使う<br>
+        ・<strong>表面結露・<a class="term-link" href="#term-frsi">fRsi</a></strong>──<strong>「壁の表面温度が外気と室内のどっち寄りか」を数値化</strong>。fRsi ≥ 0.7なら表面結露しない（<a class="term-link" href="#term-iso13788">ISO 13788</a>規格）<br>
+        ・<strong>内部結露・<a class="term-link" href="#term-ham">HAM解析</a></strong>──<strong>熱（Heat）・空気（Air）・水分（Moisture）を時間変化込みで動的に解析</strong>する最新手法。<a class="term-link" href="#term-wufi">WUFI</a> Pro/2D等のソフトで実行<br>
+        <p style="margin:.8em 0 0;font-size:.85em;color:#888">💡 ザックリ言うと：<a class="term-link" href="#term-magnus">Magnus</a>＝基本／<a class="term-link" href="#term-glaser">Glaser</a>＝静的予測（古い）／<a class="term-link" href="#term-ham">HAM</a>＝動的予測（最新）／<a class="term-link" href="#term-frsi">fRsi</a>＝表面結露の判定指標。</p>
       </div>
     </div>
 
     <div class="panel" data-num="03">
       <h3>建築・カビの世界の国際規格まとめ</h3>
-      <p style="margin:0 0 .6em;font-size:.92em;color:#555">👉 各国・各団体が定めた「結露・カビを防ぐための公式ルール」。BtoB案件でこれらの規格名を出すと信頼度UP。</p>
+      <p style="margin:0 0 .6em;font-size:.92em;color:#555">👉 各国・各団体が定めた「結露・カビを防ぐための公式ルール」。BtoB案件でこれらの規格名を出すと信頼度UP。<strong>規格名をクリックすると用語集で詳しく</strong>📖</p>
       <ul class="checklist">
-        <li><strong>ISO 13788</strong>──国際標準。<strong><a class="term-link" href="#term-frsi">fRsi</a> ≥ 0.7</strong>なら表面結露しないと判定する基準</li>
-        <li><strong>ISO 15026</strong>──国際標準。<strong>HAM動的解析（熱・空気・水分の時間変化計算）</strong>のルール</li>
-        <li><strong>ISO 6946</strong>──国際標準。建材の<strong>熱抵抗（断熱性能）</strong>の計算方法</li>
-        <li><strong>ASHRAE 160-2021</strong>──米国。<strong>「30日間の平均湿度が80%以下」</strong>ならカビが生えにくいと定義</li>
-        <li><strong>JIS A 2104</strong>──日本工業規格。建物の湿気・結露対策の計算方法</li>
-        <li><strong>WHO Indoor Air Quality</strong>──世界保健機関の<strong>「室内空気の質」ガイドライン</strong>。湿気住宅の健康影響をまとめた世界基準</li>
-        <li><strong>EN 15026（欧州統一）／BS 5250（英国）／DIN 4108-3（ドイツ）</strong>──欧州各国の建物湿気対策の国家規格</li>
+        <li><strong><a class="term-link" href="#term-iso13788">ISO 13788</a></strong>──国際標準。<strong><a class="term-link" href="#term-frsi">fRsi</a> ≥ 0.7</strong>なら表面結露しないと判定する基準</li>
+        <li><strong><a class="term-link" href="#term-iso15026">ISO 15026</a></strong>──国際標準。<strong><a class="term-link" href="#term-ham">HAM動的解析</a>（熱・空気・水分の時間変化計算）</strong>のルール</li>
+        <li><strong><a class="term-link" href="#term-iso6946">ISO 6946</a></strong>──国際標準。建材の<strong>熱抵抗（断熱性能）</strong>の計算方法</li>
+        <li><strong><a class="term-link" href="#term-ashrae160">ASHRAE 160-2021</a></strong>──米国。<strong>「30日間の平均湿度が80%以下」</strong>ならカビが生えにくいと定義</li>
+        <li><strong><a class="term-link" href="#term-jisa2104">JIS A 2104</a></strong>──日本工業規格。建物の湿気・結露対策の計算方法</li>
+        <li><strong><a class="term-link" href="#term-who-iaq">WHO Indoor Air Quality</a></strong>──世界保健機関の<strong>「室内空気の質」ガイドライン</strong>。湿気住宅の健康影響をまとめた世界基準</li>
+        <li><strong><a class="term-link" href="#term-en15026">EN 15026（欧州統一）／BS 5250（英国）／DIN 4108-3（ドイツ）</a></strong>──欧州各国の建物湿気対策の国家規格</li>
       </ul>
-      <p style="margin:.6em 0 0;font-size:.85em;color:#888">💡 日本ではJIS A 2104＋ISO 13788が実務の標準。米国の大型案件はASHRAE 160-2021必須。</p>
+      <p style="margin:.6em 0 0;font-size:.85em;color:#888">💡 日本では<a class="term-link" href="#term-jisa2104">JIS A 2104</a>＋<a class="term-link" href="#term-iso13788">ISO 13788</a>が実務の標準。米国の大型案件は<a class="term-link" href="#term-ashrae160">ASHRAE 160-2021</a>必須。</p>
     </div>
 
     <div class="info">
       <div class="info-title">💻 結露・カビ予測の専用ソフト一覧（建築設計のプロが使うツール）</div>
       <div class="info-content">
-        <p style="margin:0 0 .8em;font-size:.92em;color:#555">👉 「<strong>商用</strong>」＝<strong>会社や個人にお金を払って買う有料ソフト</strong>のこと（無料の研究用と区別）。建築設計者・ゼネコン・住宅メーカーが「この建物にカビが生えるか」を建てる前に予測するために使うシミュレーションソフト。</p>
-        ・<strong>WUFI Bio（ヴーフィ・バイオ）</strong>──ドイツのフラウンホーファー研究所製。<strong>カビ発生予測の世界標準</strong>。買い切り約45万円<br>
-        ・<strong>WUFI Plus/Pro</strong>──同じくWUFIシリーズ。<strong>建物全体の温度・湿度・カビをまとめて計算</strong>。80-150万円<br>
-        ・<strong>DELPHIN（デルフィン）</strong>──ドイツのドレスデン工科大学発。建物内の<strong>水分の動き</strong>に強い。35-80万円<br>
-        ・<strong>HAMSTAD（ハムスタッド）</strong>──研究用・大学などで使う。商用ではない<br>
+        <p style="margin:0 0 .8em;font-size:.92em;color:#555">👉 「<strong><a class="term-link" href="#term-shoyo">商用</a></strong>」＝<strong>会社や個人にお金を払って買う有料ソフト</strong>のこと（無料の研究用と区別）。建築設計者・ゼネコン・住宅メーカーが「この建物にカビが生えるか」を建てる前に予測するために使うシミュレーションソフト。<strong>クリックで詳細</strong>📖</p>
+        ・<strong><a class="term-link" href="#term-wufi">WUFI Bio（ヴーフィ・バイオ）</a></strong>──ドイツのフラウンホーファー研究所製。<strong>カビ発生予測の世界標準</strong>。買い切り約45万円<br>
+        ・<strong><a class="term-link" href="#term-wufi">WUFI Plus/Pro</a></strong>──同じくWUFIシリーズ。<strong>建物全体の温度・湿度・カビをまとめて計算</strong>。80-150万円<br>
+        ・<strong><a class="term-link" href="#term-delphin">DELPHIN（デルフィン）</a></strong>──ドイツのドレスデン工科大学発。建物内の<strong>水分の動き</strong>に強い。35-80万円<br>
+        ・<strong>HAMSTAD（ハムスタッド）</strong>──研究用・大学などで使う。<a class="term-link" href="#term-shoyo">商用</a>ではない（無料）<br>
         ・<strong>MATCH（マッチ）</strong>──デンマーク製。北欧の寒冷地気候に強い。約40万円<br>
-        ・<strong>IDA ICE（アイダ・アイス）</strong>──スウェーデン製。<strong>BIM（建物3Dモデル）連携</strong>に強い。80万円〜<br>
-        ・<strong>EnergyPlus（エナジープラス）</strong>──米エネルギー省（DOE）が作った<strong>無料の建物エネルギー解析ソフト</strong>。世界中で利用<br>
-        <p style="margin:.8em 0 0;font-size:.85em;color:#888">💡 ザックリ：日本でも普及してるのはWUFI（ドイツ製）。1社1ライセンスで45万〜150万円。<strong>カビバスターズ・大手ゼネコンも導入</strong>。月額9,800円のSaaS型がスタートアップの事業機会。</p>
+        ・<strong>IDA ICE（アイダ・アイス）</strong>──スウェーデン製。<strong><a class="term-link" href="#term-bim">BIM</a>（建物3Dモデル）連携</strong>に強い。80万円〜<br>
+        ・<strong><a class="term-link" href="#term-energyplus">EnergyPlus（エナジープラス）</a></strong>──米エネルギー省（DOE）が作った<strong>無料の建物エネルギー解析ソフト</strong>。世界中で利用<br>
+        <p style="margin:.8em 0 0;font-size:.85em;color:#888">💡 ザックリ：日本でも普及してるのは<a class="term-link" href="#term-wufi">WUFI</a>（ドイツ製）。1社1ライセンスで45万〜150万円。<strong>カビバスターズ・大手ゼネコンも導入</strong>。月額9,800円のSaaS型がスタートアップの事業機会。</p>
       </div>
     </div>
 
@@ -8713,6 +8713,86 @@ a.term-link::after{content:' 📖';font-size:.7em;opacity:.6}
     <div class="glossary-entry" id="term-ashrae160">
       <h4>ASHRAE 160-2021 <small>= 建築湿度基準</small></h4>
       <p>米国冷凍空調学会の建築湿度ガイドライン。<strong>30日移動平均で表面RH 80%以下</strong>を維持すべし。米国の住宅・建築設計の標準。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-magnus">
+      <h4>Magnus式（マグナスしき）<small>= 飽和水蒸気圧の計算式</small></h4>
+      <p><strong>気温と湿度から「水が水蒸気のままでいられる限界の圧力」を計算する基本式</strong>。これを使うと「<a class="term-link" href="#term-roten">露点温度</a>」が出せる。1844年マグナスが提案。例：気温25℃・湿度80% → 露点21.3℃。SwitchBot Meter Proのアプリにも内蔵。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-glaser">
+      <h4>Glaser法（グレーザーほう）<small>= 静的内部結露の計算方法</small></h4>
+      <p>1959年〜の<strong>建築の伝統的な結露計算法</strong>。「壁の中で結露が起きるか」を<strong>1日の平均的な状況（時間変化なし）</strong>で予測。簡単で計算しやすいが、最近は時間変化を含む<a class="term-link" href="#term-ham">HAM解析</a>に置き換わりつつある。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-gab">
+      <h4>GAB吸湿等温線（じーえーびー きゅうしつとうおんせん）<small>= 木材・コンクリ等の水を吸う性質を表す曲線</small></h4>
+      <p>「Guggenheim-Anderson-de Boer」の頭文字。<strong>建材ごとに「湿度何%でどれだけ水を吸うか」を曲線で表したモデル</strong>。WUFI等のシミュレーションソフトで素材別の吸湿計算に使う。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-ham">
+      <h4>HAM解析（はむかいせき）<small>= Heat-Air-Moisture 動的解析</small></h4>
+      <p><strong>熱（Heat）・空気（Air）・水分（Moisture）を時間変化込みで動的にシミュレーション</strong>する最新手法。WUFI Pro/2D、DELPHIN等のソフトで実行。<a class="term-link" href="#term-glaser">Glaser法</a>より精密だが計算量が多い。ISO 15026が国際標準。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-roten">
+      <h4>露点温度（ろてんおんど）<small>= 水蒸気が凝結し始める温度</small></h4>
+      <p><strong>表面温度がこれを下回ると結露する</strong>。<a class="term-link" href="#term-magnus">Magnus式</a>で気温・湿度から計算。例：気温25℃・湿度80% → 露点21.3℃。HACCP管理基準は「<strong>表面と空気の露点差3度以下</strong>」（食品工場）。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-iso13788">
+      <h4>ISO 13788 <small>= 建築の表面結露・カビ判定の国際規格</small></h4>
+      <p><strong>表面温度係数 <a class="term-link" href="#term-frsi">fRsi</a> ≥ 0.7</strong>なら表面結露しないと定める。日本のJIS A 2104と並ぶ実務標準。建物の冬場結露評価で使用。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-iso15026">
+      <h4>ISO 15026 <small>= 建築の動的湿気解析の国際規格</small></h4>
+      <p><a class="term-link" href="#term-ham">HAM解析（熱・空気・水分の時間変化計算）</a>のルール。WUFI・DELPHIN等のソフトはこの規格に準拠。<a class="term-link" href="#term-iso13788">ISO 13788</a>の上位互換。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-iso6946">
+      <h4>ISO 6946 <small>= 建材の熱抵抗の国際規格</small></h4>
+      <p>建材の<strong>熱抵抗（断熱性能・U値）の計算方法</strong>を定める。日本のZEH基準・HEAT20の根拠規格の1つ。断熱性能高い＝結露しにくい＝カビ生えにくい。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-jisa2104">
+      <h4>JIS A 2104 <small>= 日本の建築湿気・結露の規格</small></h4>
+      <p>日本工業規格。建物の<strong>湿気・結露対策の計算方法</strong>を定める。<a class="term-link" href="#term-iso13788">ISO 13788</a>の日本版。日本の建築設計の標準。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-who-iaq">
+      <h4>WHO IAQ Guidelines <small>= 世界保健機関の室内空気質ガイドライン</small></h4>
+      <p>2009年WHO発行。<strong>湿気住宅の小児喘息リスク+13%</strong>等の世界基準を定める。Awaab's Law（英国2025）等の各国の建築・賃貸法の根拠。<a class="term-link" href="#term-iaq">IAQ</a>＝Indoor Air Quality。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-en15026">
+      <h4>EN 15026 / BS 5250 / DIN 4108-3 <small>= 欧州各国の建築湿気規格</small></h4>
+      <p><strong>EN 15026</strong>＝欧州統一規格／<strong>BS 5250</strong>＝英国国家規格／<strong>DIN 4108-3</strong>＝ドイツ国家規格。すべて<strong>建築の湿気・結露・カビ予測</strong>のルール。各国はこれを建築基準法に組込み。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-delphin">
+      <h4>DELPHIN（デルフィン）<small>= 独ドレスデン工科大学発の建築湿気シミュレーションソフト</small></h4>
+      <p><a class="term-link" href="#term-wufi">WUFI</a>と並ぶ商用ソフト。<strong>建物内の水分の動き</strong>に強い。買い切り35-80万円。研究機関・ゼネコンで使用。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-bim">
+      <h4>BIM <small>= Building Information Modeling（建物情報モデル）</small></h4>
+      <p><strong>建物の3Dデジタルモデル＋シミュレーション</strong>。Revit・ArchiCAD等のソフトで構築。<a class="term-link" href="#term-wufi">WUFI</a>と連携して<strong>建てる前にカビ発生ポイントを予測</strong>できる。「建てる前にカビを防ぐ」パラダイムシフト。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-energyplus">
+      <h4>EnergyPlus（エナジープラス）<small>= 米国DOE製の無料建物エネルギー解析ソフト</small></h4>
+      <p>米エネルギー省（DOE = Department of Energy）が開発。<strong>無料で誰でも使える</strong>建物全体の温度・湿度・エネルギー解析ソフト。世界中の研究・設計で利用。日本でも建築学生・設計事務所が使う。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-shoyo">
+      <h4>商用ソフト（しょうようソフト）<small>= 会社・個人にお金を払って買う有料ソフト</small></h4>
+      <p>「商用」＝「商売（ビジネス）に使う＝お金を払う」という意味。研究用の無料ソフト（HAMSTAD等）と区別する言葉。<a class="term-link" href="#term-wufi">WUFI</a>・<a class="term-link" href="#term-delphin">DELPHIN</a>等の<strong>建築湿気シミュレーションソフト</strong>は1ライセンス35〜150万円が相場。</p>
+    </div>
+
+    <div class="glossary-entry" id="term-saturation-pressure">
+      <h4>飽和水蒸気圧（ほうわすいじょうきあつ）<small>= 空気が含める水蒸気の最大量を圧力で表したもの</small></h4>
+      <p>気温が高いほど大きい（暖かい空気は水を多く含める）。<a class="term-link" href="#term-magnus">Magnus式</a>で計算。<a class="term-link" href="#term-roten">露点温度</a>はこの圧力が現状の水蒸気圧と一致する温度。</p>
     </div>
 
     <!-- ⚗️ カビ退治の薬剤・技術 -->
