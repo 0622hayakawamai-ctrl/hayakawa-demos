@@ -6506,22 +6506,23 @@ a.term-link::after{content:' 📖';font-size:.7em;opacity:.6}
     </div>
 
     <div class="info">
-      <div class="info-title">📊 カビ属別Aw閾値（2020年以降更新値）</div>
+      <div class="info-title">📊 カビの種類別「最低水分活性（Aw）」一覧</div>
       <div class="info-content">
-        【好乾性カビ】<br>
-        ・<strong>Wallemia sebi</strong>──<strong>Aw 0.69</strong>（最低生育閾）<br>
-        ・<strong>Aspergillus penicillioides</strong>──Aw 0.71<br>
-        ・<strong>Eurotium amstelodami</strong>──Aw 0.72<br>
-        【中湿性】<br>
-        ・<strong>Aspergillus restrictus</strong>──Aw 0.75<br>
-        ・<strong>Penicillium chrysogenum</strong>──Aw 0.79<br>
-        ・<strong>A. versicolor</strong>──Aw 0.78<br>
-        【高湿性】<br>
-        ・<strong>Cladosporium</strong>──Aw 0.86<br>
-        ・<strong>Alternaria</strong>──Aw 0.88<br>
-        ・<strong>Stachybotrys chartarum</strong>──<strong>Aw 0.94</strong>（高湿要）<br>
-        ・<strong>Chaetomium globosum</strong>──Aw 0.94<br>
-        ※Pitt &amp; Hocking 2022 第4版・Frisvad &amp; Samson 2020 反映
+        <p style="margin:0 0 .8em;font-size:.92em;color:#555">👉 <strong><a class="term-link" href="#term-aw">水分活性Aw</a></strong>＝そのカビが生えるのに最低限必要な「自由水」の量。<strong>数字が小さいほど乾燥に強い</strong>＝家の中の押し入れ等で生える。</p>
+        <strong>【乾燥に強いカビ】</strong>＝押し入れ・米・乾物・本でも生える<br>
+        ・<strong><a class="term-link" href="#term-wallemia">Wallemia sebi（ワレミア・米カビ）</a></strong>──<strong>Aw 0.69</strong>（世界一の乾燥派）<br>
+        ・<strong>Aspergillus penicillioides（ペニシリオイデス）</strong>──Aw 0.71<br>
+        ・<strong>Eurotium amstelodami（ユーロチウム・赤ジャム上）</strong>──Aw 0.72<br>
+        <strong>【ふつう湿度で生えるカビ】</strong>＝風呂・キッチン・壁紙<br>
+        ・<strong>Aspergillus restrictus（レストリクタス）</strong>──Aw 0.75<br>
+        ・<strong>Penicillium chrysogenum（青カビ）</strong>──Aw 0.79<br>
+        ・<strong>A. versicolor（バーシカラー）</strong>──Aw 0.78<br>
+        <strong>【高い湿度を好むカビ】</strong>＝雨漏り・水損後にしか出ない<br>
+        ・<strong><a class="term-link" href="#term-cladosporium">Cladosporium（クラドスポリウム・黒い斑点）</a></strong>──Aw 0.86<br>
+        ・<strong>Alternaria（アルテルナリア・大型黒カビ）</strong>──Aw 0.88<br>
+        ・<strong><a class="term-link" href="#term-stachybotrys">Stachybotrys chartarum（スタキボトリス・水損黒カビ）</a></strong>──<strong>Aw 0.94</strong>（要・高湿）<br>
+        ・<strong>Chaetomium globosum（カエトミウム）</strong>──Aw 0.94<br>
+        <p style="margin:.8em 0 0;font-size:.85em;color:#888">※出典：Pitt &amp; Hocking『真菌と食品の腐敗』第4版（2022年）／Frisvad &amp; Samson 2020</p>
       </div>
     </div>
 
@@ -6548,39 +6549,45 @@ a.term-link::after{content:' 📖';font-size:.7em;opacity:.6}
     </div>
 
     <div class="info">
-      <div class="info-title">🌡 結露予測の式</div>
+      <div class="info-title">🌡 結露を予測する5つの計算式（建築の世界で標準）</div>
       <div class="info-content">
-        ・<strong>Magnus式</strong>──飽和水蒸気圧計算<br>
-        ・<strong>Glaser法</strong>──静的内部結露<br>
-        ・<strong>GAB吸湿等温線</strong>──多孔質材料<br>
-        ・<strong>表面結露</strong>──fRsi（surface temperature factor）<br>
-        ・<strong>内部結露</strong>──HAM解析（Heat-Air-Moisture）
+        <p style="margin:0 0 .8em;font-size:.92em;color:#555">👉 結露＝<strong>表面温度が露点を下回って水蒸気が水滴になる現象</strong>。これを事前に予測してカビを防ぐための計算式。</p>
+        ・<strong>Magnus式（マグナスしき）</strong>──<strong>気温と湿度から「水が水蒸気のままでいられる限界の圧力」を計算</strong>する基本式。露点の計算に使う<br>
+        ・<strong>Glaser法（グレーザーほう）</strong>──<strong>壁の中で結露が起きるかを静的に</strong>（時間変化なし・1日の平均的な状況で）予測する伝統的方法。1959年〜<br>
+        ・<strong>GAB吸湿等温線</strong>──<strong>木材・コンクリ・石膏ボード等の「水を吸う性質」を曲線で表す</strong>モデル。素材別の吸湿シミュレーションに使う<br>
+        ・<strong>表面結露・<a class="term-link" href="#term-frsi">fRsi</a></strong>──<strong>「壁の表面温度が外気と室内のどっち寄りか」を数値化</strong>。fRsi ≥ 0.7なら表面結露しない（ISO 13788規格）<br>
+        ・<strong>内部結露・HAM解析</strong>──<strong>熱（Heat）・空気（Air）・水分（Moisture）を時間変化込みで動的に解析</strong>する最新手法。WUFI Pro/2D等のソフトで実行<br>
+        <p style="margin:.8em 0 0;font-size:.85em;color:#888">💡 ザックリ言うと：Magnus＝基本／Glaser＝静的予測（古い）／HAM＝動的予測（最新）／fRsi＝表面結露の判定指標。</p>
       </div>
     </div>
 
     <div class="panel" data-num="03">
-      <h3>国際規格まとめ</h3>
+      <h3>建築・カビの世界の国際規格まとめ</h3>
+      <p style="margin:0 0 .6em;font-size:.92em;color:#555">👉 各国・各団体が定めた「結露・カビを防ぐための公式ルール」。BtoB案件でこれらの規格名を出すと信頼度UP。</p>
       <ul class="checklist">
-        <li><strong>ISO 13788</strong>──fRsi ≥ 0.7（表面結露判定）</li>
-        <li><strong>ISO 15026</strong>──HAM動的解析</li>
-        <li><strong>ISO 6946</strong>──熱抵抗</li>
-        <li><strong>ASHRAE 160-2021</strong>──30日移動平均80%RH</li>
-        <li><strong>JIS A 2104</strong>──日本</li>
-        <li><strong>WHO Indoor Air Quality</strong>──カビ指針</li>
-        <li><strong>EN 15026 / BS 5250 / DIN 4108-3</strong>──欧州各国</li>
+        <li><strong>ISO 13788</strong>──国際標準。<strong><a class="term-link" href="#term-frsi">fRsi</a> ≥ 0.7</strong>なら表面結露しないと判定する基準</li>
+        <li><strong>ISO 15026</strong>──国際標準。<strong>HAM動的解析（熱・空気・水分の時間変化計算）</strong>のルール</li>
+        <li><strong>ISO 6946</strong>──国際標準。建材の<strong>熱抵抗（断熱性能）</strong>の計算方法</li>
+        <li><strong>ASHRAE 160-2021</strong>──米国。<strong>「30日間の平均湿度が80%以下」</strong>ならカビが生えにくいと定義</li>
+        <li><strong>JIS A 2104</strong>──日本工業規格。建物の湿気・結露対策の計算方法</li>
+        <li><strong>WHO Indoor Air Quality</strong>──世界保健機関の<strong>「室内空気の質」ガイドライン</strong>。湿気住宅の健康影響をまとめた世界基準</li>
+        <li><strong>EN 15026（欧州統一）／BS 5250（英国）／DIN 4108-3（ドイツ）</strong>──欧州各国の建物湿気対策の国家規格</li>
       </ul>
+      <p style="margin:.6em 0 0;font-size:.85em;color:#888">💡 日本ではJIS A 2104＋ISO 13788が実務の標準。米国の大型案件はASHRAE 160-2021必須。</p>
     </div>
 
     <div class="info">
-      <div class="info-title">💻 商用ソフト価格マトリクス</div>
+      <div class="info-title">💻 結露・カビ予測の専用ソフト一覧（建築設計のプロが使うツール）</div>
       <div class="info-content">
-        ・<strong>WUFI Bio</strong>──買い切り約¥45万<br>
-        ・<strong>WUFI Plus/Pro</strong>──¥80-150万<br>
-        ・<strong>DELPHIN</strong>（独）──¥35-80万<br>
-        ・<strong>HAMSTAD</strong>──研究用<br>
-        ・<strong>MATCH</strong>（デンマーク）──¥40万<br>
-        ・<strong>IDA ICE</strong>──BIM統合¥80万〜<br>
-        ・<strong>EnergyPlus</strong>──無料（米DOE）
+        <p style="margin:0 0 .8em;font-size:.92em;color:#555">👉 「<strong>商用</strong>」＝<strong>会社や個人にお金を払って買う有料ソフト</strong>のこと（無料の研究用と区別）。建築設計者・ゼネコン・住宅メーカーが「この建物にカビが生えるか」を建てる前に予測するために使うシミュレーションソフト。</p>
+        ・<strong>WUFI Bio（ヴーフィ・バイオ）</strong>──ドイツのフラウンホーファー研究所製。<strong>カビ発生予測の世界標準</strong>。買い切り約45万円<br>
+        ・<strong>WUFI Plus/Pro</strong>──同じくWUFIシリーズ。<strong>建物全体の温度・湿度・カビをまとめて計算</strong>。80-150万円<br>
+        ・<strong>DELPHIN（デルフィン）</strong>──ドイツのドレスデン工科大学発。建物内の<strong>水分の動き</strong>に強い。35-80万円<br>
+        ・<strong>HAMSTAD（ハムスタッド）</strong>──研究用・大学などで使う。商用ではない<br>
+        ・<strong>MATCH（マッチ）</strong>──デンマーク製。北欧の寒冷地気候に強い。約40万円<br>
+        ・<strong>IDA ICE（アイダ・アイス）</strong>──スウェーデン製。<strong>BIM（建物3Dモデル）連携</strong>に強い。80万円〜<br>
+        ・<strong>EnergyPlus（エナジープラス）</strong>──米エネルギー省（DOE）が作った<strong>無料の建物エネルギー解析ソフト</strong>。世界中で利用<br>
+        <p style="margin:.8em 0 0;font-size:.85em;color:#888">💡 ザックリ：日本でも普及してるのはWUFI（ドイツ製）。1社1ライセンスで45万〜150万円。<strong>カビバスターズ・大手ゼネコンも導入</strong>。月額9,800円のSaaS型がスタートアップの事業機会。</p>
       </div>
     </div>
 
@@ -11266,6 +11273,7 @@ a.term-link::after{content:' 📖';font-size:.7em;opacity:.6}
   };
 
   // 代名詞・省略表現を検出して文脈で補完
+  // 重要：質問に独自の主語（現場・カビ・○○の事 等）があれば文脈で上書きしない
   function resolvePronoun(query){
     const q = normalize(query);
     const pronounPatterns = [
@@ -11274,9 +11282,28 @@ a.term-link::after{content:' 📖';font-size:.7em;opacity:.6}
       'なんで','どうして','理由は','原因は',
       'どうやって','どうすれば','方法は','やり方は'
     ];
+    // 独自の主語があるかチェック - これが含まれる場合、文脈に追従しない（新しい質問として扱う）
+    const substantiveSubjects = [
+      '現場','工事','作業','道具','機材','薬剤','検査','工法','資格','業界','業者','技術',
+      'カビ','菌','胞子','汚染','感染','除去','予防','駆除','燻蒸',
+      '会社','売上','利益','財務','経営','営業','広告','集客','料金','価格','値段',
+      'アスペルギルス','ペニシリウム','クラドスポリウム','スタキボトリス','カンジダ',
+      '光触媒','UV','HEPA','HACCP','GMP','ISO','PIC','CCS','ERMI',
+      '食品','工場','病院','ホテル','住宅','賃貸','文化財','美術館','博物館',
+      '保険','補助金','助成','法律','訴訟','賠償',
+      '健康','病気','喘息','アレルギー','水虫','カンジダ','肺炎',
+      '海外','米国','欧州','英国','日本','中国','韓国','タイ','シンガポール',
+      'マイコトキシン','アフラトキシン','オクラトキシン','サトラトキシン',
+      'MIST','CP工法','Goldmorr','Servpro','BELFOR','Anticimex','Rentokil','Ecolab',
+      'についての','の事','について'
+    ];
+    // 質問に独自の主語が含まれているか確認（2文字以上の名詞）
+    const hasOwnSubject = substantiveSubjects.some(s => q.includes(normalize(s)));
+    if(hasOwnSubject) return null; // 独自の主語あり→文脈に追従しない
+
     let needsContext = false;
     for(const p of pronounPatterns){
-      if(q.includes(p) && q.length < 30){ // 短い質問で代名詞のみ
+      if(q.includes(p) && q.length < 15){ // 厳格化：15文字未満の超短い質問のみ
         needsContext = true;
         break;
       }
