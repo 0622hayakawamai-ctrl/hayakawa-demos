@@ -13268,6 +13268,17 @@ a.term-link::after{content:' 📖';font-size:.7em;opacity:.6}
     if(!raw) return;
     addUserMsg(query);
 
+    // === 完全一致最優先：Q&Aの質問文と完全一致したら即答（本文検索より上） ===
+    const rawNorm = normalize(raw);
+    const exactQa = ALL_QA.find(qa => normalize(qa.q) === rawNorm);
+    if(exactQa){
+      setTimeout(() => {
+        addBotMsg(`<strong>「${exactQa.q}」</strong>について：<br><br>${exactQa.a}<br><a class="cb-jump" href="${exactQa.anchor}">📖 詳しくは ${exactQa.chTitle || '該当章'} へ →</a>`);
+        conversationMemory.add(raw, exactQa);
+      }, 200);
+      return;
+    }
+
     // === 文脈解決：「もっと」「それは？」「なんで？」等を補完 ===
     const pronounResolved = resolvePronoun(raw);
     let actualQuery = raw;
