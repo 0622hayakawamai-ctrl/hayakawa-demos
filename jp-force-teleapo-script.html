@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JP-FORCE 買い手M&A アポ取りスクリプト</title>
+<style>
+  :root {
+    --bg: #F5F5F4;
+    --card: #FFFFFF;
+    --primary: #1E3A8A;
+    --primary-light: #DBEAFE;
+    --accent: #DC2626;
+    --accent-light: #FEE2E2;
+    --success: #059669;
+    --success-light: #D1FAE5;
+    --warning: #D97706;
+    --warning-light: #FEF3C7;
+    --text: #0F172A;
+    --text-2: #475569;
+    --text-3: #94A3B8;
+    --border: #E2E8F0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .container { max-width: 800px; margin: 0 auto; padding: 20px 16px 60px; }
+  header {
+    background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
+    color: white;
+    padding: 24px 20px;
+    text-align: center;
+    border-radius: 12px;
+    margin-bottom: 24px;
+  }
+  header h1 { font-size: 20px; margin-bottom: 6px; }
+  header .meta { font-size: 12px; opacity: 0.9; }
+
+  .goal-banner {
+    background: white;
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+  }
+  .goal-banner h3 { font-size: 14px; color: var(--primary); margin-bottom: 10px; }
+  .goal-banner .goal {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 6px 0;
+    font-size: 14px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .badge.p1 { background: var(--success); }
+  .badge.p2 { background: var(--warning); }
+  .badge.p3 { background: var(--text-3); }
+
+  /* アコーディオン */
+  .accordion {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    transition: all 0.2s;
+  }
+  .accordion.open { box-shadow: 0 4px 12px rgba(30,58,138,0.15); }
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 20px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .accordion-header:hover { background: #F8FAFC; }
+  .accordion.open .accordion-header { background: var(--primary-light); }
+  .phase-num {
+    background: var(--primary);
+    color: white;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 16px;
+    white-space: nowrap;
+  }
+  .phase-title { font-size: 16px; font-weight: 700; flex: 1; }
+  .phase-time { font-size: 11px; color: var(--text-3); }
+  .accordion-chevron {
+    width: 12px;
+    height: 12px;
+    border-right: 2px solid var(--text-2);
+    border-bottom: 2px solid var(--text-2);
+    transform: rotate(45deg);
+    transition: transform 0.2s;
+    margin-left: 4px;
+  }
+  .accordion.open .accordion-chevron { transform: rotate(-135deg); }
+  .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+  .accordion.open .accordion-body { max-height: 9999px; }
+  .accordion-content { padding: 16px 20px 20px; }
+
+  .script-box {
+    background: #F0F9FF;
+    border-left: 4px solid var(--primary);
+    padding: 16px 18px;
+    margin: 12px 0;
+    border-radius: 4px;
+    font-size: 15px;
+    line-height: 1.9;
+  }
+  .script-box.alt { background: #FEF3C7; border-left-color: var(--warning); }
+  .script-box strong { color: var(--primary); }
+  .script-box.alt strong { color: var(--warning); }
+
+  .narrator {
+    font-size: 12px;
+    color: var(--text-3);
+    margin: 12px 0 6px;
+    font-style: italic;
+  }
+
+  /* 反応分岐ボタン */
+  .reaction-list { margin: 12px 0; }
+  .reaction-item {
+    background: var(--accent-light);
+    border: 1px solid #FECACA;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    overflow: hidden;
+    transition: all 0.15s;
+  }
+  .reaction-item.open { background: white; border-color: var(--primary); box-shadow: 0 2px 6px rgba(30,58,138,0.1); }
+  .reaction-trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .reaction-trigger::before {
+    content: "💬";
+    font-size: 16px;
+  }
+  .reaction-item.open .reaction-trigger { color: var(--primary); }
+  .reaction-item.open .reaction-trigger::before { content: "✓"; color: var(--success); font-weight: 700; }
+  .reaction-response {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease-out;
+  }
+  .reaction-item.open .reaction-response { max-height: 500px; }
+  .reaction-response-content {
+    padding: 0 14px 16px;
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text);
+    background: var(--success-light);
+    margin: 0 8px 8px;
+    padding: 14px 16px;
+    border-radius: 6px;
+    border-left: 3px solid var(--success);
+  }
+
+  .tip {
+    background: var(--warning-light);
+    border-left: 4px solid var(--warning);
+    padding: 10px 14px;
+    margin: 12px 0;
+    font-size: 13px;
+    border-radius: 4px;
+    color: var(--text);
+  }
+  .tip strong { color: var(--warning); }
+
+  .ng-list {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin: 12px 0;
+    border-radius: 4px;
+  }
+  .ng-list h4 { color: var(--accent); margin-bottom: 8px; font-size: 14px; }
+  .ng-list ul { padding-left: 18px; }
+  .ng-list li { font-size: 13px; margin: 3px 0; }
+
+  .checklist {
+    background: #F0F9FF;
+    border: 1px solid #BFDBFE;
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin: 12px 0;
+  }
+  .checklist h4 { color: var(--primary); margin-bottom: 10px; font-size: 14px; }
+  .checklist ul { list-style: none; padding: 0; }
+  .checklist li { padding: 3px 0; font-size: 13px; }
+  .checklist li::before { content: "☐ "; color: var(--primary); }
+
+  .glossary {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 8px;
+    margin: 12px 0;
+  }
+  .glossary-item {
+    background: #F8FAFC;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .glossary-item strong { color: var(--primary); display: block; margin-bottom: 2px; }
+
+  .controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .control-btn {
+    flex: 1;
+    background: white;
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text-2);
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .control-btn:hover { background: var(--primary-light); color: var(--primary); border-color: var(--primary); }
+  .control-btn.active { background: var(--primary); color: white; }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 18px; }
+    .phase-title { font-size: 14px; }
+    .script-box { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <h1>JP-FORCE 買い手M&A アポ取りスクリプト</h1>
+    <div class="meta">v1.0 / 上場企業 IR・経営企画担当者向け / 早川 まい</div>
+  </header>
+
+  <!-- ゴール -->
+  <div class="goal-banner">
+    <h3>🎯 電話のゴール（優先順位）</h3>
+    <div class="goal"><span class="badge p1">優先1</span>担当者と西田さんの 30分オンラインアポを獲得</div>
+    <div class="goal"><span class="badge p2">優先2</span>連絡先（メアド・直通電話）を取得</div>
+    <div class="goal"><span class="badge p3">優先3</span>月次譲渡案件情報の送付OK</div>
+  </div>
+
+  <!-- 操作コントロール -->
+  <div class="controls">
+    <button class="control-btn" onclick="openAll()">全部開く</button>
+    <button class="control-btn" onclick="closeAll()">全部閉じる</button>
+  </div>
+
+  <!-- PHASE 0 -->
+  <div class="accordion" id="p0">
+    <div class="accordion-header" onclick="togglePhase('p0')">
+      <span class="phase-num">PHASE 0</span>
+      <span class="phase-title">電話前チェックリスト</span>
+      <span class="phase-time">1分</span>
+      <span class="accordion-chevron"></span>
+    </div>
+    <div class="accordion-body"><div class="accordion-content">
+      <div class="checklist">
+        <h4>発信前に確認</h4>
+        <ul>
+          <li>対象企業の事業内容（HP・IR で30秒確認）</li>
+          <li>直近のM&A 実績（IR・プレスリリースで確認）</li>
+          <li>担当者の役職・氏名（リスト記載）</li>
+          <li>電話受付時間：9:30-11:30 / 13:30-16:30 が繋がりやすい</li>
+          <li>静かな環境（周囲音NG）</li>
+          <li>落ち着いた低めの声（早口NG）</li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- PHASE 1 -->
+  <div class="accordion" id="p1">
+    <div class="accordion-header" onclick="togglePhase('p1')">
+      <span class="phase-num">PHASE 1</span>
+      <span class="phase-title">受付突破</span>
+      <span class="phase-time">10〜30秒</span>
+      <span class="accordion-chevron"></span>
+    </div>
+    <div class="accordion-body"><div class="accordion-content">
+
+      <p class="narrator">▼ リストに担当者名がある場合：本人指名で繋いでもらう</p>
+      <div class="script-box">
+        お世話になっております。<br>
+        M&A仲介の <strong>株式会社JP-FORCE</strong> と申します。<br><br>
+        御社の <strong>◯◯部の××様</strong> におつなぎいただけますでしょうか。
+      </div>
+
+      <p class="narrator">▼ 担当者名が分からない場合</p>
+      <div class="script-box alt">
+        お世話になっております。<br>
+        M&A仲介の <strong>株式会社JP-FORCE</strong> と申します。<br><br>
+        御社の <strong>経営企画ご担当者様、もしくはM&Aを担当されている方</strong> におつなぎいただけますでしょうか。
+      </div>
+
+      <p class="narrator" style="margin-top: 20px;"><strong>▼ 受付がこう返してきたら、クリックして返しを確認</strong></p>
+      <div class="reaction-list">
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">お約束はございますか？</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「現時点でお約束はございませんが、御社の経営戦略にご参考になる M&A 案件のご紹介でお電話いたしました。3分ほどお取次ぎいただけませんでしょうか。」
+          </div></div>
+        </div>
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">資料をメールで送ってください</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「承知いたしました。メールアドレスを頂戴できますか？お送り後、ご担当者様より一度お電話いただけると幸いです。」<br>
+            → <strong>メアド入手</strong>
+          </div></div>
+        </div>
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">担当者は不在です</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「では戻られる時間帯を教えていただけますか？お戻り時刻に再度お電話差し上げます。」<br>
+            → <strong>時間入手</strong>
+          </div></div>
+        </div>
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">営業お断りです</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「営業ではなく、M&Aの売却案件情報のご紹介でして、御社の事業拡大に関わる情報でございます。情報共有のみでも結構ですので、ご担当者様にご判断いただきたく…」
+          </div></div>
+        </div>
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">ご用件は？</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「M&Aの売却案件、特に御社の事業領域に近い案件のご紹介でございます。3分ほどお時間いただければと。」
+          </div></div>
+        </div>
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">経営企画部の番号をお伝えします</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「ありがとうございます。お繋ぎいただける場合は引き続きお願いいたします。」<br>
+            → <strong>直通番号もメモ</strong>
+          </div></div>
+        </div>
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">上の者と相談します</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「お忙しいところ恐縮です。お繋ぎいただける可能性はございますでしょうか？」
+          </div></div>
+        </div>
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">弊社は今M&A検討してません</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「承知いたしました。今すぐのご検討ではなく、今後の参考情報として月次でお送りしたいのですが、ご担当者様のメールアドレスを頂戴できますでしょうか。」
+          </div></div>
+        </div>
+      </div>
+
+      <div class="tip"><strong>💡 ポイント：</strong>受付に詳細は説明しない。「3分」「ご担当者様にご判断いただく」で短く済ませる。</div>
+    </div></div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="accordion" id="p2">
+    <div class="accordion-header" onclick="togglePhase('p2')">
+      <span class="phase-num">PHASE 2</span>
+      <span class="phase-title">担当者接続後 自己紹介</span>
+      <span class="phase-time">30秒</span>
+      <span class="accordion-chevron"></span>
+    </div>
+    <div class="accordion-body"><div class="accordion-content">
+      <p class="narrator">▼ 担当者の声に変わったら、間髪入れず（プロ流：60秒に圧縮・相手の関心ワードを先に置く）：</p>
+      <div class="script-box">
+        ◯◯様、お忙しいところ恐れ入ります。<br>
+        <strong>株式会社JP-FORCE M&Aアドバイザリーの早川</strong> と申します。<br><br>
+        御社が <strong>★[直近のM&A実績 or 事業領域]</strong> に注力されていると拝見しまして、<br>
+        御社の戦略に合うかもしれない譲渡案件があり、<br>
+        <strong>正味60秒</strong> だけお時間頂戴できませんでしょうか。
+      </div>
+
+      <div class="tip"><strong>💡 プロのポイント：</strong>「3分」より「60秒」の方が許可率上がる（時間を取らない感）。冒頭で <strong>相手の固有情報（M&A実績・事業領域）</strong> を出すと「業界知ってる人だ」と信頼される。早口NG、敬語徹底、低めの声。</div>
+
+      <div class="tip" style="background: #FEE2E2; border-left-color: var(--accent);"><strong>⚠️ NG例：</strong>「お忙しいところ申し訳ございません」を多用しない。「すみません」連発は弱く見える。「恐れ入ります」を1回だけ。</div>
+    </div></div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="accordion" id="p3">
+    <div class="accordion-header" onclick="togglePhase('p3')">
+      <span class="phase-num">PHASE 3</span>
+      <span class="phase-title">興味喚起</span>
+      <span class="phase-time">60秒</span>
+      <span class="accordion-chevron"></span>
+    </div>
+    <div class="accordion-body"><div class="accordion-content">
+      <p class="narrator">▼ 「60秒なら」と聞く姿勢になったら（プロ流：数字＋限定性＋ノンネーム提示）：</p>
+      <div class="script-box">
+        ありがとうございます。<br><br>
+        弊社では現在、<strong>月5件前後の新規譲渡案件</strong> が発生しておりまして、<br>
+        うち <strong>★3割が上場企業様のM&A戦略に直結するレンジ</strong> でございます。<br><br>
+        ノンネームレベル（匿名版）でお伝えできる範囲ですと、直近では：<br>
+        ★ <strong>売上◯億円規模・利益率◯%・後継者問題による事業譲渡案件</strong><br>
+        ★ <strong>◯◯業界TOP10シェアの株式譲渡案件</strong><br>
+        などが進行中で、<strong>御社の◯◯領域とのシナジー</strong> が見込めると考えております。<br><br>
+        ◯◯様、率直に申しまして、こうした案件は <strong>競合他社様にも同時打診</strong> をしている関係で、<br>
+        <strong>2週間以内のNDA締結が一つの目安</strong> となっております。<br><br>
+        まずは <strong>ノンネーム資料</strong> をお送りさせていただき、ご興味のある案件があれば、弊社代表の西田から <strong>30分のオンライン</strong> で詳細をご説明させていただく流れでいかがでしょうか。
+      </div>
+
+      <p class="narrator">▼ ヒアリング（相手の温度を測る・プロ流は7割聞いて3割話す）：</p>
+      <div class="script-box alt">
+        差し支えなければ、いくつかお聞かせいただけますでしょうか。<br><br>
+        ◯ 御社の直近のM&A戦略の方向性は、新規事業領域の拡大でしょうか、それとも既存事業の強化でしょうか？<br>
+        ◯ ご検討されている案件規模感はどのレンジでしょうか？（◯億円〜◯億円等）<br>
+        ◯ ご決裁プロセスはどなたが中心でしょうか？<br><br>
+        ご無理のない範囲で結構です。
+      </div>
+
+      <div class="tip"><strong>💡 プロのポイント：</strong>
+        <ol style="padding-left: 22px; margin-top: 6px;">
+          <li><strong>数字を入れる</strong>：「月5件」「3割」「2週間」等、具体的に</li>
+          <li><strong>限定性を作る</strong>：「2週間以内」「同時打診」で適度な緊急感</li>
+          <li><strong>相手の事業領域に紐づける</strong>：「◯◯領域とのシナジー」を必ず言及</li>
+          <li><strong>ヒアリングで温度を測る</strong>：3つの質問で相手のステータス把握</li>
+        </ol>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- PHASE 4A -->
+  <div class="accordion" id="p4a">
+    <div class="accordion-header" onclick="togglePhase('p4a')">
+      <span class="phase-num">PHASE 4A</span>
+      <span class="phase-title">アポ獲得クロージング</span>
+      <span class="badge p1">優先1</span>
+      <span class="accordion-chevron"></span>
+    </div>
+    <div class="accordion-body"><div class="accordion-content">
+      <p class="narrator">▼ 担当者が「話を聞きたい」モードになったら（プロ流：日時提案ではなくURL送付で即完結）：</p>
+      <div class="script-box">
+        ありがとうございます。<br><br>
+        弊社代表の <strong>西田</strong> から30分ほど、御社の事業領域に合わせた案件のご説明をさせていただきます。<br><br>
+        日程調整がスムーズかと思いますので、<br>
+        <strong>西田の日程調整URL</strong> をすぐにお送りいたします。<br><br>
+        ◯◯様のご都合の良いお時間を、お選びいただければそのまま確定いたします。<br><br>
+        メールは <strong>[リスト記載 or 直前確認のアドレス]</strong> でよろしかったでしょうか？<br>
+        この後5分以内にお送りいたします。
+      </div>
+
+      <p class="narrator">▼ メアド確認後（即実行・電話切る前）：</p>
+      <div class="script-box">
+        ありがとうございます。<br>
+        では今すぐ送付いたします。<br><br>
+        URLからご予約完了後、自動で <strong>西田にも通知</strong> が届きますので、改めて確認のご連絡が西田から入ります。<br><br>
+        本日はお時間いただきありがとうございました。<br>
+        西田からのミーティング、楽しみにしております。
+      </div>
+
+      <div class="tip"><strong>💡 プロのポイント：</strong>「◯月◯日でいかがでしょう」と日時提案するとラリーが3-4回発生する。TimeRex/Calendly URL を即送付すれば<strong>1分でアポ確定</strong>。「URL送りました→相手が選ぶ→完了」の3ステップ。</div>
+
+      <div class="tip"><strong>📧 メール文面テンプレ（電話直後5分以内に送信）：</strong><br><br>
+        件名：【JP-FORCE】お電話のお礼／西田との面談日程ご案内<br><br>
+        ◯◯株式会社 ◯◯部 ◯◯様<br><br>
+        先ほどお電話いたしました、株式会社JP-FORCE の早川でございます。<br>
+        お忙しい中、お時間を頂戴しまして誠にありがとうございました。<br><br>
+        弊社代表の西田より、御社の事業領域に合わせたM&A案件のご説明をさせていただきたく、<br>
+        下記URLよりご都合の良い日時をお選びいただけますでしょうか。<br><br>
+        ▼ 日程予約URL<br>
+        [西田のTimeRex/Calendly URL]<br><br>
+        当日はZoomでのオンライン面談を予定しております。<br>
+        ご予約後、自動で確定メールが送付されます。<br><br>
+        引き続きよろしくお願いいたします。<br><br>
+        --<br>
+        株式会社JP-FORCE<br>
+        早川 まい<br>
+        TEL: [携帯番号]<br>
+        Mail: [メアド]
+      </div>
+    </div></div>
+  </div>
+
+  <!-- PHASE 4B -->
+  <div class="accordion" id="p4b">
+    <div class="accordion-header" onclick="togglePhase('p4b')">
+      <span class="phase-num">PHASE 4B</span>
+      <span class="phase-title">連絡先確保（アポ取れない時）</span>
+      <span class="badge p2">優先2</span>
+      <span class="accordion-chevron"></span>
+    </div>
+    <div class="accordion-body"><div class="accordion-content">
+      <p class="narrator">▼「今は時間取れない」「資料送って」となった時（プロ流：3点セット必ず取る）：</p>
+      <div class="script-box alt">
+        承知いたしました。<br><br>
+        では <strong>本日中にメールにて</strong> 弊社の取扱案件サマリー（匿名版）をお送りいたします。<br><br>
+        ◯◯様の <strong>直通メールアドレス</strong> を頂戴できますでしょうか。<br><br>
+        加えて、改めてご連絡差し上げる際の <strong>直通電話番号</strong> もお伺いできますと、代表電話ですとお繋ぎが難しい場合がございますので…
+      </div>
+
+      <p class="narrator">▼ 連絡先取得後、即追加（プロ流：次のアクション設定で関係継続）：</p>
+      <div class="script-box alt">
+        ありがとうございます。<br><br>
+        本日中にお送りした後、<strong>3営業日以内</strong> に私から改めてお電話差し上げてもよろしいでしょうか。<br><br>
+        ご覧いただいた感想だけでも結構ですので、その時にお話できれば幸いです。<br><br>
+        ◯月◯日（◯）の◯時頃にお電話差し上げますね。
+      </div>
+
+      <div class="tip"><strong>💡 プロのポイント：</strong>
+        <ol style="padding-left: 22px; margin-top: 6px;">
+          <li><strong>直通電話を必ず取る</strong>：代表電話は受付ブロックで無意味。「代表ではお繋ぎが難しい場合があるので」と理由付き</li>
+          <li><strong>次回コール日時を約束</strong>：「3営業日以内」「◯日◯時に」と具体的に。「またご連絡します」では音信不通になる</li>
+          <li><strong>マルチタッチ前提</strong>：1回で決めず、電話→メール→3日後再架電 のサイクル</li>
+        </ol>
+      </div>
+
+      <div class="tip" style="background: #D1FAE5; border-left-color: var(--success);"><strong>✅ 直通電話を聞くフレーズ集：</strong><br>
+        ・「代表電話ですと受付の方を経由してしまうので、◯◯様の直通もご教示いただけますと…」<br>
+        ・「念のため、ご担当の携帯番号があれば緊急時にご連絡できるかと存じます」<br>
+        ・「お忙しい時間帯にあえてお電話しないよう、ご都合の良い時間帯と直通もお伺いできれば」
+      </div>
+    </div></div>
+  </div>
+
+  <!-- PHASE 4C -->
+  <div class="accordion" id="p4c">
+    <div class="accordion-header" onclick="togglePhase('p4c')">
+      <span class="phase-num">PHASE 4C</span>
+      <span class="phase-title">月次情報送付OK取り</span>
+      <span class="badge p3">優先3</span>
+      <span class="accordion-chevron"></span>
+    </div>
+    <div class="accordion-body"><div class="accordion-content">
+      <p class="narrator">▼「今すぐは興味ない」「将来のために」となった時：</p>
+      <div class="script-box alt">
+        承知いたしました。<br><br>
+        弊社では <strong>月に5件前後の新規譲渡案件</strong> が発生しておりまして、これを月1回、
+        ご興味のある上場企業様に <strong>匿名のサマリー情報</strong> としてお送りしております。<br><br>
+        ◯◯様にも、<strong>月次の案件情報</strong> をお送りさせていただいてもよろしいでしょうか。<br><br>
+        「興味のある案件があれば、その時にご相談いただく」という形でのお付き合いを継続させていただければと思います。<br><br>
+        ご無理のない範囲で結構ですので、情報受け取りのみでもよろしいでしょうか。
+      </div>
+      <div class="tip"><strong>💡 ポイント：</strong>「無理のない範囲で」「情報受け取りのみで結構」と何度も繰り返し、心理的負担を下げる。</div>
+    </div></div>
+  </div>
+
+  <!-- PHASE 5 -->
+  <div class="accordion" id="p5">
+    <div class="accordion-header" onclick="togglePhase('p5')">
+      <span class="phase-num">PHASE 5</span>
+      <span class="phase-title">よくある反論への返し（12パターン）</span>
+      <span class="accordion-chevron"></span>
+    </div>
+    <div class="accordion-body"><div class="accordion-content">
+      <p class="narrator"><strong>▼ 反論をクリックすると返しが開く</strong></p>
+      <div class="reaction-list">
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">M&A仲介は他社にお願いしてます</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「承知いたしました。他社様のご紹介と重複しない案件もございますので、補完的にご検討いただける情報として、月次でお送りさせていただいてもよろしいでしょうか。」
+          </div></div>
+        </div>
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">興味ありません</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「承知いたしました。今後の参考情報として、月次の案件サマリーだけでもお送りさせていただけますでしょうか。ご検討の機会の幅を広げていただける情報かと存じます。」
+          </div></div>
+        </div>
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">具体的にどんな案件？</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「企業名は秘密保持の関係上お伝えできませんが、<strong>ノンネーム（匿名一枚物の案件概要）レベル</strong>でしたらお話しできます。<br><br>
+            具体的には<strong>業界・売上規模・利益率・エリア・譲渡理由・希望価格レンジ</strong>などをまとめた資料で、メールでもお送りできます。<br><br>
+            詳細な企業概要書（IM）は秘密保持契約締結後にご開示しておりますので、まずはノンネームをご覧いただいた上で、ご興味ある案件のみオンラインでご面談という流れでいかがでしょうか。」
+          </div></div>
+        </div>
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">資料を送ってください</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「もちろんでございます。メールアドレスを頂戴できますでしょうか。お送り後、ご覧いただいてからご連絡差し上げてもよろしいでしょうか。」
+          </div></div>
+        </div>
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">予算がない／時期じゃない</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「承知いたしました。今すぐのご検討でなくとも、業界動向や案件サマリーの情報として、月次でお送りさせていただいてもよろしいでしょうか。」
+          </div></div>
+        </div>
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">弊社で買収検討してない</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「承知いたしました。ご検討の有無は別として、業界の動向や今後の事業戦略のご参考として、月次の案件情報をお送りさせていただけますでしょうか。」
+          </div></div>
+        </div>
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">金額の話は？</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「個別案件の金額は秘密保持の関係上、まずは秘密保持契約を結ばせていただいた上で、企業概要書（IM）にてお伝えしております。」
+          </div></div>
+        </div>
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">秘密保持契約必要？</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「はい、案件の詳細をご開示する前段階で、弊社雛形の秘密保持契約を締結させていただきます。NDA締結後にIM（企業概要書）をお送りいたします。」
+          </div></div>
+        </div>
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">決裁者を出してほしい</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「ありがとうございます。それでは、弊社M&Aアドバイザーの西田から直接お話しさせていただきたく、お時間を頂戴できますでしょうか。」
+          </div></div>
+        </div>
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">電話アポは受けない方針</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「承知いたしました。それではメールにて資料をお送りさせていただきますので、メールアドレスを頂戴できますでしょうか。ご覧いただいた上でのご判断で結構です。」
+          </div></div>
+        </div>
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">営業電話は困る</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「申し訳ございません。営業というよりも、御社の事業戦略にご参考になる情報をお届けする立ち位置で、月次の情報提供だけでもよろしいでしょうか。」
+          </div></div>
+        </div>
+        <div class="reaction-item" onclick="toggleReaction(this)">
+          <div class="reaction-trigger">うちの業界の案件あるの？</div>
+          <div class="reaction-response"><div class="reaction-response-content">
+            「はい、◯◯業界の案件も取り扱っております。詳細は秘密保持契約後にIMでお伝えしておりますが、まずは概要だけでもオンラインでご説明させていただけませんか。」
+          </div></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- NG -->
+  <div class="accordion" id="ng">
+    <div class="accordion-header" onclick="togglePhase('ng')">
+      <span class="phase-num" style="background: var(--accent);">⚠️ NG</span>
+      <span class="phase-title">絶対に言わないこと</span>
+      <span class="accordion-chevron"></span>
+    </div>
+    <div class="accordion-body"><div class="accordion-content">
+      <div class="ng-list">
+        <h4>電話で絶対にNG</h4>
+        <ul>
+          <li>売り手企業の<strong>実名</strong></li>
+          <li>「絶対儲かります」「リスクなし」等の<strong>断定</strong></li>
+          <li>「<strong>インサイダー情報</strong>」匂わせ</li>
+          <li>競合他社（日本M&Aセンター等）の悪口</li>
+          <li>「他社より安いです」等の値段比較</li>
+          <li>自分が決裁できる風の発言</li>
+          <li>強引な押し売り</li>
+          <li>「絶対アポください」等のしつこい食らいつき</li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 用語集 -->
+  <div class="accordion" id="glossary">
+    <div class="accordion-header" onclick="togglePhase('glossary')">
+      <span class="phase-num" style="background: var(--success);">📚</span>
+      <span class="phase-title">業界用語集</span>
+      <span class="accordion-chevron"></span>
+    </div>
+    <div class="accordion-body"><div class="accordion-content">
+      <div class="glossary">
+        <div class="glossary-item" style="background: #FEF3C7; border-color: #FCD34D;"><strong style="color: var(--warning);">ノンネーム</strong>匿名一枚物の案件概要資料。<strong>NDA前に話せる情報の境界</strong>。業界・売上規模・利益率・エリア・譲渡理由・希望価格レンジを記載</div>
+        <div class="glossary-item"><strong>M&A</strong>Mergers and Acquisitions（合併・買収）</div>
+        <div class="glossary-item"><strong>NDA</strong>秘密保持契約</div>
+        <div class="glossary-item"><strong>LOI</strong>基本合意書</div>
+        <div class="glossary-item"><strong>DD</strong>デューデリジェンス（買収監査）</div>
+        <div class="glossary-item"><strong>IM</strong>企業概要書（NDA後に開示する詳細資料）</div>
+        <div class="glossary-item"><strong>ティザー</strong>ノンネームより更に絞った匿名案件サマリー</div>
+        <div class="glossary-item"><strong>シナジー</strong>買収による相乗効果</div>
+        <div class="glossary-item"><strong>PMI</strong>買収後の統合プロセス</div>
+        <div class="glossary-item"><strong>EBITDA</strong>利益指標</div>
+        <div class="glossary-item"><strong>ソーシング</strong>案件発掘</div>
+        <div class="glossary-item"><strong>マッチング</strong>売り手と買い手のマッチング</div>
+        <div class="glossary-item"><strong>事業承継</strong>後継者問題によるM&A</div>
+      </div>
+
+      <div class="tip" style="background: #FEF3C7; border-left-color: var(--warning);"><strong>⚠️ 重要：</strong><strong>ノンネーム</strong>と<strong>IM（企業概要書）</strong>の境界<br><br>
+        <strong>ノンネーム = NDA前に話せる</strong>：業界／売上規模／利益率／エリア／譲渡理由／希望価格レンジ／従業員規模など（企業名は伏せる）<br><br>
+        <strong>IM = NDA後に開示</strong>：企業名・財務詳細・主要顧客・組織図・契約関係等の詳細情報
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 引き継ぎ -->
+  <div class="accordion" id="handoff">
+    <div class="accordion-header" onclick="togglePhase('handoff')">
+      <span class="phase-num" style="background: var(--success);">🤝</span>
+      <span class="phase-title">アポ取得後の引き継ぎ</span>
+      <span class="accordion-chevron"></span>
+    </div>
+    <div class="accordion-body"><div class="accordion-content">
+      <h4 style="margin: 8px 0; color: var(--success); font-size: 14px;">アポ確定したら、即実行</h4>
+      <ol style="padding-left: 22px; line-height: 1.9; font-size: 14px;">
+        <li><strong>西田さんのスケジュール確認</strong>：カレンダー or Slack で「◯月◯日◯時アポ取れました」</li>
+        <li><strong>アポ詳細を西田さんに共有</strong>：企業名・担当者氏名・役職・連絡先・会話メモ</li>
+        <li><strong>Zoom URL 送付</strong>：相手のメールへ</li>
+        <li><strong>前日にリマインダーメール</strong>送付</li>
+      </ol>
+      <h4 style="margin: 16px 0 8px; color: var(--warning); font-size: 14px;">連絡先のみ取得した場合</h4>
+      <ol style="padding-left: 22px; line-height: 1.9; font-size: 14px;">
+        <li><strong>CRM/スプシに記録</strong>：氏名・会社・連絡先・温度感・次のアクション</li>
+        <li><strong>24時間以内に資料メール送付</strong>：自社紹介＋案件サマリー（匿名）</li>
+        <li><strong>2週間後に再アタック予定</strong>としてセット</li>
+      </ol>
+      <div class="tip"><strong>💡 心構え：</strong>アポ取れなくても落ち込まない。M&Aテレアポは <strong>100コール3アポが業界平均</strong>。90%は断られて当然。</div>
+    </div></div>
+  </div>
+
+</div>
+
+<script>
+function togglePhase(id) {
+  const acc = document.getElementById(id);
+  acc.classList.toggle('open');
+}
+function toggleReaction(item) {
+  event.stopPropagation();
+  item.classList.toggle('open');
+}
+function openAll() {
+  document.querySelectorAll('.accordion').forEach(a => a.classList.add('open'));
+}
+function closeAll() {
+  document.querySelectorAll('.accordion').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.reaction-item').forEach(r => r.classList.remove('open'));
+}
+// 起動時：PHASE 0 だけ開いておく
+document.getElementById('p0').classList.add('open');
+</script>
+
+</body>
+</html>
